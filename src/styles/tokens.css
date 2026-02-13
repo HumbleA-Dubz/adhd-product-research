@@ -1,39 +1,85 @@
 :root {
-  /* Typography */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-size-xs: 9px;
-  --font-size-sm: 11px;
-  --font-size-base: 13px;
-  --font-size-lg: 15px;
-  --font-size-xl: 18px;
+  /* =============================================
+     Humble Design System Tokens
+     ============================================= */
 
-  /* Colours — Chrome */
+  /* Typography — Manrope */
+  --font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-xs: 10px;     /* Small / Label */
+  --font-size-sm: 12px;     /* Body */
+  --font-size-base: 14px;   /* H4 / Component */
+  --font-size-lg: 16px;     /* H3 / Subsection */
+  --font-size-xl: 20px;     /* H2 / Section */
+  --font-size-xxl: 28px;    /* H1 / Page title */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-heading: 1.2;
+  --line-height-body: 1.15;
+
+  /* Brand Colours — Primary */
+  --brand-ink: #1E085D;          /* Primary brand (70%) — buttons, H1/H2, key UI */
+  --brand-pink: #FEBBCC;         /* Supporting accent (20%) — highlights, secondary */
+  --brand-purple: #4785D8;       /* Key moments (10%) — special highlights */
+  --brand-ink-tint: #D2CFE0;     /* Ink at 20% */
+  --brand-pink-tint: #FFF1F5;    /* Pink at 20% */
+  --brand-purple-tint: #DAE7F7;  /* Purple at 20% */
+
+  /* Neutral Colours */
+  --neutral-snow: #FDFEFC;       /* Lightest bg — primary content areas */
+  --neutral-chalk: #F6F5F0;      /* Cards, modals, callout boxes */
+  --neutral-stone: #F8F3F0;      /* Secondary sections, sidebars */
+  --neutral-rock: #DAD2CE;       /* Borders, dividers, disabled, secondary text */
+
+  /* Accent Colours */
+  --accent-yellow: #FFC600;      /* Warnings, highlights, attention */
+  --accent-mint: #45DCC1;        /* Success, confirmations, positive */
+  --accent-blue: #3564FF;        /* Information, links, primary data */
+  --accent-sky: #60CDFF;         /* Secondary info, calm highlights */
+  --accent-raspberry: #E01E5A;   /* Errors, critical warnings, urgent */
+  --accent-violet: #A183FF;      /* Premium features, creative */
+
+  /* Accent Tints (20% opacity for backgrounds) */
+  --accent-yellow-tint: #FFF4CC;
+  --accent-mint-tint: #DAF8F3;
+  --accent-blue-tint: #D7E0FF;
+  --accent-sky-tint: #DFF5FF;
+  --accent-raspberry-tint: #F9D2DE;
+  --accent-violet-tint: #ECE6FF;
+
+  /* Text Colours */
+  --text-heading: #1E085D;       /* Ink — page titles, section headings */
+  --text-primary: #1D2939;       /* Charcoal — body, descriptions, labels */
+  --text-secondary: #DAD2CE;     /* Rock — metadata, timestamps */
+
+  /* Semantic aliases (mapped from design system) */
   --bg-primary: #FFFFFF;
-  --bg-secondary: #F9FAFB;
-  --bg-tertiary: #F3F4F6;
-  --border: #E5E7EB;
-  --text-primary: #111827;
-  --text-secondary: #6B7280;
-  --text-tertiary: #9CA3AF;
+  --bg-secondary: var(--neutral-snow);
+  --bg-tertiary: var(--neutral-chalk);
+  --bg-sidebar: var(--neutral-stone);
+  --border: var(--neutral-rock);
 
-  /* Colours — Canvas */
-  --node-default: #6B7280;
-  --node-model: #8B5CF6;
-  --node-meta-challenge: #EF4444;
-  --node-claim: #9CA3AF;
-  --edge-structural: #D1D5DB;
+  /* Canvas Colours */
+  --node-default: var(--neutral-rock);
+  --node-problem: var(--brand-ink);
+  --node-model: var(--accent-violet);
+  --node-mechanism: var(--accent-sky);
+  --node-meta-challenge: var(--accent-raspberry);
+  --node-foundation: var(--accent-mint);
+  --node-implication: var(--accent-yellow);
+  --edge-structural: var(--neutral-rock);
   --ghost-opacity: 0.15;
-  --cluster-fill: #F3F4F6;
-  --cluster-border: #E5E7EB;
+  --cluster-fill: var(--neutral-chalk);
+  --cluster-border: var(--neutral-rock);
 
-  /* Colours — Semantic */
-  --green: #16A34A;
-  --amber: #F59E0B;
-  --red: #DC2626;
-  --blue-vivid: #1D4ED8;
-  --blue-medium: #3B82F6;
-  --blue-faint: #93C5FD;
-  --blue-ghost: #DBEAFE;
+  /* Semantic Colours (for presets) */
+  --green: var(--accent-mint);
+  --amber: var(--accent-yellow);
+  --red: var(--accent-raspberry);
 
   /* Spacing */
   --space-xs: 4px;
@@ -41,6 +87,12 @@
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
+
+  /* Radii — soft, rounded, organic (Humble principle) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
 
   /* Panels */
   --detail-panel-width: 400px;
@@ -70,7 +122,9 @@
 
 body {
   font-family: var(--font-family);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
   color: var(--text-primary);
   background: var(--bg-primary);
   overflow: hidden;
@@ -105,6 +159,7 @@ body {
   position: relative;
   overflow: hidden;
   z-index: var(--z-canvas);
+  background: var(--neutral-snow);
 }
 
 #detail-panel {
@@ -126,7 +181,7 @@ body {
 #legend {
   height: var(--legend-height);
   border-top: 1px solid var(--border);
-  background: var(--bg-secondary);
+  background: var(--neutral-chalk);
   z-index: var(--z-legend);
   flex-shrink: 0;
 }
@@ -138,12 +193,13 @@ body {
 #search-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(30, 8, 93, 0.4);
   z-index: var(--z-search);
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding-top: 20vh;
+  backdrop-filter: blur(4px);
 }
 
 #search-overlay.hidden {
@@ -155,8 +211,8 @@ body {
   top: var(--space-sm);
   left: var(--space-sm);
   z-index: 10;
-  font-size: var(--font-size-sm);
-  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
   pointer-events: none;
 }
 

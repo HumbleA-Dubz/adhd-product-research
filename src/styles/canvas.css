@@ -1,7 +1,7 @@
-/* SVG Canvas Styles */
+/* SVG Canvas Styles — Humble Design System */
 
 .canvas-root {
-  background: var(--bg-primary);
+  background: var(--neutral-snow);
   cursor: grab;
 }
 
@@ -13,10 +13,12 @@
 .node circle {
   cursor: pointer;
   transition: fill var(--transition-normal), opacity var(--transition-normal), stroke-width var(--transition-fast);
+  stroke: var(--neutral-rock);
+  stroke-width: 1.5px;
 }
 
 .node.selected circle {
-  stroke: var(--blue-vivid);
+  stroke: var(--brand-ink);
   stroke-width: 3px;
 }
 
@@ -24,34 +26,42 @@
   opacity: var(--ghost-opacity);
 }
 
-/* Node Type Colors */
+/* Node Type Colors — Humble palette */
 .node-problem circle {
-  fill: var(--node-default);
+  fill: var(--node-problem);
+  stroke: var(--brand-ink);
 }
 
 .node-model circle {
   fill: var(--node-model);
+  stroke: var(--accent-violet);
 }
 
 .node-mechanism circle {
-  fill: var(--node-default);
+  fill: var(--node-mechanism);
+  stroke: var(--accent-sky);
 }
 
 .node-meta_challenge circle {
   fill: var(--node-meta-challenge);
+  stroke: var(--accent-raspberry);
 }
 
 .node-foundation circle {
-  fill: var(--node-default);
+  fill: var(--node-foundation);
+  stroke: var(--accent-mint);
 }
 
 .node-implication circle {
-  fill: var(--node-default);
+  fill: var(--node-implication);
+  stroke: var(--accent-yellow);
 }
 
 /* Labels */
 .node-label {
-  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
   fill: var(--text-primary);
   pointer-events: none;
   text-anchor: middle;
@@ -59,8 +69,9 @@
 }
 
 .node-secondary-id {
-  font-size: var(--font-size-xs);
-  fill: var(--text-tertiary);
+  font-family: var(--font-family);
+  font-size: 9px;
+  fill: var(--text-secondary);
   pointer-events: none;
   text-anchor: middle;
   user-select: none;
@@ -78,13 +89,13 @@
   display: none;
 }
 
-/* Cluster Boundaries */
+/* Cluster Boundaries — soft, rounded (Humble principle) */
 .cluster-boundary {
   fill: var(--cluster-fill);
   stroke: var(--cluster-border);
   stroke-width: 1px;
-  rx: 8;
-  ry: 8;
+  rx: var(--radius-lg);
+  ry: var(--radius-lg);
   pointer-events: none;
 }
 

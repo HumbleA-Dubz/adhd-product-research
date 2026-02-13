@@ -1,5 +1,5 @@
 /* ========================================
-   Detail Panel
+   Detail Panel — Humble Design System
    ======================================== */
 
 .detail-panel-content {
@@ -14,11 +14,11 @@
   width: 32px;
   height: 32px;
   border: none;
-  background: var(--bg-tertiary);
-  border-radius: 4px;
-  font-size: 24px;
+  background: var(--neutral-chalk);
+  border-radius: var(--radius-full);
+  font-size: 20px;
   line-height: 1;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -27,8 +27,8 @@
 }
 
 .detail-panel-close:hover {
-  background: var(--border);
-  color: var(--text-primary);
+  background: var(--neutral-stone);
+  color: var(--text-heading);
 }
 
 .detail-header {
@@ -38,8 +38,9 @@
 
 .detail-header h2 {
   font-size: var(--font-size-xl);
-  font-weight: 600;
-  color: var(--text-primary);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+  line-height: var(--line-height-heading);
   margin-bottom: var(--space-sm);
 }
 
@@ -48,8 +49,8 @@
 }
 
 .section-heading {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -57,123 +58,98 @@
 }
 
 .description-text {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   color: var(--text-primary);
   line-height: 1.6;
 }
 
-/* Badges */
+/* Badges — soft rounded (Humble) */
 
 .badge {
   display: inline-block;
-  padding: 2px 8px;
-  border-radius: 3px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
   margin-right: var(--space-xs);
   margin-bottom: var(--space-xs);
 }
 
 .badge.secondary-id {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
-}
-
-.badge.evidence-tier {
-  background: var(--blue-ghost);
-  color: var(--blue-vivid);
-}
-
-.badge.role {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
-}
-
-.badge.claim-type-observation {
-  background: var(--blue-ghost);
-  color: var(--blue-vivid);
-}
-
-.badge.claim-type-interpretation {
-  background: #F3E8FF;
-  color: #7C3AED;
-}
-
-.badge.claim-type-synthesis {
-  background: #D1FAE5;
-  color: #059669;
-}
-
-.badge.claim-type-caveat {
-  background: #FEF3C7;
-  color: #D97706;
-}
-
-.badge.rating-S {
-  background: #D1FAE5;
-  color: #059669;
-}
-
-.badge.rating-P {
-  background: #FEF3C7;
-  color: #D97706;
-}
-
-.badge.rating-X {
-  background: #FEE2E2;
-  color: #DC2626;
-}
-
-.badge.severity-H {
-  background: #FEE2E2;
-  color: #DC2626;
-}
-
-.badge.severity-M {
-  background: #FEF3C7;
-  color: #D97706;
-}
-
-.badge.severity-L {
-  background: #D1FAE5;
-  color: #059669;
-}
-
-.badge.severity {
-  background: var(--bg-tertiary);
+  background: var(--neutral-chalk);
   color: var(--text-primary);
 }
 
-.badge.complexity {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
+.badge.evidence-tier {
+  background: var(--accent-blue-tint);
+  color: var(--accent-blue);
 }
 
-.badge.build-buy {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
+.badge.role {
+  background: var(--neutral-chalk);
+  color: var(--text-primary);
 }
 
-.badge.foundation-strength {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
+.badge.claim-type-observation {
+  background: var(--accent-blue-tint);
+  color: var(--accent-blue);
 }
 
-.badge.implication-type {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
+.badge.claim-type-interpretation {
+  background: var(--accent-violet-tint);
+  color: var(--accent-violet);
 }
 
-.badge.source-type {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
+.badge.claim-type-synthesis {
+  background: var(--accent-mint-tint);
+  color: var(--accent-mint);
 }
 
+.badge.claim-type-caveat {
+  background: var(--accent-yellow-tint);
+  color: #B8860B;
+}
+
+.badge.rating-S {
+  background: var(--accent-mint-tint);
+  color: #2B9A6E;
+}
+
+.badge.rating-P {
+  background: var(--accent-yellow-tint);
+  color: #B8860B;
+}
+
+.badge.rating-X {
+  background: var(--accent-raspberry-tint);
+  color: var(--accent-raspberry);
+}
+
+.badge.severity-H {
+  background: var(--accent-raspberry-tint);
+  color: var(--accent-raspberry);
+}
+
+.badge.severity-M {
+  background: var(--accent-yellow-tint);
+  color: #B8860B;
+}
+
+.badge.severity-L {
+  background: var(--accent-mint-tint);
+  color: #2B9A6E;
+}
+
+.badge.severity,
+.badge.complexity,
+.badge.build-buy,
+.badge.foundation-strength,
+.badge.implication-type,
+.badge.source-type,
 .badge.cluster-type {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
+  background: var(--neutral-chalk);
+  color: var(--text-primary);
 }
 
 /* Scores */
@@ -185,23 +161,23 @@
 }
 
 .score-item {
-  padding: var(--space-sm);
-  background: var(--bg-secondary);
-  border-radius: 4px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--neutral-chalk);
+  border-radius: var(--radius-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .score-label {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--text-secondary);
 }
 
 .score-value {
   font-size: var(--font-size-base);
-  font-weight: 600;
-  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
 }
 
 /* Classification */
@@ -221,9 +197,9 @@
 }
 
 .dimension-item {
-  padding: var(--space-sm);
-  background: var(--bg-secondary);
-  border-radius: 4px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--neutral-chalk);
+  border-radius: var(--radius-md);
 }
 
 .dim-label {
@@ -236,7 +212,7 @@
 .dim-value {
   display: block;
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   color: var(--text-primary);
 }
 
@@ -269,22 +245,23 @@
 .entity-link {
   background: none;
   border: none;
-  color: var(--blue-vivid);
-  font-size: var(--font-size-base);
+  color: var(--accent-blue);
+  font-size: var(--font-size-sm);
   text-decoration: none;
   cursor: pointer;
   padding: 0;
   font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
   transition: color var(--transition-fast);
 }
 
 .entity-link:hover {
-  color: var(--blue-medium);
+  color: var(--brand-ink);
   text-decoration: underline;
 }
 
 .narrative-text {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--text-secondary);
   font-style: italic;
 }
@@ -306,19 +283,20 @@
 /* External link */
 
 .external-link {
-  color: var(--blue-vivid);
+  color: var(--accent-blue);
   text-decoration: none;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   transition: color var(--transition-fast);
 }
 
 .external-link:hover {
-  color: var(--blue-medium);
+  color: var(--brand-ink);
   text-decoration: underline;
 }
 
 /* ========================================
-   Question Bar
+   Question Bar — Humble Design System
    ======================================== */
 
 .question-bar-container {
@@ -330,43 +308,44 @@
 }
 
 .preset-button {
-  height: 32px;
+  height: 34px;
   padding: 0 var(--space-md);
-  border: 1px solid var(--border);
+  border: 1px solid var(--neutral-rock);
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
-  font-weight: 500;
-  border-radius: 6px;
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
 }
 
 .preset-button:hover {
-  background: var(--bg-secondary);
-  border-color: var(--text-tertiary);
+  background: var(--neutral-chalk);
+  border-color: var(--brand-ink-tint);
 }
 
 .preset-button.active {
-  background: var(--blue-vivid);
-  border-color: var(--blue-vivid);
+  background: var(--brand-ink);
+  border-color: var(--brand-ink);
   color: #FFFFFF;
 }
 
 .preset-button.active:hover {
-  background: var(--blue-medium);
-  border-color: var(--blue-medium);
+  background: #2A0E7A;
+  border-color: #2A0E7A;
 }
 
 .preset-button.clear-button {
   margin-left: auto;
-  background: var(--bg-secondary);
+  background: var(--neutral-chalk);
+  border-color: var(--neutral-rock);
 }
 
 .preset-button.clear-button:hover {
-  background: var(--bg-tertiary);
+  background: var(--neutral-stone);
 }
 
 .preset-button:disabled {
@@ -382,13 +361,13 @@
 
 .preset-dropdown {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   left: 0;
-  min-width: 200px;
+  min-width: 220px;
   background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--neutral-rock);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(30, 8, 93, 0.08);
   z-index: 1000;
   overflow: hidden;
 }
@@ -412,25 +391,25 @@
 }
 
 .dropdown-option:hover {
-  background: var(--bg-secondary);
+  background: var(--neutral-chalk);
 }
 
 .dropdown-option.active {
-  background: var(--blue-ghost);
-  color: var(--blue-vivid);
-  font-weight: 500;
+  background: var(--brand-ink-tint);
+  color: var(--brand-ink);
+  font-weight: var(--font-weight-medium);
 }
 
 /* ========================================
-   Search Overlay
+   Search Overlay — Humble Design System
    ======================================== */
 
 .search-box {
   width: 600px;
   max-width: 90vw;
   background: var(--bg-primary);
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(30, 8, 93, 0.12);
   overflow: hidden;
 }
 
@@ -438,16 +417,18 @@
   width: 100%;
   padding: var(--space-md) var(--space-lg);
   border: none;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--neutral-rock);
   font-family: var(--font-family);
   font-size: var(--font-size-lg);
-  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-heading);
   background: var(--bg-primary);
   outline: none;
 }
 
 .search-input::placeholder {
-  color: var(--text-tertiary);
+  color: var(--neutral-rock);
+  font-weight: var(--font-weight-regular);
 }
 
 .search-results {
@@ -456,7 +437,7 @@
 }
 
 .search-type-group {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--neutral-chalk);
 }
 
 .search-type-group:last-child {
@@ -465,9 +446,9 @@
 
 .search-type-header {
   padding: var(--space-sm) var(--space-lg);
-  background: var(--bg-secondary);
+  background: var(--neutral-chalk);
   font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -492,7 +473,7 @@
 }
 
 .search-result-item:hover:not(:disabled) {
-  background: var(--bg-secondary);
+  background: var(--neutral-snow);
 }
 
 .search-result-item:disabled {
@@ -502,45 +483,46 @@
 
 .result-name {
   flex: 1;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
 }
 
 .result-id {
-  font-size: var(--font-size-sm);
-  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
   font-family: 'Courier New', monospace;
 }
 
 .off-canvas-label {
-  font-size: var(--font-size-xs);
-  color: var(--text-tertiary);
-  background: var(--bg-tertiary);
-  padding: 2px 6px;
-  border-radius: 3px;
+  font-size: 9px;
+  color: var(--text-secondary);
+  background: var(--neutral-chalk);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
 }
 
 .search-no-results {
   padding: var(--space-lg);
   text-align: center;
   font-size: var(--font-size-sm);
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
 }
 
 /* ========================================
-   Tooltip
+   Tooltip — Humble Design System
    ======================================== */
 
 .tooltip {
   position: fixed;
   max-width: var(--tooltip-max-width);
   padding: var(--space-sm) var(--space-md);
-  background: #1F2937;
+  background: var(--brand-ink);
   color: #FFFFFF;
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   line-height: 1.5;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(30, 8, 93, 0.2);
   z-index: var(--z-tooltip);
   pointer-events: none;
 }
@@ -550,51 +532,51 @@
 }
 
 .tooltip-name {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   margin-bottom: 4px;
 }
 
 .tooltip-field {
-  font-size: 11px;
-  color: #D1D5DB;
+  font-size: var(--font-size-xs);
+  color: var(--brand-ink-tint);
   margin-top: 2px;
 }
 
 .tooltip-statement {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   line-height: 1.4;
   margin-bottom: 4px;
 }
 
 /* ========================================
-   Mode Indicator
+   Mode Indicator — Humble Design System
    ======================================== */
 
 .mode-indicator {
-  font-size: var(--font-size-sm);
-  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
   pointer-events: none;
   padding: var(--space-xs) var(--space-sm);
   background: rgba(255, 255, 255, 0.9);
-  border-radius: 4px;
+  border-radius: var(--radius-full);
   backdrop-filter: blur(4px);
 }
 
 .mode-indicator.mode-browse {
-  color: var(--text-tertiary);
-}
-
-.mode-indicator.mode-detail {
   color: var(--text-secondary);
 }
 
+.mode-indicator.mode-detail {
+  color: var(--text-primary);
+}
+
 .mode-indicator.mode-refocus {
-  color: var(--blue-vivid);
-  font-weight: 500;
+  color: var(--brand-ink);
+  font-weight: var(--font-weight-medium);
 }
 
 /* ========================================
-   Legend
+   Legend — Humble Design System
    ======================================== */
 
 .legend-container {
@@ -606,8 +588,8 @@
 }
 
 .legend-title {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -626,13 +608,13 @@
 }
 
 .legend-swatch {
-  width: 16px;
-  height: 16px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .legend-label {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--text-primary);
 }
