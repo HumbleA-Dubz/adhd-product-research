@@ -1,0 +1,244 @@
+{
+  "nodes": [
+    {
+      "id": "problem-FP03",
+      "type": "problem",
+      "displayName": "Time Estimation and Time Blindness",
+      "secondaryId": "FP03",
+      "canvasVisible": true,
+      "attributes": {
+        "plain_language": "Consistently misjudging how long tasks will take",
+        "scores": { "frequency": 5, "differentiation": 4, "connectedness": 5, "total": 14 },
+        "evidence_tier": 1,
+        "evidence_tier_normalised": 1.0,
+        "cluster": "CL_A",
+        "role": "hub"
+      }
+    },
+    {
+      "id": "problem-FP04",
+      "type": "problem",
+      "displayName": "Deadline Management Failure",
+      "secondaryId": "FP04",
+      "canvasVisible": true,
+      "attributes": {
+        "plain_language": "Missing deadlines despite knowing about them in advance",
+        "scores": { "frequency": 4, "differentiation": 3, "connectedness": 4, "total": 11 },
+        "evidence_tier": 2,
+        "evidence_tier_normalised": 2.0,
+        "cluster": "CL_A",
+        "role": "receiver"
+      }
+    },
+    {
+      "id": "problem-FP05",
+      "type": "problem",
+      "displayName": "Prioritisation Failure",
+      "secondaryId": "FP05",
+      "canvasVisible": true,
+      "attributes": {
+        "plain_language": "Working on low-priority tasks while urgent ones wait",
+        "scores": { "frequency": 4, "differentiation": 3, "connectedness": 5, "total": 12 },
+        "evidence_tier": 2,
+        "evidence_tier_normalised": 2.0,
+        "cluster": "CL_A",
+        "role": "receiver"
+      }
+    },
+    {
+      "id": "cluster-CL_A",
+      "type": "cluster",
+      "displayName": "Time-Perception Cascade",
+      "secondaryId": "CL_A",
+      "canvasVisible": true,
+      "attributes": {
+        "type": "amplifier",
+        "hub": "problem-FP03"
+      }
+    },
+    {
+      "id": "model-M1",
+      "type": "model",
+      "displayName": "Ambient Monitor and Intervene",
+      "secondaryId": "M1",
+      "canvasVisible": true,
+      "attributes": {
+        "plain_language": "Background system that watches for problems and intervenes automatically",
+        "dimensions": {
+          "initiation": "System-initiated",
+          "effort": "Zero/Near-zero",
+          "timing": "Real-time",
+          "continuity": "Always-on"
+        },
+        "retention_risk": "Low",
+        "habit_burden": "None"
+      }
+    },
+    {
+      "id": "model-M2",
+      "type": "model",
+      "displayName": "Passive Capture with Intelligent Retrieval",
+      "secondaryId": "M2",
+      "canvasVisible": true,
+      "attributes": {
+        "plain_language": "System that captures information automatically and surfaces it when needed",
+        "dimensions": {
+          "initiation": "System-initiated",
+          "effort": "Zero capture / Low retrieval",
+          "timing": "Asynchronous",
+          "continuity": "Always-on"
+        },
+        "retention_risk": "Low-Medium",
+        "habit_burden": "Minimal"
+      }
+    },
+    {
+      "id": "mechanism-MECH01",
+      "type": "mechanism",
+      "displayName": "Time Perception Distortion",
+      "secondaryId": "MECH01",
+      "canvasVisible": true,
+      "attributes": {
+        "plain_language": "Altered perception of time passing, leading to consistent under/over-estimation"
+      }
+    },
+    {
+      "id": "meta_challenge-MC1",
+      "type": "meta_challenge",
+      "displayName": "Novelty Decay",
+      "secondaryId": "MC1",
+      "canvasVisible": true,
+      "attributes": {
+        "plain_language": "Tools lose effectiveness as novelty wears off",
+        "severity": "Critical"
+      }
+    },
+    {
+      "id": "foundation-FDN01",
+      "type": "foundation",
+      "displayName": "Cross-app Activity Monitoring",
+      "secondaryId": "FDN01",
+      "canvasVisible": true,
+      "attributes": {
+        "purpose": "Know what the user is doing across applications",
+        "complexity": "High",
+        "build_or_buy": "Build"
+      }
+    },
+    {
+      "id": "claim-C008",
+      "type": "claim",
+      "displayName": "Adults with ADHD show significant time perception deficits...",
+      "secondaryId": "C008",
+      "canvasVisible": false,
+      "attributes": {
+        "statement": "Adults with ADHD show significant time perception deficits compared to neurotypical controls",
+        "type": "observation"
+      }
+    },
+    {
+      "id": "source-Our_S3",
+      "type": "source",
+      "displayName": "Barkley (2015) - ADHD and Self-Regulation",
+      "secondaryId": "Our_S3",
+      "canvasVisible": false,
+      "attributes": {
+        "type": "peer_reviewed",
+        "evidence_tier": "Tier 1"
+      }
+    },
+    {
+      "id": "implication-IMP01",
+      "type": "implication",
+      "displayName": "The Initiation Paradox",
+      "secondaryId": "IMP01",
+      "canvasVisible": true,
+      "attributes": {
+        "type": "paradox",
+        "statement": "The people who most need productivity tools are least able to start using them"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-FP03-CL_A",
+      "source": "problem-FP03",
+      "target": "cluster-CL_A",
+      "type": "belongs_to",
+      "directed": true,
+      "structural": true,
+      "attributes": { "role": "hub" }
+    },
+    {
+      "id": "e-FP04-CL_A",
+      "source": "problem-FP04",
+      "target": "cluster-CL_A",
+      "type": "belongs_to",
+      "directed": true,
+      "structural": true,
+      "attributes": { "role": "receiver" }
+    },
+    {
+      "id": "e-FP05-CL_A",
+      "source": "problem-FP05",
+      "target": "cluster-CL_A",
+      "type": "belongs_to",
+      "directed": true,
+      "structural": true,
+      "attributes": { "role": "receiver" }
+    },
+    {
+      "id": "e-FP03-MECH01",
+      "source": "problem-FP03",
+      "target": "mechanism-MECH01",
+      "type": "explained_by",
+      "directed": true,
+      "structural": false,
+      "attributes": {}
+    },
+    {
+      "id": "e-FP03-M1-compat",
+      "source": "problem-FP03",
+      "target": "model-M1",
+      "type": "compatible_with",
+      "directed": false,
+      "structural": false,
+      "attributes": { "rating": "S" }
+    },
+    {
+      "id": "e-M1-MC1-vuln",
+      "source": "model-M1",
+      "target": "meta_challenge-MC1",
+      "type": "vulnerable_to",
+      "directed": true,
+      "structural": false,
+      "attributes": { "rating": "M", "narrative": "Moderate — interventions may habituate" }
+    },
+    {
+      "id": "e-M1-FDN01-req",
+      "source": "model-M1",
+      "target": "foundation-FDN01",
+      "type": "requires",
+      "directed": true,
+      "structural": false,
+      "attributes": { "strength": "required" }
+    },
+    {
+      "id": "e-C008-Our_S3",
+      "source": "claim-C008",
+      "target": "source-Our_S3",
+      "type": "cites",
+      "directed": true,
+      "structural": false,
+      "attributes": {}
+    }
+  ],
+  "metadata": {
+    "nodeCount": 12,
+    "edgeCount": 8,
+    "entityTypes": ["problem", "cluster", "model", "mechanism", "meta_challenge", "foundation", "claim", "source", "implication"],
+    "edgeTypes": ["belongs_to", "explained_by", "compatible_with", "vulnerable_to", "requires", "cites"],
+    "warnings": [],
+    "buildTime": "mock"
+  }
+}

@@ -1,0 +1,102 @@
+/* SVG Canvas Styles */
+
+.canvas-root {
+  background: var(--bg-primary);
+  cursor: grab;
+}
+
+.canvas-root:active {
+  cursor: grabbing;
+}
+
+/* Node Styles */
+.node circle {
+  cursor: pointer;
+  transition: fill var(--transition-normal), opacity var(--transition-normal), stroke-width var(--transition-fast);
+}
+
+.node.selected circle {
+  stroke: var(--blue-vivid);
+  stroke-width: 3px;
+}
+
+.node.ghost {
+  opacity: var(--ghost-opacity);
+}
+
+/* Node Type Colors */
+.node-problem circle {
+  fill: var(--node-default);
+}
+
+.node-model circle {
+  fill: var(--node-model);
+}
+
+.node-mechanism circle {
+  fill: var(--node-default);
+}
+
+.node-meta_challenge circle {
+  fill: var(--node-meta-challenge);
+}
+
+.node-foundation circle {
+  fill: var(--node-default);
+}
+
+.node-implication circle {
+  fill: var(--node-default);
+}
+
+/* Labels */
+.node-label {
+  font-size: var(--font-size-sm);
+  fill: var(--text-primary);
+  pointer-events: none;
+  text-anchor: middle;
+  user-select: none;
+}
+
+.node-secondary-id {
+  font-size: var(--font-size-xs);
+  fill: var(--text-tertiary);
+  pointer-events: none;
+  text-anchor: middle;
+  user-select: none;
+}
+
+/* Edge Styles */
+.edge {
+  stroke: var(--edge-structural);
+  stroke-width: 1px;
+  fill: none;
+  pointer-events: none;
+}
+
+.edge:not(.edge-structural) {
+  display: none;
+}
+
+/* Cluster Boundaries */
+.cluster-boundary {
+  fill: var(--cluster-fill);
+  stroke: var(--cluster-border);
+  stroke-width: 1px;
+  rx: 8;
+  ry: 8;
+  pointer-events: none;
+}
+
+/* Preset Override Classes */
+.preset-green circle {
+  fill: var(--green) !important;
+}
+
+.preset-amber circle {
+  fill: var(--amber) !important;
+}
+
+.preset-red circle {
+  fill: var(--red) !important;
+}

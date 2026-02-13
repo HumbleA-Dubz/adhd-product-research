@@ -1,0 +1,105 @@
+# Manual mapping of implication edges to entities
+# implications.yaml uses file names in derived_from, not entity IDs
+# This config maps derived_from → source entities and affects → target entities
+
+IMP01:
+  derived_from:
+    - compatibility  # All compatibility data (not a single entity, so we skip this)
+  affects:
+    # These are abstract concepts, not entities in our graph
+
+IMP02:
+  derived_from:
+    - compatibility  # compatibility.yaml meta-challenge matrix
+  affects:
+    - M1  # Ambient Monitor and Intervene
+    - M2  # Passive Capture and Structured Delivery
+    - M6  # Periodic Injection
+
+IMP03:
+  derived_from:
+    - compatibility
+  affects:
+    - M2  # Passive Capture (knowledge graph)
+    - M5  # Calibration Feedback Loop (calibration data)
+    - M4  # Intelligent Reordering (pattern learning)
+
+IMP04:
+  derived_from:
+    - compatibility
+  affects:
+    - M1  # Ambient Monitor
+    - M2  # Passive Capture
+    - M6  # Periodic Injection
+
+IMP05:
+  derived_from:
+    - compatibility
+  affects:
+    - M2  # Passive Capture (ambient presence)
+    - M6  # Periodic Injection (ambient presence)
+    - MC2  # Bootstrapping vulnerability
+    - MC5  # Notification desensitisation
+
+IMP06:
+  derived_from:
+    - compatibility
+    - engagement_models
+  affects:
+    - M7  # Structured Check-In
+
+IMP07:
+  derived_from:
+    - compatibility
+  affects:
+    - M2  # Passive Capture (narrow applicability, strong evidence)
+    - M1  # Ambient Monitor (broad applicability, weaker evidence)
+
+IMP08:
+  derived_from:
+    - meta_challenges  # MC1 reference
+  affects:
+    - MC1  # Novelty decay
+
+IMP09:
+  derived_from:
+    - foundations
+  affects:
+    - FDN01  # Calendar integration
+    - FDN02  # Task tool integration
+    - FDN03  # Non-shaming tone framework
+    - FDN04  # Variability engine
+    - FDN05  # On-device processing
+    - FDN06  # MCP backbone
+    - FDN07  # Knowledge graph
+
+IMP10:
+  derived_from:
+    - compatibility
+    - engagement_models
+  affects:
+    - FP07  # Meeting Memory Failure
+    - FP09  # Email Management Failure
+    - M2  # Passive Capture
+
+IMP11:
+  derived_from:
+    - compatibility
+    - problems
+  affects:
+    - FP01  # Task Initiation Failure
+    - M1  # Ambient Monitor and Intervene
+    - M4  # Intelligent Reordering
+
+IMP12:
+  derived_from:
+    - claims  # Caveats C033, C035
+  affects:
+    # Affects all entities conceptually, but no specific edges
+
+IMP13:
+  derived_from:
+    - claims  # Caveat C034
+  affects:
+    - M2  # Passive Capture (strongest retention claim)
+    - M7  # Structured Check-In (empirically abandoned)

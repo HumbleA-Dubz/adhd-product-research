@@ -1,5 +1,7 @@
 node_modules/
-.next/
-out/
-*.tsbuildinfo
-next-env.d.ts
+dist/
+.vite/
+_old_reference/
+*.local
+.DS_Store
+*.log
