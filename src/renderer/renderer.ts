@@ -5,18 +5,41 @@ import type { GraphNode } from '../graph/types';
 import { computePositions, getCanvasDimensions, type Position } from './layout';
 import { renderEdges, renderClusterBoundaries } from './edges';
 
-// Node radius by type
-const NODE_RADIUS = {
-  problem: 20,
-  model: 20,
-  mechanism: 18,
-  meta_challenge: 18,
-  foundation: 18,
-  implication: 16,
-  cluster: 0, // Clusters don't have circles
-  claim: 0,
-  source: 0,
+// Tier 1 entities use rounded rectangles (problems, models)
+const TIER1_TYPES = new Set(['problem', 'model']);
+
+// Rounded rectangle dimensions for Tier 1 nodes
+const RECT_DIMS = {
+  problem: { width: 140, height: 36, rx: 8 },
+  model: { width: 130, height: 34, rx: 8 },
 };
+
+// Circle radius for Tier 2+ nodes
+const CIRCLE_RADIUS: Record<string, number> = {
+  mechanism: 16,
+  meta_challenge: 16,
+  foundation: 14,
+  implication: 12,
+};
+
+/**
+ * Whether a node type uses a rounded rectangle (Tier 1) or circle (Tier 2+).
+ */
+function isTier1(type: string): boolean {
+  return TIER1_TYPES.has(type);
+}
+
+/**
+ * Get the shape dimensions for a node, used for edge attachment and hit testing.
+ */
+export function getNodeBounds(type: string): { width: number; height: number } {
+  if (isTier1(type)) {
+    const dims = RECT_DIMS[type as keyof typeof RECT_DIMS] || { width: 130, height: 34 };
+    return dims;
+  }
+  const r = CIRCLE_RADIUS[type] || 14;
+  return { width: r * 2, height: r * 2 };
+}
 
 /**
  * Initialize the SVG renderer for the graph.
@@ -88,7 +111,9 @@ export function initRenderer(graph: Graph, store: Store): void {
 }
 
 /**
- * Render node circles and labels.
+ * Render nodes with dual form factors:
+ * - Tier 1 (problems, models): rounded rectangles with interior labels
+ * - Tier 2+ (mechanisms, foundations, meta_challenges, implications): circles with external labels
  */
 function renderNodes(
   nodeLayer: d3.Selection<SVGGElement, unknown, null, undefined>,
@@ -107,16 +132,43 @@ function renderNodes(
       return pos ? `translate(${pos.x}, ${pos.y})` : '';
     });
 
-  // Render circles
-  nodeGroups
-    .append('circle')
-    .attr('r', (d) => NODE_RADIUS[d.type] || 18)
-    .attr('stroke-width', (d) => {
-      // Hub problems get a bolder border
-      if (d.type === 'problem' && d.attributes.role === 'hub') return 2;
-      return 1;
-    })
-    .attr('stroke', '#333');
+  // Add role-based CSS classes for hub/amplifier distinction
+  nodeGroups.each(function (d) {
+    const el = d3.select(this);
+    if (d.type === 'problem' && d.attributes?.role) {
+      el.classed(`node-role-${d.attributes.role}`, true);
+    }
+  });
+
+  // Render shapes based on tier
+  nodeGroups.each(function (d) {
+    const el = d3.select(this);
+
+    if (isTier1(d.type)) {
+      // Tier 1: Rounded rectangle centered on position
+      const dims = RECT_DIMS[d.type as keyof typeof RECT_DIMS] || { width: 130, height: 34, rx: 8 };
+      el.append('rect')
+        .attr('x', -dims.width / 2)
+        .attr('y', -dims.height / 2)
+        .attr('width', dims.width)
+        .attr('height', dims.height)
+        .attr('rx', dims.rx)
+        .attr('ry', dims.rx);
+
+      // Interior label (display name, truncated to fit)
+      el.append('text')
+        .attr('class', 'node-interior-label')
+        .attr('x', 0)
+        .attr('y', 0)
+        .text(truncateText(d.displayName, 20));
+
+    } else {
+      // Tier 2+: Circle
+      const r = CIRCLE_RADIUS[d.type] || 14;
+      el.append('circle')
+        .attr('r', r);
+    }
+  });
 
   // Wire event handlers to store
   nodeGroups
@@ -131,10 +183,12 @@ function renderNodes(
       store.selectNode(d.id);
     });
 
-  // Render labels
+  // Render external labels (only for Tier 2+ circle nodes)
+  const circleNodes = nodes.filter(n => !isTier1(n.type));
+
   const labelGroups = labelLayer
     .selectAll<SVGGElement, GraphNode>('.node-label-group')
-    .data(nodes, (d: GraphNode) => d.id)
+    .data(circleNodes, (d: GraphNode) => d.id)
     .join('g')
     .attr('class', 'node-label-group')
     .attr('transform', (d) => {
@@ -142,18 +196,18 @@ function renderNodes(
       return pos ? `translate(${pos.x}, ${pos.y})` : '';
     });
 
-  // Primary label (displayName)
+  // Primary label (displayName) below circle
   labelGroups
     .append('text')
     .attr('class', 'node-label')
-    .attr('dy', (d) => NODE_RADIUS[d.type] + 14)
-    .text((d) => truncateText(d.displayName, 40));
+    .attr('dy', (d) => (CIRCLE_RADIUS[d.type] || 14) + 14)
+    .text((d) => truncateText(d.displayName, 30));
 
   // Secondary label (secondaryId)
   labelGroups
     .append('text')
     .attr('class', 'node-secondary-id')
-    .attr('dy', (d) => NODE_RADIUS[d.type] + 26)
+    .attr('dy', (d) => (CIRCLE_RADIUS[d.type] || 14) + 26)
     .text((d) => d.secondaryId);
 }
 
@@ -179,8 +233,6 @@ function subscribeToStoreChanges(
 
   // Handle preset activation (visual overrides)
   store.subscribe('preset:activated', (state) => {
-    // This will be fully implemented during integration
-    // For now, just set up the subscription structure
     console.log('Preset activated:', state.activePreset);
   });
 

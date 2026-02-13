@@ -1,7 +1,7 @@
-/* SVG Canvas Styles — Humble Design System */
+/* SVG Canvas Styles — ADHD Research Navigator */
 
 .canvas-root {
-  background: var(--neutral-snow);
+  background: var(--chrome-bg-canvas);
   cursor: grab;
 }
 
@@ -9,60 +9,88 @@
   cursor: grabbing;
 }
 
-/* Node Styles */
-.node circle {
+/* Node base styles — support both circle and rect (Tier 1 entities use rounded rect) */
+.node circle,
+.node rect {
   cursor: pointer;
-  transition: fill var(--transition-normal), opacity var(--transition-normal), stroke-width var(--transition-fast);
-  stroke: var(--neutral-rock);
+  transition: fill var(--transition-normal), opacity var(--transition-normal), stroke-width var(--transition-fast), stroke var(--transition-fast);
   stroke-width: 1.5px;
 }
 
-.node.selected circle {
-  stroke: var(--brand-ink);
+.node.selected circle,
+.node.selected rect {
+  stroke: var(--interactive-selection);
   stroke-width: 3px;
 }
 
 .node.ghost {
-  opacity: var(--ghost-opacity);
+  opacity: var(--ghost-opacity-readable);
 }
 
-/* Node Type Colors — Humble palette */
-.node-problem circle {
-  fill: var(--node-problem);
-  stroke: var(--brand-ink);
+/* Node type fills — muted tints for type identification */
+.node-problem circle,
+.node-problem rect {
+  fill: var(--node-problem-fill);
+  stroke: var(--node-problem-stroke);
 }
 
-.node-model circle {
-  fill: var(--node-model);
-  stroke: var(--accent-violet);
+.node-model circle,
+.node-model rect {
+  fill: var(--node-model-fill);
+  stroke: var(--node-model-stroke);
 }
 
-.node-mechanism circle {
-  fill: var(--node-mechanism);
-  stroke: var(--accent-sky);
+.node-mechanism circle,
+.node-mechanism rect {
+  fill: var(--node-mechanism-fill);
+  stroke: var(--node-mechanism-stroke);
 }
 
-.node-meta_challenge circle {
-  fill: var(--node-meta-challenge);
-  stroke: var(--accent-raspberry);
+.node-meta_challenge circle,
+.node-meta_challenge rect {
+  fill: var(--node-meta-challenge-fill);
+  stroke: var(--node-meta-challenge-stroke);
 }
 
-.node-foundation circle {
-  fill: var(--node-foundation);
-  stroke: var(--accent-mint);
+.node-foundation circle,
+.node-foundation rect {
+  fill: var(--node-foundation-fill);
+  stroke: var(--node-foundation-stroke);
 }
 
-.node-implication circle {
-  fill: var(--node-implication);
-  stroke: var(--accent-yellow);
+.node-implication circle,
+.node-implication rect {
+  fill: var(--node-implication-fill);
+  stroke: var(--node-implication-stroke);
 }
 
-/* Labels */
+/* Cluster nodes — subtle, structural element */
+.node-cluster circle,
+.node-cluster rect {
+  fill: var(--chrome-bg-surface-2);
+  stroke: var(--chrome-border-subtle);
+  stroke-width: 1px;
+}
+
+/* Hub problems — visually distinguished with bolder border */
+.node-role-hub circle,
+.node-role-hub rect {
+  stroke-width: 3px;
+}
+
+/* Amplifier problems — dashed border to indicate cross-cluster role */
+.node-role-amplifier circle,
+.node-role-amplifier rect {
+  stroke-width: 2.5px;
+  stroke-dasharray: 4 2;
+}
+
+/* Node exterior labels (for circle nodes and outside rect nodes) */
 .node-label {
   font-family: var(--font-family);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  fill: var(--text-primary);
+  font-size: var(--type-caption);
+  font-weight: var(--weight-medium);
+  fill: var(--chrome-text-primary);
   pointer-events: none;
   text-anchor: middle;
   user-select: none;
@@ -70,16 +98,39 @@
 
 .node-secondary-id {
   font-family: var(--font-family);
-  font-size: 9px;
-  fill: var(--text-secondary);
+  font-size: var(--type-micro);
+  fill: var(--chrome-text-secondary);
   pointer-events: none;
   text-anchor: middle;
   user-select: none;
 }
 
+/* Node interior labels (for rounded rect nodes — problems and models) */
+.node-interior-label {
+  font-family: var(--font-family);
+  font-size: var(--type-caption);
+  font-weight: var(--weight-medium);
+  fill: var(--chrome-text-primary);
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: central;
+  user-select: none;
+}
+
+.node-interior-id {
+  font-family: var(--font-family);
+  font-size: var(--type-micro);
+  font-weight: var(--weight-medium);
+  fill: var(--chrome-text-secondary);
+  pointer-events: none;
+  text-anchor: start;
+  dominant-baseline: central;
+  user-select: none;
+}
+
 /* Edge Styles */
 .edge {
-  stroke: var(--edge-structural);
+  stroke: var(--chrome-border-default);
   stroke-width: 1px;
   fill: none;
   pointer-events: none;
@@ -89,25 +140,76 @@
   display: none;
 }
 
-/* Cluster Boundaries — soft, rounded (Humble principle) */
+/* Cluster Boundaries — soft rounded for visual grouping */
 .cluster-boundary {
-  fill: var(--cluster-fill);
-  stroke: var(--cluster-border);
+  fill: var(--chrome-bg-surface-2);
+  fill-opacity: 0.4;
+  stroke: var(--chrome-border-subtle);
   stroke-width: 1px;
   rx: var(--radius-lg);
   ry: var(--radius-lg);
   pointer-events: none;
 }
 
-/* Preset Override Classes */
-.preset-green circle {
-  fill: var(--green) !important;
+.cluster-label {
+  font-family: var(--font-family);
+  font-size: var(--type-heading);
+  font-weight: var(--weight-semibold);
+  fill: var(--chrome-text-heading);
+  pointer-events: none;
+  text-anchor: middle;
+  user-select: none;
 }
 
-.preset-amber circle {
-  fill: var(--amber) !important;
+/* Preset Override Classes — data encoding colors */
+.preset-green circle,
+.preset-green rect {
+  fill: var(--data-compat-s) !important;
 }
 
-.preset-red circle {
-  fill: var(--red) !important;
+.preset-amber circle,
+.preset-amber rect {
+  fill: var(--data-compat-p) !important;
+}
+
+.preset-red circle,
+.preset-red rect {
+  fill: var(--data-compat-x) !important;
+}
+
+/* Evidence Tier Presets */
+.preset-tier-1 circle,
+.preset-tier-1 rect {
+  fill: var(--data-tier-1) !important;
+}
+
+.preset-tier-2 circle,
+.preset-tier-2 rect {
+  fill: var(--data-tier-2) !important;
+}
+
+.preset-tier-3 circle,
+.preset-tier-3 rect {
+  fill: var(--data-tier-3) !important;
+}
+
+.preset-tier-4 circle,
+.preset-tier-4 rect {
+  fill: var(--data-tier-4) !important;
+}
+
+/* Vulnerability Level Presets */
+.preset-vuln-h circle,
+.preset-vuln-h rect {
+  fill: var(--data-vuln-h) !important;
+}
+
+.preset-vuln-m circle,
+.preset-vuln-m rect {
+  fill: var(--data-vuln-m) !important;
+}
+
+.preset-vuln-l circle,
+.preset-vuln-l rect {
+  fill: var(--data-vuln-l) !important;
 }

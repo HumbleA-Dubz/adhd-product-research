@@ -25,7 +25,7 @@ export function renderEdges(
     .attr('orient', 'auto-start-reverse')
     .append('polygon')
     .attr('points', '0 0, 10 5, 0 10')
-    .attr('fill', 'var(--edge-structural)');
+    .attr('fill', 'var(--chrome-border-default)');
 
   // Render each edge
   const edgeSelection = edgeLayer

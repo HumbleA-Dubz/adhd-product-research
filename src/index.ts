@@ -59,6 +59,9 @@ async function main() {
   // Wire preset visual overrides to renderer
   wirePresetOverrides(graph, store);
 
+  // Run onboarding choreography (staged reveal)
+  runOnboardingChoreography();
+
   // Expose to console for debugging
   (window as any).__graph = graph;
   (window as any).__store = store;
@@ -67,9 +70,17 @@ async function main() {
 }
 
 /**
+ * Select the shape element inside a node group (either circle or rect).
+ */
+function selectShape(nodeEl: d3.Selection<any, any, any, any>): d3.Selection<any, any, any, any> {
+  const circle = nodeEl.select('circle');
+  if (!circle.empty()) return circle;
+  return nodeEl.select('rect');
+}
+
+/**
  * Wire preset activation/clearing to SVG visual overrides.
- * When a preset is activated, compute overrides and apply CSS/inline styles.
- * When cleared, remove all override styles.
+ * Handles both circle (Tier 2+) and rect (Tier 1) node shapes.
  */
 function wirePresetOverrides(graph: Graph, store: Store) {
   store.subscribe('preset:activated', (state) => {
@@ -88,12 +99,14 @@ function wirePresetOverrides(graph: Graph, store: Store) {
       const nodeData = el.datum() as any;
       if (!nodeData) return;
 
+      const shape = selectShape(el);
       const override = overrides.nodeOverrides.get(nodeData.id);
 
       // Reset previous overrides
-      el.select('circle')
+      shape
         .style('fill', null)
         .style('stroke', null)
+        .style('stroke-width', null)
         .style('opacity', null);
       el.classed('preset-green', false)
         .classed('preset-amber', false)
@@ -105,12 +118,12 @@ function wirePresetOverrides(graph: Graph, store: Store) {
       if (override) {
         // Apply fill
         if (override.fill) {
-          el.select('circle').style('fill', override.fill);
+          shape.style('fill', override.fill);
         }
 
         // Apply border
         if (override.border) {
-          el.select('circle')
+          shape
             .style('stroke', override.border)
             .style('stroke-width', '3px');
         }
@@ -120,14 +133,22 @@ function wirePresetOverrides(graph: Graph, store: Store) {
           el.style('opacity', override.opacity);
         }
 
-        // Apply badge
+        // Apply badge — position above shape
         if (override.badge) {
+          let badgeY: number;
           const circle = el.select('circle');
-          const r = parseFloat(circle.attr('r')) || 18;
+          if (!circle.empty()) {
+            const r = parseFloat(circle.attr('r')) || 14;
+            badgeY = -r - 6;
+          } else {
+            const rect = el.select('rect');
+            const h = parseFloat(rect.attr('height')) || 34;
+            badgeY = -(h / 2) - 6;
+          }
 
           el.append('text')
             .attr('class', 'preset-badge')
-            .attr('dy', -r - 6)
+            .attr('dy', badgeY)
             .attr('text-anchor', 'middle')
             .attr('font-size', '10px')
             .attr('font-weight', '600')
@@ -171,7 +192,8 @@ function wirePresetOverrides(graph: Graph, store: Store) {
     // Reset all node overrides
     nodeLayer.selectAll('.node').each(function () {
       const el = d3.select(this);
-      el.select('circle')
+      const shape = selectShape(el);
+      shape
         .style('fill', null)
         .style('stroke', null)
         .style('stroke-width', null)
@@ -193,6 +215,66 @@ function wirePresetOverrides(graph: Graph, store: Store) {
         .style('opacity', null);
     });
   });
+}
+
+/**
+ * Onboarding choreography — staged reveal sequence.
+ * T+0.0s: Canvas skeleton visible (background, chrome)
+ * T+0.2s: Cluster boundaries fade in
+ * T+0.5s: Brief pause (visual breathing room)
+ * T+0.7s: Problem/model nodes stagger in
+ * T+1.0s: Tier 2+ nodes fade in
+ * T+1.3s: Question bar activates (becomes interactive)
+ */
+function runOnboardingChoreography(): void {
+  const clusterLayer = d3.select('.cluster-layer');
+  const nodeLayer = d3.select('.node-layer');
+  const labelLayer = d3.select('.label-layer');
+  const questionBar = d3.select('#question-bar');
+
+  // Start everything hidden
+  clusterLayer.style('opacity', 0);
+  nodeLayer.selectAll('.node').style('opacity', 0);
+  labelLayer.selectAll('.node-label-group').style('opacity', 0);
+  questionBar.style('opacity', 0.3).style('pointer-events', 'none');
+
+  // T+200ms: Cluster boundaries fade in
+  clusterLayer
+    .transition()
+    .delay(200)
+    .duration(400)
+    .style('opacity', 1);
+
+  // T+700ms: Tier 1 nodes (problems, models) stagger in
+  nodeLayer.selectAll('.node-problem, .node-model')
+    .transition()
+    .delay((_, i) => 700 + i * 30)
+    .duration(300)
+    .style('opacity', 1);
+
+  // T+1000ms: Tier 2+ nodes fade in
+  nodeLayer.selectAll('.node-mechanism, .node-meta_challenge, .node-foundation, .node-implication')
+    .transition()
+    .delay(1000)
+    .duration(300)
+    .style('opacity', 1);
+
+  // Labels follow their nodes
+  labelLayer.selectAll('.node-label-group')
+    .transition()
+    .delay(1000)
+    .duration(300)
+    .style('opacity', 1);
+
+  // T+1300ms: Question bar becomes fully interactive
+  questionBar
+    .transition()
+    .delay(1300)
+    .duration(300)
+    .style('opacity', 1)
+    .on('end', function () {
+      d3.select(this).style('pointer-events', null);
+    });
 }
 
 main();

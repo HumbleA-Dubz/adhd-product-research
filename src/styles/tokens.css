@@ -1,109 +1,135 @@
 :root {
   /* =============================================
-     Humble Design System Tokens
+     ADHD Research Navigator — Design Tokens
+     Aesthetic: "Confident Analytical"
      ============================================= */
 
-  /* Typography — Manrope */
-  --font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-size-xs: 10px;     /* Small / Label */
-  --font-size-sm: 12px;     /* Body */
-  --font-size-base: 14px;   /* H4 / Component */
-  --font-size-lg: 16px;     /* H3 / Subsection */
-  --font-size-xl: 20px;     /* H2 / Section */
-  --font-size-xxl: 28px;    /* H1 / Page title */
+  /* Typography — Inter */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
+  /* Type Scale (8 levels) */
+  --type-display: 28px;
+  --type-title: 20px;
+  --type-heading: 16px;
+  --type-body: 15px;
+  --type-body-small: 13px;
+  --type-label: 14px;
+  --type-caption: 12px;
+  --type-micro: 10px;
 
-  --line-height-heading: 1.2;
-  --line-height-body: 1.15;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
 
-  /* Brand Colours — Primary */
-  --brand-ink: #1E085D;          /* Primary brand (70%) — buttons, H1/H2, key UI */
-  --brand-pink: #FEBBCC;         /* Supporting accent (20%) — highlights, secondary */
-  --brand-purple: #4785D8;       /* Key moments (10%) — special highlights */
-  --brand-ink-tint: #D2CFE0;     /* Ink at 20% */
-  --brand-pink-tint: #FFF1F5;    /* Pink at 20% */
-  --brand-purple-tint: #DAE7F7;  /* Purple at 20% */
+  --line-height-tight: 1.15;
+  --line-height-heading: 1.25;
+  --line-height-body: 1.5;
 
-  /* Neutral Colours */
-  --neutral-snow: #FDFEFC;       /* Lightest bg — primary content areas */
-  --neutral-chalk: #F6F5F0;      /* Cards, modals, callout boxes */
-  --neutral-stone: #F8F3F0;      /* Secondary sections, sidebars */
-  --neutral-rock: #DAD2CE;       /* Borders, dividers, disabled, secondary text */
+  /* ---- PALETTE A: Chrome (Structural UI) ---- */
+  --chrome-bg-canvas: #FAFAF9;
+  --chrome-bg-surface: #FFFFFF;
+  --chrome-bg-surface-2: #F5F5F4;
+  --chrome-bg-surface-3: #E7E5E4;
+  --chrome-bg-hover: #F5F5F4;
 
-  /* Accent Colours */
-  --accent-yellow: #FFC600;      /* Warnings, highlights, attention */
-  --accent-mint: #45DCC1;        /* Success, confirmations, positive */
-  --accent-blue: #3564FF;        /* Information, links, primary data */
-  --accent-sky: #60CDFF;         /* Secondary info, calm highlights */
-  --accent-raspberry: #E01E5A;   /* Errors, critical warnings, urgent */
-  --accent-violet: #A183FF;      /* Premium features, creative */
+  --chrome-border-subtle: #E7E5E4;
+  --chrome-border-default: #D6D3D1;
+  --chrome-border-strong: #A8A29E;
 
-  /* Accent Tints (20% opacity for backgrounds) */
-  --accent-yellow-tint: #FFF4CC;
-  --accent-mint-tint: #DAF8F3;
-  --accent-blue-tint: #D7E0FF;
-  --accent-sky-tint: #DFF5FF;
-  --accent-raspberry-tint: #F9D2DE;
-  --accent-violet-tint: #ECE6FF;
+  --chrome-text-heading: #1C1917;
+  --chrome-text-primary: #292524;
+  --chrome-text-secondary: #57534E;
+  --chrome-text-tertiary: #78716C;
+  --chrome-text-disabled: #A8A29E;
+  --chrome-text-inverse: #FAFAF9;
 
-  /* Text Colours */
-  --text-heading: #1E085D;       /* Ink — page titles, section headings */
-  --text-primary: #1D2939;       /* Charcoal — body, descriptions, labels */
-  --text-secondary: #DAD2CE;     /* Rock — metadata, timestamps */
+  /* ---- PALETTE B: Data Encoding ---- */
+  /* Sequential: Evidence Tiers (blue ramp) */
+  --data-tier-1: #1E3A5F;
+  --data-tier-2: #2C5282;
+  --data-tier-3: #4A7BA7;
+  --data-tier-4: #7FA3C3;
+  --data-no-data: #D6D3D1;
 
-  /* Semantic aliases (mapped from design system) */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: var(--neutral-snow);
-  --bg-tertiary: var(--neutral-chalk);
-  --bg-sidebar: var(--neutral-stone);
-  --border: var(--neutral-rock);
+  /* Diverging: Compatibility (S/P/X) */
+  --data-compat-s: #10B981;
+  --data-compat-p: #F59E0B;
+  --data-compat-x: #DC2626;
 
-  /* Canvas Colours */
-  --node-default: var(--neutral-rock);
-  --node-problem: var(--brand-ink);
-  --node-model: var(--accent-violet);
-  --node-mechanism: var(--accent-sky);
-  --node-meta-challenge: var(--accent-raspberry);
-  --node-foundation: var(--accent-mint);
-  --node-implication: var(--accent-yellow);
-  --edge-structural: var(--neutral-rock);
-  --ghost-opacity: 0.15;
-  --cluster-fill: var(--neutral-chalk);
-  --cluster-border: var(--neutral-rock);
+  /* Diverging: Vulnerability (H/M/L) */
+  --data-vuln-h: #7C2D12;
+  --data-vuln-m: #EA580C;
+  --data-vuln-l: #FED7AA;
 
-  /* Semantic Colours (for presets) */
-  --green: var(--accent-mint);
-  --amber: var(--accent-yellow);
-  --red: var(--accent-raspberry);
+  /* Categorical: Mechanisms */
+  --data-mech-1: #8B5CF6;
+  --data-mech-2: #EC4899;
+  --data-mech-3: #10B981;
+  --data-mech-4: #F59E0B;
+  --data-mech-5: #3B82F6;
+  --data-mech-6: #6366F1;
+
+  /* ---- PALETTE C: Semantic (UI Feedback) ---- */
+  --semantic-success: #059669;
+  --semantic-success-tint: #D1FAE5;
+  --semantic-warning: #D97706;
+  --semantic-warning-tint: #FEF3C7;
+  --semantic-error: #DC2626;
+  --semantic-error-tint: #FEE2E2;
+  --semantic-info: #2563EB;
+  --semantic-info-tint: #DBEAFE;
+
+  /* ---- PALETTE D: Interactive States ---- */
+  --interactive-focus: #2563EB;
+  --interactive-focus-ring: 2px solid #2563EB;
+  --interactive-selection: #2563EB;
+  --interactive-hover-overlay: rgba(0,0,0,0.04);
+
+  /* ---- Node Type Colors (default fills, muted) ---- */
+  --node-problem-fill: #F3EFF8;
+  --node-problem-stroke: #D0C4E0;
+  --node-model-fill: #EDF2F8;
+  --node-model-stroke: #B8CCE0;
+  --node-mechanism-fill: #EDF7F7;
+  --node-mechanism-stroke: #A8D4D4;
+  --node-meta-challenge-fill: #FDF0EF;
+  --node-meta-challenge-stroke: #E0A8A4;
+  --node-foundation-fill: #EEF6F1;
+  --node-foundation-stroke: #A4CDB8;
+  --node-implication-fill: #FBF7EE;
+  --node-implication-stroke: #D4C89C;
 
   /* Spacing */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
 
-  /* Radii — soft, rounded, organic (Humble principle) */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 9999px;
 
-  /* Panels */
+  /* Elevation */
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-2: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-3: 0 8px 24px rgba(0,0,0,0.12);
+
+  /* Layout */
   --detail-panel-width: 400px;
   --question-bar-height: 56px;
   --tooltip-max-width: 350px;
   --legend-height: 48px;
 
   /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-normal: 300ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 300ms ease-out;
+  --transition-slow: 500ms ease-out;
+  --transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Z-index */
   --z-canvas: 1;
@@ -112,6 +138,10 @@
   --z-question-bar: 300;
   --z-legend: 300;
   --z-search: 400;
+
+  /* Ghost/dim states */
+  --ghost-opacity: 0.15;
+  --ghost-opacity-readable: 0.3;
 }
 
 * {
@@ -122,11 +152,11 @@
 
 body {
   font-family: var(--font-family);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-regular);
+  font-size: var(--type-body-small);
+  font-weight: var(--weight-regular);
   line-height: var(--line-height-body);
-  color: var(--text-primary);
-  background: var(--bg-primary);
+  color: var(--chrome-text-primary);
+  background: var(--chrome-bg-canvas);
   overflow: hidden;
   height: 100vh;
   width: 100vw;
@@ -141,8 +171,8 @@ body {
 
 #question-bar {
   height: var(--question-bar-height);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-primary);
+  border-bottom: 1px solid var(--chrome-border-default);
+  background: var(--chrome-bg-surface);
   z-index: var(--z-question-bar);
   flex-shrink: 0;
 }
@@ -159,13 +189,13 @@ body {
   position: relative;
   overflow: hidden;
   z-index: var(--z-canvas);
-  background: var(--neutral-snow);
+  background: var(--chrome-bg-canvas);
 }
 
 #detail-panel {
   width: var(--detail-panel-width);
-  border-left: 1px solid var(--border);
-  background: var(--bg-primary);
+  border-left: 1px solid var(--chrome-border-default);
+  background: var(--chrome-bg-surface);
   z-index: var(--z-detail-panel);
   overflow-y: auto;
   flex-shrink: 0;
@@ -180,8 +210,8 @@ body {
 
 #legend {
   height: var(--legend-height);
-  border-top: 1px solid var(--border);
-  background: var(--neutral-chalk);
+  border-top: 1px solid var(--chrome-border-default);
+  background: var(--chrome-bg-surface-2);
   z-index: var(--z-legend);
   flex-shrink: 0;
 }
@@ -193,7 +223,7 @@ body {
 #search-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(30, 8, 93, 0.4);
+  background: rgba(0, 0, 0, 0.4);
   z-index: var(--z-search);
   display: flex;
   align-items: flex-start;
@@ -208,11 +238,11 @@ body {
 
 #mode-indicator {
   position: absolute;
-  top: var(--space-sm);
-  left: var(--space-sm);
+  top: var(--space-8);
+  left: var(--space-8);
   z-index: 10;
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  font-size: var(--type-micro);
+  color: var(--chrome-text-secondary);
   pointer-events: none;
 }
 

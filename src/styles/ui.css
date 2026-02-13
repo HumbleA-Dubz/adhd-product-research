@@ -1,24 +1,24 @@
 /* ========================================
-   Detail Panel — Humble Design System
+   Detail Panel — ADHD Research Navigator
    ======================================== */
 
 .detail-panel-content {
-  padding: var(--space-lg);
+  padding: var(--space-24);
   position: relative;
 }
 
 .detail-panel-close {
   position: absolute;
-  top: var(--space-md);
-  right: var(--space-md);
+  top: var(--space-16);
+  right: var(--space-16);
   width: 32px;
   height: 32px;
   border: none;
-  background: var(--neutral-chalk);
+  background: var(--chrome-bg-surface-2);
   border-radius: var(--radius-full);
   font-size: 20px;
   line-height: 1;
-  color: var(--text-primary);
+  color: var(--chrome-text-primary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -27,118 +27,118 @@
 }
 
 .detail-panel-close:hover {
-  background: var(--neutral-stone);
-  color: var(--text-heading);
+  background: var(--chrome-bg-surface-3);
+  color: var(--chrome-text-heading);
 }
 
 .detail-header {
-  margin-bottom: var(--space-lg);
-  padding-right: var(--space-xl);
+  margin-bottom: var(--space-24);
+  padding-right: var(--space-32);
 }
 
 .detail-header h2 {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-heading);
+  font-size: var(--type-title);
+  font-weight: var(--weight-semibold);
+  color: var(--chrome-text-heading);
   line-height: var(--line-height-heading);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-8);
 }
 
 .detail-section {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-24);
 }
 
 .section-heading {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-secondary);
+  font-size: var(--type-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--chrome-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-8);
 }
 
 .description-text {
-  font-size: var(--font-size-sm);
-  color: var(--text-primary);
+  font-size: var(--type-body-small);
+  color: var(--chrome-text-primary);
   line-height: 1.6;
 }
 
-/* Badges — soft rounded (Humble) */
+/* Badges */
 
 .badge {
   display: inline-block;
   padding: 3px 10px;
   border-radius: var(--radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--type-caption);
+  font-weight: var(--weight-medium);
   letter-spacing: 0.02em;
-  margin-right: var(--space-xs);
-  margin-bottom: var(--space-xs);
+  margin-right: var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
 .badge.secondary-id {
-  background: var(--neutral-chalk);
-  color: var(--text-primary);
+  background: var(--chrome-bg-surface-2);
+  color: var(--chrome-text-primary);
 }
 
 .badge.evidence-tier {
-  background: var(--accent-blue-tint);
-  color: var(--accent-blue);
+  background: var(--semantic-info-tint);
+  color: var(--semantic-info);
 }
 
 .badge.role {
-  background: var(--neutral-chalk);
-  color: var(--text-primary);
+  background: var(--chrome-bg-surface-2);
+  color: var(--chrome-text-primary);
 }
 
 .badge.claim-type-observation {
-  background: var(--accent-blue-tint);
-  color: var(--accent-blue);
+  background: var(--semantic-info-tint);
+  color: var(--semantic-info);
 }
 
 .badge.claim-type-interpretation {
-  background: var(--accent-violet-tint);
-  color: var(--accent-violet);
+  background: #F3F0FF;
+  color: #7C3AED;
 }
 
 .badge.claim-type-synthesis {
-  background: var(--accent-mint-tint);
-  color: var(--accent-mint);
+  background: var(--semantic-success-tint);
+  color: var(--semantic-success);
 }
 
 .badge.claim-type-caveat {
-  background: var(--accent-yellow-tint);
-  color: #B8860B;
+  background: var(--semantic-warning-tint);
+  color: var(--semantic-warning);
 }
 
 .badge.rating-S {
-  background: var(--accent-mint-tint);
-  color: #2B9A6E;
+  background: var(--semantic-success-tint);
+  color: var(--semantic-success);
 }
 
 .badge.rating-P {
-  background: var(--accent-yellow-tint);
-  color: #B8860B;
+  background: var(--semantic-warning-tint);
+  color: var(--semantic-warning);
 }
 
 .badge.rating-X {
-  background: var(--accent-raspberry-tint);
-  color: var(--accent-raspberry);
+  background: var(--semantic-error-tint);
+  color: var(--semantic-error);
 }
 
 .badge.severity-H {
-  background: var(--accent-raspberry-tint);
-  color: var(--accent-raspberry);
+  background: var(--semantic-error-tint);
+  color: var(--semantic-error);
 }
 
 .badge.severity-M {
-  background: var(--accent-yellow-tint);
-  color: #B8860B;
+  background: var(--semantic-warning-tint);
+  color: var(--semantic-warning);
 }
 
 .badge.severity-L {
-  background: var(--accent-mint-tint);
-  color: #2B9A6E;
+  background: var(--semantic-success-tint);
+  color: var(--semantic-success);
 }
 
 .badge.severity,
@@ -148,8 +148,8 @@
 .badge.implication-type,
 .badge.source-type,
 .badge.cluster-type {
-  background: var(--neutral-chalk);
-  color: var(--text-primary);
+  background: var(--chrome-bg-surface-2);
+  color: var(--chrome-text-primary);
 }
 
 /* Scores */
@@ -157,12 +157,12 @@
 .scores-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-sm);
+  gap: var(--space-8);
 }
 
 .score-item {
-  padding: var(--space-sm) var(--space-md);
-  background: var(--neutral-chalk);
+  padding: var(--space-8) var(--space-16);
+  background: var(--chrome-bg-surface-2);
   border-radius: var(--radius-md);
   display: flex;
   justify-content: space-between;
@@ -170,14 +170,14 @@
 }
 
 .score-label {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  font-size: var(--type-caption);
+  color: var(--chrome-text-secondary);
 }
 
 .score-value {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-heading);
+  font-size: var(--type-body);
+  font-weight: var(--weight-semibold);
+  color: var(--chrome-text-heading);
 }
 
 /* Classification */
@@ -185,7 +185,7 @@
 .classification-content {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs);
+  gap: var(--space-4);
 }
 
 /* Dimensions */
@@ -193,27 +193,27 @@
 .dimensions-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-sm);
+  gap: var(--space-8);
 }
 
 .dimension-item {
-  padding: var(--space-sm) var(--space-md);
-  background: var(--neutral-chalk);
+  padding: var(--space-8) var(--space-16);
+  background: var(--chrome-bg-surface-2);
   border-radius: var(--radius-md);
 }
 
 .dim-label {
   display: block;
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  font-size: var(--type-caption);
+  color: var(--chrome-text-secondary);
   margin-bottom: 2px;
 }
 
 .dim-value {
   display: block;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
+  font-size: var(--type-body-small);
+  font-weight: var(--weight-medium);
+  color: var(--chrome-text-primary);
 }
 
 /* Meta content */
@@ -221,9 +221,9 @@
 .meta-content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  font-size: var(--font-size-sm);
-  color: var(--text-primary);
+  gap: var(--space-4);
+  font-size: var(--type-body-small);
+  color: var(--chrome-text-primary);
 }
 
 /* Entity lists */
@@ -235,34 +235,34 @@
 }
 
 .entity-list li {
-  padding: var(--space-xs) 0;
+  padding: var(--space-4) 0;
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-4);
   flex-wrap: wrap;
 }
 
 .entity-link {
   background: none;
   border: none;
-  color: var(--accent-blue);
-  font-size: var(--font-size-sm);
+  color: var(--semantic-info);
+  font-size: var(--type-body-small);
   text-decoration: none;
   cursor: pointer;
   padding: 0;
   font-family: var(--font-family);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--weight-medium);
   transition: color var(--transition-fast);
 }
 
 .entity-link:hover {
-  color: var(--brand-ink);
+  color: var(--chrome-text-heading);
   text-decoration: underline;
 }
 
 .narrative-text {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  font-size: var(--type-caption);
+  color: var(--chrome-text-secondary);
   font-style: italic;
 }
 
@@ -270,52 +270,52 @@
 
 .capabilities-list {
   list-style: disc;
-  margin-left: var(--space-md);
+  margin-left: var(--space-16);
   padding: 0;
 }
 
 .capabilities-list li {
   padding: 2px 0;
-  font-size: var(--font-size-sm);
-  color: var(--text-primary);
+  font-size: var(--type-body-small);
+  color: var(--chrome-text-primary);
 }
 
 /* External link */
 
 .external-link {
-  color: var(--accent-blue);
+  color: var(--semantic-info);
   text-decoration: none;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--type-body-small);
+  font-weight: var(--weight-medium);
   transition: color var(--transition-fast);
 }
 
 .external-link:hover {
-  color: var(--brand-ink);
+  color: var(--chrome-text-heading);
   text-decoration: underline;
 }
 
 /* ========================================
-   Question Bar — Humble Design System
+   Question Bar
    ======================================== */
 
 .question-bar-container {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: 0 var(--space-md);
+  gap: var(--space-8);
+  padding: 0 var(--space-16);
   height: 100%;
 }
 
 .preset-button {
   height: 34px;
-  padding: 0 var(--space-md);
-  border: 1px solid var(--neutral-rock);
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  padding: 0 var(--space-16);
+  border: 1px solid var(--chrome-border-strong);
+  background: var(--chrome-bg-surface);
+  color: var(--chrome-text-primary);
   font-family: var(--font-family);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--type-body-small);
+  font-weight: var(--weight-medium);
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -323,29 +323,38 @@
 }
 
 .preset-button:hover {
-  background: var(--neutral-chalk);
-  border-color: var(--brand-ink-tint);
+  background: var(--chrome-bg-surface-2);
+  border-color: var(--interactive-selection);
 }
 
 .preset-button.active {
-  background: var(--brand-ink);
-  border-color: var(--brand-ink);
+  background: var(--interactive-selection);
+  border-color: var(--interactive-selection);
   color: #FFFFFF;
 }
 
 .preset-button.active:hover {
-  background: #2A0E7A;
-  border-color: #2A0E7A;
+  background: #1D4ED8;
+  border-color: #1D4ED8;
 }
 
 .preset-button.clear-button {
   margin-left: auto;
-  background: var(--neutral-chalk);
-  border-color: var(--neutral-rock);
+  background: var(--chrome-bg-surface-2);
+  border-color: var(--chrome-border-strong);
 }
 
 .preset-button.clear-button:hover {
-  background: var(--neutral-stone);
+  background: var(--chrome-bg-surface-3);
+}
+
+.preset-button.reset-button {
+  background: var(--chrome-bg-surface-2);
+  border-color: var(--chrome-border-strong);
+}
+
+.preset-button.reset-button:hover {
+  background: var(--chrome-bg-surface-3);
 }
 
 .preset-button:disabled {
@@ -364,10 +373,10 @@
   top: calc(100% + 6px);
   left: 0;
   min-width: 220px;
-  background: var(--bg-primary);
-  border: 1px solid var(--neutral-rock);
+  background: var(--chrome-bg-surface);
+  border: 1px solid var(--chrome-border-strong);
   border-radius: var(--radius-md);
-  box-shadow: 0 4px 16px rgba(30, 8, 93, 0.08);
+  box-shadow: var(--shadow-2);
   z-index: 1000;
   overflow: hidden;
 }
@@ -379,56 +388,56 @@
 .dropdown-option {
   display: block;
   width: 100%;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-8) var(--space-16);
   border: none;
   background: none;
-  color: var(--text-primary);
+  color: var(--chrome-text-primary);
   font-family: var(--font-family);
-  font-size: var(--font-size-sm);
+  font-size: var(--type-body-small);
   text-align: left;
   cursor: pointer;
   transition: background var(--transition-fast);
 }
 
 .dropdown-option:hover {
-  background: var(--neutral-chalk);
+  background: var(--chrome-bg-surface-2);
 }
 
 .dropdown-option.active {
-  background: var(--brand-ink-tint);
-  color: var(--brand-ink);
-  font-weight: var(--font-weight-medium);
+  background: var(--semantic-info-tint);
+  color: var(--semantic-info);
+  font-weight: var(--weight-medium);
 }
 
 /* ========================================
-   Search Overlay — Humble Design System
+   Search Overlay
    ======================================== */
 
 .search-box {
   width: 600px;
   max-width: 90vw;
-  background: var(--bg-primary);
+  background: var(--chrome-bg-surface);
   border-radius: var(--radius-lg);
-  box-shadow: 0 8px 32px rgba(30, 8, 93, 0.12);
+  box-shadow: var(--shadow-3);
   overflow: hidden;
 }
 
 .search-input {
   width: 100%;
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-16) var(--space-24);
   border: none;
-  border-bottom: 1px solid var(--neutral-rock);
+  border-bottom: 1px solid var(--chrome-border-strong);
   font-family: var(--font-family);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-heading);
-  background: var(--bg-primary);
+  font-size: var(--type-heading);
+  font-weight: var(--weight-medium);
+  color: var(--chrome-text-heading);
+  background: var(--chrome-bg-surface);
   outline: none;
 }
 
 .search-input::placeholder {
-  color: var(--neutral-rock);
-  font-weight: var(--font-weight-regular);
+  color: var(--chrome-text-disabled);
+  font-weight: var(--weight-regular);
 }
 
 .search-results {
@@ -437,7 +446,7 @@
 }
 
 .search-type-group {
-  border-bottom: 1px solid var(--neutral-chalk);
+  border-bottom: 1px solid var(--chrome-bg-surface-2);
 }
 
 .search-type-group:last-child {
@@ -445,25 +454,25 @@
 }
 
 .search-type-header {
-  padding: var(--space-sm) var(--space-lg);
-  background: var(--neutral-chalk);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-secondary);
+  padding: var(--space-8) var(--space-24);
+  background: var(--chrome-bg-surface-2);
+  font-size: var(--type-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--chrome-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .search-type-results {
-  padding: var(--space-xs) 0;
+  padding: var(--space-4) 0;
 }
 
 .search-result-item {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-8);
   width: 100%;
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--space-8) var(--space-24);
   border: none;
   background: none;
   text-align: left;
@@ -473,7 +482,7 @@
 }
 
 .search-result-item:hover:not(:disabled) {
-  background: var(--neutral-snow);
+  background: var(--chrome-bg-hover);
 }
 
 .search-result-item:disabled {
@@ -483,46 +492,46 @@
 
 .result-name {
   flex: 1;
-  font-size: var(--font-size-sm);
-  color: var(--text-primary);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--type-body-small);
+  color: var(--chrome-text-primary);
+  font-weight: var(--weight-medium);
 }
 
 .result-id {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  font-size: var(--type-caption);
+  color: var(--chrome-text-secondary);
   font-family: 'Courier New', monospace;
 }
 
 .off-canvas-label {
   font-size: 9px;
-  color: var(--text-secondary);
-  background: var(--neutral-chalk);
+  color: var(--chrome-text-secondary);
+  background: var(--chrome-bg-surface-2);
   padding: 2px 8px;
   border-radius: var(--radius-full);
 }
 
 .search-no-results {
-  padding: var(--space-lg);
+  padding: var(--space-24);
   text-align: center;
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  font-size: var(--type-body-small);
+  color: var(--chrome-text-secondary);
 }
 
 /* ========================================
-   Tooltip — Humble Design System
+   Tooltip
    ======================================== */
 
 .tooltip {
   position: fixed;
   max-width: var(--tooltip-max-width);
-  padding: var(--space-sm) var(--space-md);
-  background: var(--brand-ink);
+  padding: var(--space-8) var(--space-16);
+  background: var(--chrome-text-heading);
   color: #FFFFFF;
-  font-size: var(--font-size-sm);
+  font-size: var(--type-body-small);
   line-height: 1.5;
   border-radius: var(--radius-md);
-  box-shadow: 0 4px 16px rgba(30, 8, 93, 0.2);
+  box-shadow: var(--shadow-3);
   z-index: var(--z-tooltip);
   pointer-events: none;
 }
@@ -532,79 +541,79 @@
 }
 
 .tooltip-name {
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--weight-semibold);
   margin-bottom: 4px;
 }
 
 .tooltip-field {
-  font-size: var(--font-size-xs);
-  color: var(--brand-ink-tint);
+  font-size: var(--type-caption);
+  color: rgba(255, 255, 255, 0.7);
   margin-top: 2px;
 }
 
 .tooltip-statement {
-  font-size: var(--font-size-sm);
+  font-size: var(--type-body-small);
   line-height: 1.4;
   margin-bottom: 4px;
 }
 
 /* ========================================
-   Mode Indicator — Humble Design System
+   Mode Indicator
    ======================================== */
 
 .mode-indicator {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  font-size: var(--type-caption);
+  color: var(--chrome-text-secondary);
   pointer-events: none;
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-4) var(--space-8);
   background: rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-full);
   backdrop-filter: blur(4px);
 }
 
 .mode-indicator.mode-browse {
-  color: var(--text-secondary);
+  color: var(--chrome-text-secondary);
 }
 
 .mode-indicator.mode-detail {
-  color: var(--text-primary);
+  color: var(--chrome-text-primary);
 }
 
 .mode-indicator.mode-refocus {
-  color: var(--brand-ink);
-  font-weight: var(--font-weight-medium);
+  color: var(--interactive-selection);
+  font-weight: var(--weight-medium);
 }
 
 /* ========================================
-   Legend — Humble Design System
+   Legend
    ======================================== */
 
 .legend-container {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
-  padding: 0 var(--space-lg);
+  gap: var(--space-24);
+  padding: 0 var(--space-24);
   height: 100%;
 }
 
 .legend-title {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-secondary);
+  font-size: var(--type-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--chrome-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .legend-entries {
   display: flex;
-  gap: var(--space-lg);
+  gap: var(--space-24);
   flex-wrap: wrap;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-4);
 }
 
 .legend-swatch {
@@ -615,6 +624,6 @@
 }
 
 .legend-label {
-  font-size: var(--font-size-xs);
-  color: var(--text-primary);
+  font-size: var(--type-caption);
+  color: var(--chrome-text-primary);
 }

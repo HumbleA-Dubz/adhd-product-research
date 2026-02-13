@@ -36,6 +36,14 @@ export function initQuestionBar(graph: Graph, store: Store): void {
   clearBtn.onclick = () => store.clearPreset();
   container.appendChild(clearBtn);
 
+  // Add Reset button (AC22) — returns to BROWSE + default viewport + no preset
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'preset-button reset-button';
+  resetBtn.textContent = 'Reset';
+  resetBtn.title = 'Reset to initial view (clears preset, deselects node, resets viewport)';
+  resetBtn.onclick = () => store.reset();
+  container.appendChild(resetBtn);
+
   questionBar.appendChild(container);
 
   // Subscribe to preset changes to update button states

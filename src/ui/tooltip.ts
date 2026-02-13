@@ -124,7 +124,9 @@ function renderProblemTooltip(node: any, tooltip: HTMLElement): void {
   if (attrs.evidence_tier !== undefined) {
     const tier = document.createElement('div');
     tier.className = 'tooltip-field';
-    tier.textContent = `Evidence: Tier ${attrs.evidence_tier}`;
+    // Round to nearest integer for display (data has fractional tiers like 1.3, 1.7)
+    const tierDisplay = Math.round(attrs.evidence_tier);
+    tier.textContent = `Evidence: Tier ${tierDisplay}`;
     tooltip.appendChild(tier);
   }
 
