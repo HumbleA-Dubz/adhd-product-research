@@ -28,8 +28,7 @@ _framework:
   scope:
     domain: "ADHD workplace functional problems"
     population: "Working adults with ADHD in the UK"
-    constraint: "Software products only — no clinical validation, no service/content dependencies"
-    default_outcome: "Do not pursue. Analysis must surface something compelling to override."
+    constraint: "Software products only — no clinical validation"
 
   # ─────────────────────────────────────────────────────────────
   # KEY DEFINITIONS
