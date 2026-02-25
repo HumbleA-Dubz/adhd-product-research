@@ -2618,15 +2618,63 @@ FP03:
     estimate how long things will take. Loses hours without
     noticing. Plans that assume a working sense of time fail
     consistently.
+  functional_definition: >
+    Consistently misjudges how long tasks will take, leading to
+    overcommitted schedules, missed deadlines, and unreliable
+    time promises to colleagues and clients. Loses awareness of
+    time passage during work.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          Time estimation required whenever planning tasks, making
+          commitments, or scheduling work — functionally daily for
+          knowledge workers. Failure manifests daily as a background
+          distortion affecting all planning. Users describe losing
+          awareness of time passage "every day" during work. Not scored
+          5 because the failure is a persistent distortion rather than
+          discrete multiple-daily incidents.
+        evidence: |
+          27.8% report lateness problems often/very often [P1A, Tier 1].
+          Daily time-awareness failures [P2A, Tier 3]. Practitioners
+          identify it as most frequently reported workplace challenge
+          [P2C, Tier 2].
+        evidence_tier: "1"
       differentiation:
         score: 5
+        assessment: |
+          Neurologically distinct in ADHD — a fundamental difference in
+          time perception, not merely poor planning. Neurotypical workers
+          misjudge time occasionally; ADHD adults experience a persistent,
+          qualitative inability to perceive time passage. Standard
+          time-management advice ineffective because it assumes an internal
+          time sense that doesn't exist. Tools designed for neurotypical
+          estimation (calendars, to-do lists) fail because they assume
+          existing time awareness.
+        evidence: |
+          Neurological basis documented [P2C, Tier 1-2]. Self-management
+          to time identified as primary EF mediating deficit [P1C, Tier 1].
+          Standard tools fail because they assume existing time awareness
+          [P2B, Tier 3].
+        evidence_tier: "1"
       connectedness:
         score: 5
+        assessment: |
+          Most connected problem in the set. Addressing would reduce:
+          (1) FP04 Deadline misses — missed primarily from time estimation
+          errors. (2) FP12 Chronic lateness — direct manifestation.
+          (3) FP08 Long-term project neglect — delay discounting is a
+          time-perception failure. (4) FP05 Prioritisation failure —
+          inability to estimate duration prevents sequencing. (5) FP02
+          Inconsistent focus — unnoticed time passage extends unproductive
+          periods. P2C identifies time management as foundational with
+          cascading effects across other work performance areas.
+        evidence: |
+          P2C cascading-effects model [Tier 2]. EF mediation analysis
+          [P1C, Tier 1]. User narratives of chain reactions [P2A, Tier 3].
+        evidence_tier: "1-2"
       total: 14
       evidence_tier_avg: 1.3
   refs:
@@ -2642,15 +2690,56 @@ FP04:
     Consistently fails to deliver work by agreed deadlines.
     Not from lack of effort but from misjudged time, focus
     lapses, and accumulated delays from upstream problems.
+  functional_definition: >
+    Submits work products after agreed deadlines. Requires
+    deadline extensions or produces rushed, lower-quality output
+    at the last minute. Creates downstream delays for dependent
+    colleagues.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          Most knowledge workers have multiple active deadlines, so the
+          risk of deadline failure is daily. Actual miss rate is lower
+          than daily, but daily experience of being behind schedule
+          confirmed by WHO data (21.7 reduced-quantity days/year ≈ once
+          per working week, with daily pressure on active deadlines).
+        evidence: |
+          21.7 days/year reduced work quantity [P1A, Tier 1]. #1
+          termination reason [P2A, Tier 3]. Employer ratings show
+          significant deadline impairment [P1A, Tier 1].
+        evidence_tier: "1"
       differentiation:
         score: 3
+        assessment: |
+          Common general problem — many workers miss deadlines. ADHD
+          version more frequent and severe (55% vs 11.7%) but observable
+          failure looks similar. Differentiation lies in causes (time
+          blindness, initiation failure, focus) not the failure itself.
+          Standard deadline tools provide partial benefit — don't
+          completely fail as they do for initiation or time estimation.
+          Score 3: ADHD-specific aspects affect which solutions work,
+          but the problem is partially addressable with general tools.
+        evidence: |
+          55% vs 11.7% prevalence gap [P1A, Tier 1]. Standard deadline
+          tools provide partial benefit [P2B, Tier 3].
+        evidence_tier: "1"
       connectedness:
         score: 3
+        assessment: |
+          Primarily a receiving problem — caused by FP01 (initiation),
+          FP02 (focus), FP03 (time blindness), FP05 (prioritisation),
+          FP08 (project neglect). Addressing deadline misses directly
+          would not reduce upstream causes. Downstream consequence is
+          poor evaluations/termination (excluded in S1). Score 3 rather
+          than 2 because persistent deadline failures feed into the
+          overwhelm-burnout cycle, worsening FP02 as stress accumulates.
+        evidence: |
+          P2C overwhelm-burnout cycle [Tier 2]. Primarily a receiving
+          problem with limited causal broadcasting.
+        evidence_tier: "1"
       total: 10
       evidence_tier_avg: 1.0
   refs:
@@ -2669,15 +2758,52 @@ FP12:
     Persistently late to work, meetings, and commitments
     despite consequences, warnings, and genuine effort. Driven
     by inability to perceive preparation time accurately.
+  functional_definition: >
+    Arrives late to work, meetings, appointments, and shift
+    starts despite awareness of the problem and repeated
+    consequences.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          For those affected, lateness is a daily risk — every scheduled
+          commitment (work start, meetings, calls) presents opportunity.
+          27.8% report as often/very often problem. Not scored 5 because
+          not every scheduled event results in lateness; daily pattern
+          but not multiple-times-per-day.
+        evidence: |
+          27.8% often/very often [P1A, Tier 1]. "Running behind" pattern
+          [P1A, Tier 1]. Employer ratings confirm punctuality impairment
+          [P1A, Tier 1].
+        evidence_tier: "1"
       differentiation:
         score: 4
+        assessment: |
+          ADHD chronic lateness substantially different from occasional
+          lateness. Persists despite awareness, consequences, repeated
+          warnings, alarms, and genuine effort. Mechanism is time
+          blindness — inability to perceive how much preparation time
+          has elapsed. Standard advice ("leave earlier," "set alarms")
+          provides partial benefit but doesn't address underlying
+          time-perception deficit.
+        evidence: |
+          Persistence despite consequences [P1A, Tier 1]. Time blindness
+          mechanism [P2C, Tier 2]. 27.8% vs 7.8% — 3.6x gap [P1A,
+          Tier 1].
+        evidence_tier: "1"
       connectedness:
         score: 2
+        assessment: |
+          Receiving problem caused by FP03 (time blindness). Solving
+          lateness wouldn't reduce other problems. Consequences are
+          interpersonal and reputational (FP14, FP15 — filtered in S2).
+          Isolated downstream manifestation of time blindness.
+        evidence: |
+          Direct consequence of FP03 [analysis]. No upstream causal
+          arrows to other functional problems.
+        evidence_tier: "1"
       total: 10
       evidence_tier_avg: 1.0
   refs:
@@ -2695,15 +2821,63 @@ FP01:
     different from procrastination — not avoidance of unpleasant
     work, but a neurological gate that blocks action regardless
     of intent.
+  functional_definition: >
+    Fails to begin known-important work tasks despite
+    understanding what needs to be done. Experiences extended
+    delays between intending to start and actually starting,
+    resulting in missed or compressed deadlines.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 5
+        assessment: |
+          Task initiation required every time a new task must be
+          started — many times daily for knowledge workers. Users
+          describe the "invisible barrier" as present every time
+          switching to a new task, with multiple daily instances of
+          paralysis. 40.7% report problems taking on new tasks
+          often/very often.
+        evidence: |
+          #1 most-discussed problem in ADHD communities — extremely
+          high frequency implied by volume [P2A, Tier 3]. 40.7%
+          report problems often/very often [P1A, Tier 1]. Practitioners
+          describe as "one of the most pervasive challenges" [P2C,
+          Tier 2].
+        evidence_tier: "1"
       differentiation:
         score: 5
+        assessment: |
+          Explicitly described as "fundamentally different from
+          procrastination." The "invisible barrier" — knowing exactly
+          what to do but physically unable to start — qualitatively
+          distinct from neurotypical reluctance. ADHD involves a
+          neurological gate that effort alone cannot open. Attributed
+          to altered rewards-processing systems and weaker executive
+          functions. Standard advice ("just start") fails because it
+          assumes a functioning initiation system.
+        evidence: |
+          Qualitatively different from procrastination — "invisible
+          barrier" [P2A, Tier 3]. Altered reward processing as
+          mechanism [P2C, Tier 1-2]. Standard productivity advice
+          fails [P2B, Tier 3].
+        evidence_tier: "2"
       connectedness:
         score: 4
+        assessment: |
+          Drives: (1) FP04 Deadline misses — can't start = can't
+          finish on time. (2) FP08 Long-term project neglect —
+          initiation barrier higher for low-urgency tasks. (3) FP11
+          Documentation paralysis — documentation particularly
+          aversive to initiate. Does not directly cause FP03 (time
+          blindness), FP12 (lateness), or FP06 (detail errors).
+          Cluster centre for 3 problems, not a 5-problem hub.
+        evidence: |
+          User narratives link initiation to project neglect and
+          documentation avoidance [P2A, Tier 3]. P2C identifies
+          initiation as connected to multiple downstream failures
+          [Tier 2].
+        evidence_tier: "2"
       total: 14
       evidence_tier_avg: 1.7
   refs:
@@ -2719,15 +2893,54 @@ FP11:
     reports, meeting notes, evaluations. Low-stimulation plus
     high-effort creates the maximum initiation barrier. "Nothing
     makes it NOT paperwork."
+  functional_definition: >
+    Fails to complete required paperwork, reports, documentation,
+    and administrative tasks. These tasks are chronically delayed
+    or avoided despite understanding their importance.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          For roles with documentation requirements (most knowledge
+          work), administrative tasks arise daily — timesheets, meeting
+          notes, reports, records. ADHD users describe daily avoidance
+          with backlogs accumulating.
+        evidence: |
+          "Paperwork is hell" — constant daily struggle [P2A, Tier 3].
+          OT with ADHD describes ongoing paralysis completing
+          evaluations [P2A, Tier 3].
+        evidence_tier: "3"
       differentiation:
         score: 4
+        assessment: |
+          Documentation boring for everyone, but ADHD aversion
+          substantially different. Users describe complete inability to
+          start — beyond preference. "Nothing makes it NOT paperwork."
+          Low-stimulation plus high-cognitive-load specifically triggers
+          ADHD task-avoidance. Standard advice (batch, schedule,
+          template) provides marginal benefit because the initiation
+          barrier, not the process, is the problem. Combination of
+          FP01 (initiation failure) and low-stimulation creates a
+          uniquely severe barrier.
+        evidence: |
+          "Nothing makes it NOT paperwork" [P2A, Tier 3]. Task
+          initiation barrier highest for low-stimulation tasks [P2C,
+          Tier 2]. Standard advice limited benefit [P2A, Tier 3].
+        evidence_tier: "3"
       connectedness:
         score: 2
+        assessment: |
+          Primarily a receiving problem — caused by FP01 (initiation
+          failure applied to a specific domain). Solving documentation
+          paralysis wouldn't reduce other problems. Specific
+          manifestation of initiation failure in a particularly
+          aversive context.
+        evidence: |
+          Downstream of FP01 [analysis]. No upstream effects on
+          other problems.
+        evidence_tier: "3"
       total: 10
       evidence_tier_avg: 3.0
   refs:
@@ -2745,15 +2958,67 @@ FP02:
     variability itself is the problem. What works Monday may
     fail Tuesday. Standard focus tools assume a consistent
     baseline that does not exist.
+  functional_definition: >
+    Fails to maintain productive output for expected durations.
+    Work that should take minutes extends to hours. Productive
+    capacity varies dramatically day-to-day with no reliable
+    pattern, resulting in unpredictable output.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 5
+        assessment: |
+          Focus failures occur throughout each working day. Users
+          describe "literally getting almost no work done" with only
+          "30 mins" of genuine focus. WHO: 21.7 days/year reduced
+          quantity, 13.6 days reduced quality — on affected days,
+          failure recurs repeatedly. 55% report "problems getting work
+          done efficiently" often/very often — persistent daily
+          experience, not occasional lapse.
+        evidence: |
+          55% often/very often (WFIRS) [P1A, Tier 1]. 21.7
+          reduced-quantity days/year (WHO, n=7,075) [P1A, Tier 1].
+          "Tasks that take others 5 min take me 30" [P2A, Tier 3].
+          29.27% cite as #1 challenge (ADDitude, n≈1,000) [P2A,
+          Tier 2].
+        evidence_tier: "1"
       differentiation:
         score: 4
+        assessment: |
+          Everyone has focus lapses but ADHD version substantially more
+          severe with qualitatively different patterns. Key
+          differentiator is the variability — not uniformly poor focus
+          but unpredictable oscillation between near-zero productivity
+          and hyperfocus. "Different approaches seem to work on
+          different days." Standard solutions (Pomodoro, focus apps)
+          fail because they assume consistent baseline attention. Score
+          4 not 5 because observable output failure (low productivity)
+          looks similar in kind to neurotypical distraction, even
+          though severity and variability substantially different.
+        evidence: |
+          Day-to-day variability as key differentiator [P2A, Tier 3].
+          Standard tools fail due to variable response [P2B, Tier 3].
+          55% vs 11.7% — 5x gap confirms substantial severity
+          difference [P1A, Tier 1].
+        evidence_tier: "1"
       connectedness:
         score: 4
+        assessment: |
+          Focus failure drives: (1) FP04 Deadline misses —
+          low-productivity days accumulate into insufficient output.
+          (2) FP06 Detail errors — attention lapses during execution
+          produce errors. (3) FP08 Long-term project neglect —
+          inability to sustain attention on unstimulating strategic
+          work. Not scored 5 because focus failure is often downstream
+          of FP03 (time blindness) and FP05 (prioritisation). Both
+          causes and is caused by other problems, but causal influence
+          outward affects 3 problems.
+        evidence: |
+          P1A multi-domain impairment — inattention central to most
+          impairments [Tier 1]. P2C overwhelm-burnout cycle includes
+          focus decline [Tier 2].
+        evidence_tier: "1"
       total: 13
       evidence_tier_avg: 1.0
   refs:
@@ -2771,15 +3036,56 @@ FP06:
     sending incomplete work. The errors are identical to
     neurotypical mistakes but far more frequent and resistant
     to quality processes.
+  functional_definition: >
+    Produces work containing errors of oversight — typos,
+    incorrect figures, missed steps, incomplete submissions —
+    despite checking. Requires excessive QA from self or others
+    before work meets quality standards.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          Detail errors occur regularly throughout work. Users describe
+          errors persisting "even after checking 2 or 3x." Programmers
+          report daily issues — forgetting files, leaving debug code,
+          minor coding errors. DSM-5 uses "often" frequency. 22.5%
+          report poor evaluations driven by error patterns. 55%
+          reporting inefficient work includes error-driven rework.
+        evidence: |
+          DSM-5 "often" criterion [Tier 1]. 22.5% poor evaluations
+          [P1A, Tier 1]. Daily occurrence in user reports [P2A,
+          Tier 3].
+        evidence_tier: "1"
       differentiation:
         score: 3
+        assessment: |
+          Everyone makes mistakes. ADHD version more frequent and
+          resistant to self-checking, but errors themselves look
+          identical. Differentiation is in severity (persisting after
+          multiple checks) and inability of standard QA to compensate.
+          However, automated checking tools (spell-check, linters,
+          validators) work equally well for both populations. Score 3:
+          ADHD users need more aggressive automated checking, but tools
+          don't need fundamentally different design.
+        evidence: |
+          DSM criterion confirms higher prevalence [Tier 1]. Errors
+          persist after checking — more severe [P2A, Tier 3]. Standard
+          error-detection tools work for both populations.
+        evidence_tier: "1"
       connectedness:
         score: 3
+        assessment: |
+          Primarily connects to FP04 (deadline misses) — rework from
+          errors extends task duration. Downstream of FP02 (focus
+          failure) — attention lapses cause the errors. Terminal
+          failure mode (error → rework or consequences) rather than
+          a hub that cascades.
+        evidence: |
+          P2A multiple terminations linked to detail errors [Tier 3].
+          Primarily a receiving problem from FP02.
+        evidence_tier: "2"
       total: 10
       evidence_tier_avg: 1.0
   refs:
@@ -2796,15 +3102,61 @@ FP05:
     Responds to interest, novelty, and urgency instead.
     "Procrastivity" — doing interesting low-priority tasks
     while important tasks stagnate.
+  functional_definition: >
+    Spends time on low-value activities while high-priority
+    tasks are neglected. Cannot effectively sequence multiple
+    competing demands. When faced with several tasks of similar
+    urgency, either freezes or switches rapidly without
+    completing any.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 5
+        assessment: |
+          Prioritisation decisions throughout each day — which email
+          first, which task next, whether to respond to interruption.
+          ADHD adults face these more frequently because priorities
+          lost after each interruption. ADDitude poll: 21.86% of ~1,000
+          cite as #1 challenge. Combined with 55% reporting inefficient
+          work and daily paralysis from competing demands.
+        evidence: |
+          21.86% of ~1,000 cite as top challenge [P2A, Tier 2].
+          Included in 55% reporting inefficient work [P1A, Tier 1].
+          Daily paralysis from competing demands [P2A, Tier 3].
+        evidence_tier: "1-2"
       differentiation:
         score: 4
+        assessment: |
+          Common general problem but ADHD creates substantially more
+          severe version. Key differentiator: ADHD brains cannot
+          reliably use importance/urgency — respond to interest,
+          novelty, immediate consequences instead. Tools offering "more
+          options" make problem worse for ADHD users while helping NT
+          users. Standard prioritisation frameworks (Eisenhower etc.)
+          assume ability to override preference with importance that
+          ADHD fundamentally impairs. Score 4 not 5 because observable
+          failure (doing wrong task) looks similar even if mechanism
+          differs.
+        evidence: |
+          Interest-based not importance-based activation [P2C, Tier 2].
+          Standard frameworks fail [P2B, Tier 3]. Same problem but
+          significantly more severe — fits score 4 definition.
+        evidence_tier: "2"
       connectedness:
         score: 4
+        assessment: |
+          Drives: (1) FP08 Long-term project neglect — strategic work
+          deprioritised for urgent daily tasks (procrastivity). (2) FP04
+          Deadline misses — working on wrong tasks means right tasks
+          don't get done. (3) FP02 Inconsistent focus — time on
+          low-value activities is a form of focus misdirection. Not a
+          hub — doesn't directly cause FP03, FP12, or FP06.
+        evidence: |
+          P2C "procrastivity" — tackling easier tasks while avoiding
+          priorities [Tier 2]. P2A paralysis from competing demands
+          leading to "nothing gets done" [Tier 3].
+        evidence_tier: "2"
       total: 13
       evidence_tier_avg: 1.7
   refs:
@@ -2826,15 +3178,60 @@ FP08:
     (distant deadlines create zero urgency) and initiation
     failure (low-stimulation strategic work is hardest to
     start).
+  functional_definition: >
+    Completes daily operational tasks but fails to make progress
+    on strategic, multi-week or multi-month projects. Distant
+    deadlines do not generate sufficient motivation to act until
+    crisis point.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          Avoidance of long-term projects is a daily pattern — each day
+          the worker chooses immediate tasks over strategic work. Not a
+          single event but daily accumulation of avoidance. Users
+          describe completing daily operational work while strategic
+          projects remain untouched for weeks or months.
+        evidence: |
+          Daily pattern of doing immediate tasks while avoiding
+          long-term work [P2A, Tier 3]. 69.2% report "working below
+          potential" (WFIRS) — many instances likely reflect this
+          pattern [P1A, Tier 1].
+        evidence_tier: "2"
       differentiation:
         score: 5
+        assessment: |
+          Driven by delay discounting — neurological bias drastically
+          undervaluing distant rewards relative to immediate ones.
+          Well-documented, neurologically-grounded ADHD phenomenon
+          qualitatively different from general procrastination.
+          Neurotypical workers can motivate toward distant goals using
+          importance; ADHD brains literally discount distant outcomes
+          more steeply. Standard project management tools (Gantt
+          charts, milestone trackers) ineffective because they assume
+          future milestones create present motivation.
+        evidence: |
+          Delay discounting as ADHD-specific mechanism [P2A, Tier 1 —
+          Barkley]. "Inherently unable to anticipate and plan for the
+          future" with a "very short time horizon" [P2A, Tier 2]. User
+          terminated specifically for this pattern [P2A, Tier 3].
+        evidence_tier: "1-2"
       connectedness:
         score: 3
+        assessment: |
+          Primarily connects to FP04 (deadline misses) — neglected
+          projects eventually hit deadlines, creating crisis. More a
+          consequence of FP03, FP01, and FP05 than a cause of other
+          problems. Solving project neglect wouldn't reduce focus, time
+          blindness, or detail errors. Connects strongly to one
+          downstream outcome but is otherwise a receiving problem.
+        evidence: |
+          P2C overwhelm cycle — project neglect leads to deadline
+          crises [Tier 2]. Causal arrows primarily point toward this
+          problem from FP01, FP03, FP05 [Tier 2].
+        evidence_tier: "2"
       total: 12
       evidence_tier_avg: 1.7
   refs:
@@ -2855,15 +3252,63 @@ FP07:
     Information is processed in real time but never reaches
     long-term storage. Standard note-taking creates a dual-task
     problem that worsens it.
+  functional_definition: >
+    Processes and understands information during meetings and
+    conversations but cannot recall content shortly afterward.
+    Fails to remember action items, instructions, or commitments
+    made in verbal interactions.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          Knowledge workers attend meetings and receive verbal
+          instructions daily. For those affected, memory failure at
+          virtually every meeting. "Understanding everything being
+          said — walking out and not remembering anything." 75-81% of
+          ADHD individuals show measurable working memory impairment.
+        evidence: |
+          Daily occurrence [P2A, Tier 3]. Forgetting instructions as
+          common presenting problem [P2C, Tier 2]. DSM-5: "often does
+          not seem to listen when spoken to directly" [Tier 1].
+          Bifactor modelling: 75-81% impairment prevalence [P3B,
+          Tier 1].
+        evidence_tier: "1-2"
       differentiation:
         score: 5
+        assessment: |
+          Phase 3 established ADHD meeting-memory failure driven by
+          encoding deficit, not retrieval failure. P3 amplitude
+          reduction during encoding shows the ADHD brain fails to
+          encode information into memory even while processing in
+          real-time. Neurologically distinct from neurotypical forgetting
+          (which is retrieval failure). Methylphenidate does not
+          normalise — treated adults still show large impairments.
+          Standard note-taking creates dual-task problem (listen +
+          decide importance + write). Raised from 4 to 5: qualitatively
+          different neurological process requiring fundamentally
+          different design.
+        evidence: |
+          P3 encoding signal measurably lower [Missonnier et al. 2013,
+          Tier 1]. Encoding vs retrieval confirmed [Bonilla et al.
+          2020, Tier 1]. Medication reduces but doesn't eliminate
+          deficit [Fuermaier et al. 2016, Tier 1]. Note-taking creates
+          dual-task problem [P3B, Tier 2-3].
+        evidence_tier: "1"
       connectedness:
         score: 2
+        assessment: |
+          Relatively isolated. Can lead to missed action items
+          (connecting to FP04 deadline misses) but causal chain is
+          indirect. Shares working memory root cause with FP09 but
+          solving one wouldn't solve the other — contexts and failure
+          modes differ. Specific, contained failure domain.
+        evidence: |
+          Primarily isolated to verbal information retention.
+          Prospective memory impairment affects action items [P3B,
+          Tier 1] but broadcasting effect is limited.
+        evidence_tier: "2-3"
       total: 11
       evidence_tier_avg: 1.7
   refs:
@@ -2885,15 +3330,65 @@ FP09:
     vanishes. Not inbox overwhelm — prospective memory failure.
     The "read and forgot" pattern. Standard email tools address
     volume and speed; none address forgotten reply intentions.
+  functional_definition: >
+    Fails to respond to emails and messages within expected
+    timeframes. Reads communications but forgets to reply.
+    Inboxes accumulate to the point of avoidance.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          Email and messaging are daily activities. ADHD users describe
+          daily failures — forgetting to reply, inbox accumulation,
+          avoidance. Phase 3: prospective memory impairment (d=1.60)
+          applied to volume of daily email strongly supports multiple
+          daily failures. Case could be made for 5 but relies on
+          inference not direct measurement. Score 4 is the
+          evidence-conservative choice. Evidence tier improved from
+          Tier 3 to Tier 1-2.
+        evidence: |
+          Prospective memory impairment d=1.60 for task planning
+          [Altgassen et al. 2014/2019, Tier 1]. Daily avoidance and
+          forgetting to reply [P2A, Tier 3]. Practitioners: email
+          overwhelm as daily experience [Tier 2].
+        evidence_tier: "1-2"
       differentiation:
         score: 4
+        assessment: |
+          Phase 3 confirmed substantial differentiation: (1) prospective
+          memory failure as qualitatively different mechanism — "read it,
+          intended to reply, forgot" is neurological not procrastination
+          [Tier 1]; (2) avoidance-shame spiral driven by RSD amplifies
+          delay [Tier 2]; (3) standard email strategies (batch, folders,
+          inbox zero) fail for ADHD-specific reasons — assume prospective
+          memory and return-to-check behaviours that ADHD impairs
+          [Tier 2-3]. Score 4 not 5 because observable failure
+          (late/missing replies) exists on continuum with neurotypical
+          email overwhelm — mechanism different but outcome not.
+        evidence: |
+          Prospective memory as distinct mechanism [Tier 1]. Four-layer
+          convergence: prospective memory + task initiation + decision
+          fatigue + emotional avoidance [P3A, Tier 1-2]. "Out of sight,
+          out of mind" [P2B, Tier 3].
+        evidence_tier: "1-2"
       connectedness:
         score: 3
+        assessment: |
+          Phase 3 identified direct causal link to FP04 via missed
+          action items in email. Termination case for failed calendar
+          invite demonstrates chain. Email failure feeds
+          overwhelm-burnout cycle — accumulated unanswered emails
+          create stress worsening FP02 (focus) and FP01 (initiation)
+          through shame-driven paralysis. Still modest — primarily a
+          receiving problem — but direct FP04 link warrants 3 over 2.
+          Raised from 2 to 3 in Phase 3.
+        evidence: |
+          Email → missed action items → deadline failure [P3A, Tier 2].
+          Termination for missed calendar invite [P2A, Tier 3]. Email
+          backlog feeds overwhelm-burnout cycle [P2C, Tier 2].
+        evidence_tier: "2"
       total: 11
       evidence_tier_avg: 1.7
   refs:
@@ -2915,15 +3410,57 @@ FP10:
     losing focus — losing the entire mental context that was
     built up during focused work. An environmental/workload
     interaction more than a core EF failure.
+  functional_definition: >
+    Loses significant productive time when transitioning between
+    tasks or recovering from interruptions. After being pulled
+    away from work, requires extended reorientation time before
+    regaining productive focus.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 4
+        assessment: |
+          Context switches occur multiple times daily — meetings
+          interrupt focused work, colleagues ask questions,
+          notifications arrive. Recovery from switches is the primary
+          problem, with reorientation taking 30+ minutes per switch.
+          One user estimates 2-3 hours/day lost to reorientation.
+        evidence: |
+          "2-3 hours of my day is spent just staring at something"
+          [P2A, Tier 4 — single user]. 30-minute recovery after
+          meetings [P2A, Tier 3 — programmer reports]. Daily
+          occurrence certain; severity data limited.
+        evidence_tier: "3-4"
       differentiation:
         score: 3
+        assessment: |
+          Context switching cost well-documented general problem (23
+          minutes average recovery for all workers). ADHD version
+          appears more severe (30+ min, emotional distress) but
+          mechanism is similar — rebuilding mental context.
+          Differentiation is in severity not kind. Standard solutions
+          (time-blocking, notification management, DND) work for ADHD
+          users but need more aggressive application. Score 3 not 4
+          because problem isn't qualitatively different.
+        evidence: |
+          General population context-switching research shows similar
+          but less severe patterns [Tier 1]. ADHD-specific data
+          limited to user reports [P2A, Tier 3-4]. Standard solutions
+          partially work [P2B, Tier 3].
+        evidence_tier: "3"
       connectedness:
         score: 2
+        assessment: |
+          Relatively isolated. Contributes to FP02 (inconsistent
+          focus) but not the primary cause. Doesn't cause time
+          blindness, initiation failure, or prioritisation problems.
+          Specific workload-environment interaction rather than core
+          EF failure.
+        evidence: |
+          Shares context with focus problems but solving it wouldn't
+          address underlying attention deficit.
+        evidence_tier: "3"
       total: 9
       evidence_tier_avg: 3.3
   refs:
@@ -2937,39 +3474,11 @@ FP10:
     context with FP02 (focus) but mechanistically different.
   derived_from: Our_S3
 
-FP13:
-  type: problem
-  name: Waiting Mode
-  plain_language: >
-    An upcoming obligation (meeting, appointment, call) blocks
-    productive work on everything else, even hours beforehand.
-    Not avoidance of a single task — temporal paralysis across
-    ALL tasks. The person is hyper-aware of the upcoming event
-    and that awareness consumes all activation capacity. Unlike
-    Task Initiation Failure (FP01), the block is not task-
-    specific: nothing can start because something is coming
-    later.
-  status: active
-  evaluations:
-    scoring:
-      frequency:
-        score: 3
-      differentiation:
-        score: 4
-      connectedness:
-        score: 2
-      total: 9
-      evidence_tier_avg: 2.3
-  refs:
-    mechanisms: [MECH01, MECH02]
-
-    claims: []
-  cluster_notes: >
-    Standalone. Temporal paralysis driven by anticipated obligations.
-    Shares time perception mechanism (MECH01) with Cluster A but
-    the functional pattern is distinct — it blocks ALL work, not
-    just time-dependent work. Does not cascade into other problems.
-  derived_from: Morning_Extraction_Feb25
+# FP13 (Waiting Mode) DEMOTED TO STAGING — see STG_012.
+# Originally added from Morning_Extraction_Feb25, never went through
+# the S1→S2→S3 pipeline. No gate evaluations, no claims, Tier 3 only.
+# ID collision with S1's FP13 (Attendance, now FP13b). Software
+# amenability questionable. Phenomenon is real but entity was premature.
 
 FP18:
   type: problem
@@ -2978,15 +3487,55 @@ FP18:
     Cannot maintain organisation systems after initial setup.
     Desks, files, folders decay to disorder within days. The
     problem is sustained maintenance, not the initial sort.
+  functional_definition: >
+    Maintains a cluttered, disorganised physical and/or digital
+    workspace that impedes finding documents, tools, and
+    information when needed. Loses important items. Fails to
+    maintain filing or organisation systems after initial setup.
   status: active
   evaluations:
     scoring:
       frequency:
         score: 3
+        assessment: |
+          Impact of disorganisation manifests when users can't find
+          something needed — several times per week, not daily.
+          Disorganisation itself is constant but the functional
+          failure (can't find document, lost item, cluttered workspace
+          impeding work) occurs intermittently.
+        evidence: |
+          OT consensus identifies as common presenting problem [P2C,
+          Tier 2]. Users describe chronic state [P1C, Tier 1].
+          Functional impact several times per week rather than daily
+          crisis.
+        evidence_tier: "2"
       differentiation:
         score: 3
+        assessment: |
+          Many people have messy desks. ADHD version more persistent
+          and resistant to organisation attempts, but observable
+          failure looks similar. Differentiation: ADHD users cannot
+          maintain organisation systems after initial setup — the
+          maintenance fails, not the initial sorting. Standard advice
+          (filing, labelling) works temporarily but abandoned within
+          days. Score 3: difference is in sustainability, not nature.
+        evidence: |
+          Self-organisation as EF mediator [P1C, Tier 1]. "Organisation
+          requires regular, repeated behaviours" which ADHD impairs
+          [P2C, Tier 2].
+        evidence_tier: "2"
       connectedness:
         score: 2
+        assessment: |
+          Shares context with other problems (wastes time, contributes
+          to overwhelm) but addressing it wouldn't meaningfully reduce
+          time blindness, initiation failure, focus, or prioritisation.
+          Relatively standalone. Digital disorganisation connects
+          loosely to FP09 but distinct failure domains.
+        evidence: |
+          No cascading effects described in research. OT consensus
+          treats as independent intervention area [P2C, Tier 2].
+        evidence_tier: "2"
       total: 8
       evidence_tier_avg: 2.0
   refs:
@@ -2998,6 +3547,185 @@ FP18:
     but operates in a different domain (physical/digital environment,
     not task execution). Lowest score in the set.
   derived_from: Our_S3
+
+
+# ───────────────────────────────────────────────────────────────
+# GATE-FILTERED PROBLEMS
+# Problems identified in S1 that failed gate filters (S2).
+# Retained for completeness and cross-reference. Not scored.
+# ───────────────────────────────────────────────────────────────
+
+FP13b:
+  type: problem
+  name: Attendance and Sickness Absence
+  status: filtered_out
+  functional_definition: >
+    Misses work days at a rate significantly exceeding peers.
+    Combination of genuine health impacts (sleep disorders,
+    stress-related illness, comorbid conditions) and avoidance-
+    driven absences when work feels overwhelming.
+  gate_results:
+    gate_1_software_amenability: borderline_fail
+    gate_2_individual_addressability: fail
+    failed_gate: both
+    rationale: >
+      Medical and systemic drivers dominate. Software cannot
+      prevent illness. Employer policies (sick leave, flexible
+      schedules, return-to-work support) are critical levers.
+      Attendance improvement requires organisational accommodation.
+  evidence_tier: Tier 1
+  id_note: >
+    S1/S2 FP13 (Attendance). Originally suffixed 'b' to avoid
+    collision with a Waiting Mode entity that occupied FP13.
+    That entity has been demoted to staging (STG_012). The 'b'
+    suffix is retained to avoid confusion in change history.
+  derived_from: Our_S2
+
+FP14:
+  type: problem
+  name: Interpersonal Conflict with Supervisors
+  status: filtered_out
+  functional_definition: >
+    Engages in arguments, poor acceptance of feedback, perceived
+    insubordination, or overstepping boundaries with managers.
+    Creates strained supervisor-employee relationships that lead
+    to discipline or termination.
+  gate_results:
+    gate_1_software_amenability: fail
+    gate_2_individual_addressability: fail
+    failed_gate: both
+    rationale: >
+      Supervisor conflict is inherently bilateral. Requires the
+      supervisor's willingness to understand ADHD and adjust
+      communication style. OT consensus identifies social
+      awareness as requiring interpersonal intervention, not
+      technology. Coaches address through relationship coaching.
+  evidence_tier: Tier 1
+  key_prevalence: "26.3% report problems with supervisor often/very often vs 12.3% controls"
+  derived_from: Our_S2
+
+FP15:
+  type: problem
+  name: Team Collaboration Failure
+  status: filtered_out
+  functional_definition: >
+    Fails to coordinate effectively with colleagues — misses
+    hand-offs, forgets shared commitments, interrupts or
+    dominates discussions, and appears disengaged. Creates
+    friction in team-dependent work.
+  gate_results:
+    gate_1_software_amenability: marginal_pass
+    gate_2_individual_addressability: fail
+    failed_gate: gate_2
+    rationale: >
+      Software could partially support (hand-off tracking,
+      commitment logging) but core failures are real-time
+      interpersonal behaviours. Perception of being disengaged
+      or disruptive is shaped by colleagues' reactions and
+      workplace culture. Requires both individual strategy and
+      team understanding.
+  evidence_tier: Tier 1
+  key_prevalence: "30.8% report problems working in a team often/very often vs 11.5% controls"
+  derived_from: Our_S2
+
+FP16:
+  type: problem
+  name: Emotional Outbursts and Dysregulation at Work
+  status: filtered_out
+  functional_definition: >
+    Reacts to workplace stressors (criticism, feedback, minor
+    setbacks, perceived rejection) with disproportionate
+    emotional intensity. Displays irritation, frustration, or
+    anger that damages professional relationships. Difficulty
+    calming down after becoming upset.
+  gate_results:
+    gate_1_software_amenability: fail
+    gate_2_individual_addressability: partial_pass
+    failed_gate: gate_1
+    rationale: >
+      Emotional dysregulation occurs in real-time social
+      interactions faster than any software intervention could
+      intercept. CBT and psychosocial interventions (d=.56 effect
+      size) are the effective approach. Emotion-tracking apps
+      exist but do not prevent outbursts. Primary intervention
+      is therapeutic skill development.
+  evidence_tier: Tier 1-2
+  derived_from: Our_S2
+
+FP17:
+  type: problem
+  name: Impulsive Job Quitting
+  status: filtered_out
+  functional_definition: >
+    Quits jobs suddenly in response to boredom, conflict, or
+    minor setbacks without having alternative employment secured.
+    Creates fragmented career history and financial instability.
+  gate_results:
+    gate_1_software_amenability: fail
+    gate_2_individual_addressability: pass
+    failed_gate: gate_1
+    rationale: >
+      Impulsive quitting is a momentary, high-stakes decision
+      driven by boredom, conflict, or emotional reactivity.
+      Software cannot prevent someone from submitting a
+      resignation. Requires impulse control and emotional
+      regulation skills — clinical/coaching domains.
+  evidence_tier: Tier 1
+  key_prevalence: "3x more likely to quit a job impulsively vs non-ADHD adults"
+  derived_from: Our_S2
+
+FP19:
+  type: problem
+  name: Safety Errors and Workplace Accidents
+  status: filtered_out
+  functional_definition: >
+    Commits errors related to safety procedures, checklists,
+    or equipment operation. At higher risk of workplace injuries
+    and traffic accidents than peers.
+  gate_results:
+    gate_1_software_amenability: fail
+    gate_2_individual_addressability: fail
+    failed_gate: both
+    rationale: >
+      Workplace safety involves physical operations in real-time
+      environments. Software cannot prevent inattentive equipment
+      operation. The 2x+ accident risk reflects real-time
+      attentional failures in physical environments. Safety
+      improvement requires organisational-level safety
+      accommodations (role modification, reduced hazardous
+      equipment operation).
+  evidence_tier: Tier 1
+  key_prevalence: "2x+ risk of workplace accidents; 23% higher road traffic accident risk"
+  derived_from: Our_S2
+
+FP20:
+  type: problem
+  name: Underperforming Relative to Capability
+  status: filtered_out
+  functional_definition: >
+    Consistently delivers work below the level expected given
+    training, intelligence, and demonstrated capability. Fails
+    to progress in career, take on higher-level responsibilities,
+    or contribute at a level matching credentials.
+  gate_results:
+    gate_1_software_amenability: pass
+    gate_2_individual_addressability: pass
+    failed_gate: none
+    exclusion_reason: meta_outcome
+    rationale: >
+      Passed both gates but excluded from scoring as a meta-
+      outcome — the cumulative result of FP01-FP11. Addressed
+      by addressing upstream problems. No standalone intervention
+      needed; aggregate effect of component problem improvement
+      creates the improvement. Retained as highest-prevalence
+      WFIRS item (69.2%) and distinct source of user distress.
+  evidence_tier: Tier 1
+  key_prevalence: "69.2% vs 16.6% controls — single most endorsed WFIRS work item"
+  meta_outcome_note: >
+    Composite of multiple functional problems. Not scored
+    separately but retained as a measure of overall impact.
+    Revisited in synthesis (S10).
+  derived_from: Our_S2
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -3241,6 +3969,32 @@ MC1:
     discontinue within 1 year (n=1.2M); 77% do not complete
     self-guided digital interventions; app graveyard is
     universal across all tool categories.
+  evaluations:
+    inclusion_test:
+      cross_cluster:
+        met: true
+        reasoning: >
+          Affects all three clusters. All use paradigms requiring
+          sustained user engagement that decays. Time-management
+          tools, initiation tools, and focus tools all habituate.
+      cross_engagement_model:
+        met: true
+        reasoning: >
+          Active prompting habituates. Passive capture creates data
+          graveyards. Session-based rituals lose novelty. Ambient
+          interventions become invisible. No model is immune.
+      not_implementation_solvable:
+        met: true
+        reasoning: >
+          Variable delivery, refresh cycles, and novelty injection
+          can slow but not prevent neurological habituation. The
+          brain's response to repeated stimuli is fundamental.
+      evidenced:
+        met: true
+        reasoning: >
+          Tier 1 (medication adherence data, systematic reviews)
+          and Tier 3 (high-convergence user reports of app
+          abandonment across all tool categories).
   refs:
     clusters_affected: [CL_A, CL_B, CL_C]
     claims: [C022, C024, C025]
@@ -3273,6 +4027,34 @@ MC2:
     login at module 2 only — the reminder itself habituates.
     "Those apps will NEVER WORK because you have to remember
     to look at them, which you won't."
+  evaluations:
+    inclusion_test:
+      cross_cluster:
+        met: true
+        reasoning: >
+          Cluster A: must remember to check time-management tool.
+          Cluster B: must initiate use of initiation tool.
+          Cluster C: must direct attention to attention-management
+          tool. The paradox applies universally.
+      cross_engagement_model:
+        met: true
+        reasoning: >
+          Active prompting: user must set up and maintain. Passive
+          monitoring: user must install and trust. Session-based:
+          user must remember to start sessions. Ambient: least
+          affected but still requires initial configuration.
+      not_implementation_solvable:
+        met: true
+        reasoning: >
+          Integration depth reduces friction but cannot eliminate
+          it. Even a zero-config tool requires the user to not
+          uninstall it. The paradox is structural and irreducible.
+      evidenced:
+        met: true
+        reasoning: >
+          Tier 1-2 (prospective memory: 52% forgot naturalistic
+          task; SMS habituation after one module) and Tier 3
+          (direct user articulation of the paradox).
   refs:
     clusters_affected: [CL_A, CL_B, CL_C]
     claims: [C019, C025]
@@ -3305,6 +4087,36 @@ MC3:
     self-esteem, increased sense of failure. Users who praised
     sustained tools (plain notebooks, Amazing Marvin) cited
     "no judgment for missed days."
+  evaluations:
+    inclusion_test:
+      cross_cluster:
+        met: true
+        reasoning: >
+          Cluster A: "3 days behind schedule" display creates
+          shame. Cluster B: "0 tasks started today" creates
+          shame. Cluster C: "Only 2 hours productive this week"
+          creates shame. Any cluster's tool that tracks progress
+          creates potential shame triggers.
+      cross_engagement_model:
+        met: true
+        reasoning: >
+          Active prompting: missed prompts accumulate as failures.
+          Passive capture: if user reviews data, they see gaps.
+          Session-based: broken streaks visible. Ambient: least
+          affected but overdue counts still possible.
+      not_implementation_solvable:
+        met: true
+        reasoning: >
+          Lapse-tolerant design (no streaks, no overdue counts,
+          fresh-start capability) can reduce shame triggers but
+          cannot eliminate them. The user's internal shame response
+          operates independently of what the tool displays.
+      evidenced:
+        met: true
+        reasoning: >
+          Tier 2 (non-adapted CBT worsened self-esteem) and Tier 3
+          (high-convergence user reports: "73 overdue tasks,"
+          blank-page shame, "I'd rather uninstall the app").
   refs:
     clusters_affected: [CL_A, CL_B, CL_C]
     claims: [C020, C021, C022]
@@ -3337,6 +4149,38 @@ MC4:
     adjacent tools (Motion, Sunsama, Reclaim) brand as
     general productivity. Granola's bot-free approach is
     commercially validated partly by removing the social signal.
+  evaluations:
+    inclusion_test:
+      cross_cluster:
+        met: true
+        reasoning: >
+          Any ADHD-positioned tool used in a workplace creates
+          disclosure risk regardless of which cluster it targets.
+          Time-management tools (CL_A), initiation tools (CL_B),
+          and focus tools (CL_C) all carry the same visibility
+          concern. All three clusters affected.
+      cross_engagement_model:
+        met: true
+        reasoning: >
+          Active prompting visible during screen-share. Passive
+          monitoring visible in taskbar or app switcher. Session-
+          based creates "what's that app?" questions. Ambient
+          is least affected but still present in installed-app
+          lists and notification trays. All models affected.
+      not_implementation_solvable:
+        met: true
+        reasoning: >
+          Neutral branding reduces but cannot eliminate the
+          tension. Clinical specificity (needed for efficacy)
+          conflicts with workplace acceptability. Even a
+          generically-branded tool must explain itself if
+          discovered or questioned.
+      evidenced:
+        met: true
+        reasoning: >
+          Tier 2 (practitioner consensus on disclosure dilemma,
+          market behaviour — successful tools avoid ND branding)
+          and Tier 3 (user reports of fear and concealment).
   refs:
     clusters_affected: [CL_A, CL_B, CL_C]
     claims: [C026]
@@ -3368,6 +4212,40 @@ MC5:
     desensitised to them and stop paying attention." Alarm
     fatigue documented across every time-management tool
     category.
+  evaluations:
+    inclusion_test:
+      cross_cluster:
+        met: true
+        reasoning: >
+          Cluster A: timer and deadline alerts desensitise.
+          Cluster B: initiation nudges and task-start prompts
+          desensitise. Cluster C: focus-break notifications
+          desensitise. 2+ clusters affected. CL_C is partially
+          affected — less notification-dependent than CL_A/CL_B.
+      cross_engagement_model:
+        met: true
+        reasoning: >
+          Active prompting is maximally affected — the core
+          delivery mechanism habituates. Passive monitoring
+          affected when it surfaces alerts. Session-based
+          affected if it uses reminders to trigger sessions.
+          Ambient least affected but still vulnerable if it
+          uses any notification channel.
+      not_implementation_solvable:
+        met: true
+        reasoning: >
+          Variable timing, multi-channel delivery, escalation
+          logic, and novelty injection can slow but cannot
+          prevent neurological habituation. The brain's
+          filtering of repeated stimuli is a fundamental
+          neurological process, not a design flaw.
+      evidenced:
+        met: true
+        reasoning: >
+          Tier 2 (SMS reminder RCT — habituation after single
+          module) and Tier 3 (consistent user reports of alarm
+          fatigue across all tool categories, Pomodoro failure
+          pattern).
   refs:
     clusters_affected: [CL_A, CL_B]
     claims: [C022, C021]
@@ -3411,6 +4289,43 @@ MC6:
     itself turns into another task I need to oversee." Documented
     across Notion, Obsidian, ClickUp, Trello, OmniFocus, Asana,
     and bullet journals.
+  evaluations:
+    inclusion_test:
+      cross_cluster:
+        met: true
+        reasoning: >
+          Cluster B (Initiation/Follow-Through): building a task
+          system substitutes for doing the tasks. Cluster C
+          (Attention/Quality): configuring focus tools substitutes
+          for focused work. CL_A less directly affected — time-
+          management tools are less customisable, though calendar
+          restructuring can manifest the same pattern. 2 clusters
+          clearly affected.
+      cross_engagement_model:
+        met: true
+        reasoning: >
+          Active prompting: setup and customisation of prompt rules
+          becomes the meta-work. Session-based: ritual design and
+          optimisation becomes the activity. Passive monitoring:
+          dashboard configuration is a common trap. Ambient: least
+          affected — minimal setup surface. 3 of 4 models affected.
+      not_implementation_solvable:
+        met: true
+        reasoning: >
+          Zero-config design reduces but cannot eliminate the
+          pattern. Any tool with user-facing settings, templates,
+          or workflows provides a surface for system-building.
+          The motivation hijack is neurological — configuring
+          delivers novelty dopamine that actual work does not.
+      evidenced:
+        met: true
+        reasoning: >
+          Tier 3 (high-convergence user reports across Notion,
+          Obsidian, ClickUp, OmniFocus, Trello, Asana, and bullet
+          journals — P2B Core Patterns #1 and #5). No Tier 1-2
+          evidence directly on system-building substitution, but
+          the pattern is documented independently across 7+ tool
+          categories with consistent user language.
   refs:
     clusters_affected: [CL_B, CL_C]
     claims: [C025]
@@ -3538,6 +4453,45 @@ M1:
       MC5:
         level: High
         rationale: Depends on notifications landing
+    cluster_compatibility:
+      CL_A:
+        rating: S
+        rationale: >
+          Time blindness is continuous and below awareness —
+          precisely where ambient detection and proactive
+          intervention are structurally necessary. Can detect
+          time overruns before downstream failures cascade.
+      CL_B:
+        rating: S
+        rationale: >
+          Initiation failure manifests as detectable stalling.
+          Continuous monitoring detects the stuck state and
+          delivers graded interventions without requiring user
+          to self-identify as stuck.
+      CL_C:
+        rating: S
+        rationale: >
+          Focus inconsistency manifests as detectable context-
+          switching patterns. Ambient monitoring can detect
+          attention drift and intervene. Must respect hyperfocus.
+      FP05:
+        rating: P
+        rationale: >
+          Can detect procrastivity but evaluating task importance
+          adds significant complexity beyond core detection
+          mechanism. Extension, not core fit.
+      FP07:
+        rating: P
+        rationale: >
+          Could detect commitments during meetings but intervening
+          during a meeting creates social friction. Partially
+          compatible for post-meeting resurfacing.
+      FP09:
+        rating: P
+        rationale: >
+          Could detect read-but-not-replied patterns. Intervention
+          timing not well-matched to email's asynchronous nature.
+          Partially compatible for stalled-reply detection.
   refs:
     primary_problems: [FP01]
     secondary_problems: [FP02, FP03]
@@ -3581,6 +4535,45 @@ M2:
       MC5:
         level: Low
         rationale: Value delivery, not interruption
+    cluster_compatibility:
+      CL_A:
+        rating: P
+        rationale: >
+          Can capture time-relevant context (deadlines, durations)
+          but addresses retrospective dimension only. Cannot make
+          user aware of time as it passes — the core deficit.
+      CL_B:
+        rating: X
+        rationale: >
+          Initiation failure means nothing happens — there is no
+          content to capture during a stall. Fundamentally
+          incompatible with absence-of-action problems.
+      CL_C:
+        rating: P
+        rationale: >
+          Cannot prevent focus lapses but can document what
+          happened during them. Useful for FP06 error-checking
+          via captured records. Does not address hub mechanism.
+      FP05:
+        rating: X
+        rationale: >
+          Capture records what happened, not what should happen
+          next. Prioritisation is forward-looking; capture is
+          backward-looking. No structural alignment.
+      FP07:
+        rating: S
+        rationale: >
+          Structurally designed for meeting memory. Zero-effort
+          capture, processes after the fact, delivers structured
+          output proactively. Matches the encoding deficit where
+          the user cannot compensate by trying harder.
+      FP09:
+        rating: S
+        rationale: >
+          Directly addresses the email failure mechanism. Captures
+          read-state and reply-state at zero effort, detects the
+          prospective memory failure, delivers reply queue at
+          appropriate moment. Structurally optimal.
   refs:
     primary_problems: [FP07, FP09]
     claims: [C014, C015, C017, C018, C028]
@@ -3622,6 +4615,45 @@ M3:
       MC5:
         level: Low
         rationale: Not notification-dependent
+    cluster_compatibility:
+      CL_A:
+        rating: X
+        rationale: >
+          Time blindness is a perception deficit, not a task-
+          execution modality problem. Changing input modality
+          does not alter time perception. No structural alignment.
+      CL_B:
+        rating: P
+        rationale: >
+          For FP11 (documentation paralysis), modality shift
+          directly lowers the initiation barrier by changing
+          "write" to "speak." Strong sub-cluster fit. But for
+          FP01 broadly, changing modality does not address the
+          core activation-energy deficit.
+      CL_C:
+        rating: X
+        rationale: >
+          Focus inconsistency occurs regardless of input modality.
+          No structural alignment with the attention mechanism.
+      FP05:
+        rating: X
+        rationale: >
+          Changing input modality does not help decide what to
+          work on. Prioritisation is a decision problem, not an
+          execution modality problem.
+      FP07:
+        rating: X
+        rationale: >
+          Meeting memory failure is an encoding deficit during
+          listening/participating. Changing modality is irrelevant
+          — the brain fails to store what it processes.
+      FP09:
+        rating: P
+        rationale: >
+          Voice-to-reply could lower the barrier to composing
+          replies once a forgotten email has been resurfaced.
+          Addresses composition sub-problem, not the core
+          forgetting-to-reply problem.
   refs:
     primary_problems: [FP11]
     claims: []
@@ -3665,6 +4697,50 @@ M4:
       MC5:
         level: Moderate
         rationale: Depends on push if used
+    cluster_compatibility:
+      CL_A:
+        rating: P
+        rationale: >
+          Can factor time constraints into task ordering (surface
+          short tasks near meetings) providing indirect time
+          awareness. Does not address the core time perception
+          deficit — manages around it.
+      CL_B:
+        rating: S
+        rationale: >
+          Reordering by neurological accessibility directly
+          addresses "cannot start" by surfacing the lowest-
+          activation-barrier task. "Show one task" eliminates
+          decision paralysis. Procrastivity detection bridges
+          what-you-can-do to what-you-should-do.
+      CL_C:
+        rating: P
+        rationale: >
+          Can match tasks to current energy/focus state. Works
+          around focus inconsistency rather than compensating
+          for it. Partially helpful for reducing FP02 impact
+          on FP04.
+      FP05:
+        rating: S
+        rationale: >
+          Structurally designed for prioritisation failure.
+          Reorders based on neurological accessibility balanced
+          against importance. "Show one task" eliminates decision
+          paralysis. Procrastivity detection directly targets
+          interest-based override of importance.
+      FP07:
+        rating: X
+        rationale: >
+          Task reordering has no bearing on meeting memory.
+          Problem occurs during meetings, not during task
+          selection. No structural alignment.
+      FP09:
+        rating: P
+        rationale: >
+          If email replies are treated as tasks, reordering by
+          urgency could help. But core problem is "remembering
+          a reply is needed," not "which email first." Partially
+          compatible once the reply queue is surfaced.
   refs:
     primary_problems: [FP05]
     secondary_problems: [FP01]
@@ -3706,6 +4782,47 @@ M5:
       MC5:
         level: Moderate
         rationale: Overrun alerts may habituate
+    cluster_compatibility:
+      CL_A:
+        rating: S
+        rationale: >
+          Directly targets the time blindness mechanism:
+          estimation vs actual tracking, personal bias
+          calibration, real-time time-elapsed awareness. The
+          "before + during" timing matches the continuous
+          nature of time perception failure.
+      CL_B:
+        rating: X
+        rationale: >
+          Calibration requires user to estimate before starting
+          and reflect after completing. Initiation failure means
+          the user cannot start — the loop has no input.
+          Addresses time perception, not activation energy.
+      CL_C:
+        rating: P
+        rationale: >
+          Tracking focus patterns over time could help learn
+          personal attention rhythms. Addresses meta-awareness
+          of focus inconsistency but does not prevent or
+          intervene during lapses. Partial alignment.
+      FP05:
+        rating: P
+        rationale: >
+          Could track prioritisation accuracy over time and feed
+          back patterns. Builds meta-awareness but does not
+          provide in-the-moment guidance. Partial alignment.
+      FP07:
+        rating: X
+        rationale: >
+          Meeting memory failure is an encoding deficit, not a
+          calibration problem. The feedback loop has nothing to
+          calibrate against for this problem.
+      FP09:
+        rating: X
+        rationale: >
+          Email management failure is a prospective memory
+          deficit, not a time estimation problem. Nothing to
+          calibrate.
   refs:
     primary_problems: [FP03]
     claims: [C008, C009]
@@ -3747,6 +4864,48 @@ M6:
       MC5:
         level: Moderate
         rationale: Depends on task notifications
+    cluster_compatibility:
+      CL_A:
+        rating: P
+        rationale: >
+          Can address FP08 (project neglect driven by delay
+          discounting) by surfacing neglected projects as micro-
+          tasks. Does not address the FP03 hub — real-time time
+          perception operates on a different timescale.
+      CL_B:
+        rating: P
+        rationale: >
+          Injecting micro-tasks can lower activation barriers
+          for FP08. But the injected task itself still requires
+          initiation. Reduces barrier size but does not provide
+          real-time intervention at the moment of stalling.
+      CL_C:
+        rating: X
+        rationale: >
+          Focus inconsistency is a within-task, moment-to-moment
+          problem. Periodic injection operates at the between-task
+          level. Timescale mismatch is fundamental.
+      FP05:
+        rating: P
+        rationale: >
+          Can surface neglected high-priority items as micro-
+          tasks, counteracting procrastivity. But does not
+          address in-the-moment "what should I do right now"
+          decisions. Addresses longer-timescale neglect.
+      FP07:
+        rating: P
+        rationale: >
+          Could resurface meeting commitments as micro-tasks.
+          Addresses downstream consequence (forgotten action
+          items) but requires commitments to be captured
+          elsewhere first. Dependent on M2-style capture.
+      FP09:
+        rating: P
+        rationale: >
+          Injecting "reply to X's email" as a micro-task
+          compensates for forgotten intentions. Structurally
+          a simplified version of M2's reply queue. Requires
+          email monitoring upstream.
   refs:
     primary_problems: [FP08]
     claims: [C013]
@@ -3790,6 +4949,50 @@ M7:
       MC5:
         level: High
         rationale: Depends on check-in reminders
+    cluster_compatibility:
+      CL_A:
+        rating: P
+        rationale: >
+          Daily check-in can incorporate time estimation and
+          realistic load assessment. Addresses planning dimension
+          of time blindness but not real-time during-task
+          dimension. Useful for FP04 prevention.
+      CL_B:
+        rating: P
+        rationale: >
+          Guided check-in helps plan which tasks to start and
+          when, reducing decision overhead. But requires user to
+          show up (meta-initiation problem) and cannot help at
+          moment of stalling during the day.
+      CL_C:
+        rating: P
+        rationale: >
+          Can plan focus-intensive work during best attention
+          windows. Addresses planning dimension but not real-time
+          focus lapses. Limited by variability — what works Monday
+          may fail Tuesday.
+      FP05:
+        rating: S
+        rationale: >
+          Guided planning check-in directly addresses
+          prioritisation: review commitments, rank importance,
+          select today's focus. Forced prioritisation during
+          planning is practitioner-recommended. Plan may not
+          survive real-time interest-based impulses.
+      FP07:
+        rating: P
+        rationale: >
+          Could include "review meeting commitments from
+          yesterday." But if content was not captured (encoding
+          deficit means nothing to review from memory), check-in
+          has no material. Depends on M2-style capture upstream.
+      FP09:
+        rating: P
+        rationale: >
+          Could include email review step. But generating the
+          unreplied-email list requires M2-style monitoring.
+          Adds habit-formation burden to what could be a passive
+          process.
   refs:
     primary_problems: [FP01, FP03, FP05]
     claims: [C029, C030, C031]
@@ -3831,6 +5034,48 @@ M8:
       MC5:
         level: Low
         rationale: Not notification-dependent
+    cluster_compatibility:
+      CL_A:
+        rating: X
+        rationale: >
+          Time blindness is continuous and below awareness. On-
+          demand scaffolding requires user to recognise the
+          problem and seek help, contradicting the low-awareness
+          nature. A tool that waits to be asked cannot address it.
+      CL_B:
+        rating: P
+        rationale: >
+          When the user recognises they are stuck, scaffolding
+          (micro-step breakdown, starting-point draft) can lower
+          the activation barrier. Goblin Tools' approach,
+          community-validated. Fails when user is in unaware
+          procrastivity.
+      CL_C:
+        rating: P
+        rationale: >
+          When focus breaks and user notices, scaffolding can
+          help re-orient (what was I doing? next micro-step?).
+          But focus lapses are typically below awareness — works
+          for recovery phase, not prevention.
+      FP05:
+        rating: P
+        rationale: >
+          When overwhelmed by competing priorities, scaffolding
+          can generate a decision framework. Requires user to
+          recognise prioritisation struggle. Works for conscious
+          overwhelm; fails for unconscious procrastivity.
+      FP07:
+        rating: X
+        rationale: >
+          Meeting memory failure is invisible until commitment
+          is missed days later. User cannot request scaffolding
+          for a problem they do not know exists.
+      FP09:
+        rating: X
+        rationale: >
+          User does not know they have forgotten to reply. Cannot
+          request scaffolding for a below-awareness prospective
+          memory deficit. Structurally incompatible.
   refs:
     primary_problems: [FP01, FP11]
     claims: [C011]
@@ -3846,16 +5091,14 @@ M8:
 
 STG_001:
   type: staging
-  origin: FP13 (note field, removed during migration)
+  origin: FP13 Waiting Mode (note field, removed during migration)
+  status: superseded_by_STG_012
   content: >
-    Evidence in our formal corpus is thin — P2E interview
-    mentions (Andrei) and widely discussed in ADHD communities
-    but not surfaced in our FP-series Reddit research or clinical
-    sources. Scores are provisional. No existing claims in the
-    claims layer map to this problem specifically.
+    Original staging note for FP13 evidence thinness. Mislabeled
+    as "context switching cost" (that is FP10). Superseded by
+    STG_012 which captures the full demoted entity.
   promotion_condition: >
-    Create a dedicated claim when clinical or structured community
-    evidence for FP13 (context switching cost) is identified.
+    N/A — see STG_012.
 
 STG_002:
   type: staging
@@ -4059,3 +5302,136 @@ STG_006:
         review becomes a prioritisation exercise. This affects
         SR_005 (settled flags) and any future strategic review
         cycle.
+
+STG_007:
+  type: staging
+  origin: derivability assessment — requirements layer evaluation
+  status: open
+  content: >
+    S0 (Methodology), S1 (Master Problem List), CS2 (Choice Space
+    Map), CS3 (Cross-Layer Mapping sans solutioning), and CS4
+    (Engagement Models) represent the transition from claims to
+    requirements/thesis-level content. They need a proper
+    architectural evaluation of how the SoR should support them
+    as a layer, rather than piecemeal encoding of individual
+    fields. Key questions: should there be a requirements entity
+    type? Should these map to existing thesis claims? Is the
+    requirements layer distinct from the claims layer? What
+    derivability target is appropriate?
+  promotion_condition: >
+    Promote when a requirements-layer architecture decision has
+    been made. Output is either: (a) new entity types added to
+    SoR schema, (b) existing entities enriched with requirements
+    fields, or (c) explicit decision that these files remain
+    external references only.
+
+STG_008:
+  type: staging
+  origin: CS5 relocated candidates — entity typing assessment
+  status: open
+  content: >
+    CS5 Section 3 identified 6 phenomena that failed MC inclusion
+    criteria: Implementation Friction, Cognitive Overload from
+    Complexity, Inconsistency Across Contexts, Individual
+    Difference in EF Profiles, Support System Dependency, and
+    Multi-Comorbidity Complications. These are NOT failed meta-
+    challenges to be stored as excluded MCs. They are phenomena
+    that don't fit the meta-challenge entity type and need proper
+    assessment of what entity type (if any) they belong to.
+    Options include: cross-cutting concerns, problem modifiers,
+    mechanism sub-types, or genuinely outside SoR scope.
+  promotion_condition: >
+    Promote when entity typing assessment is complete. Each
+    candidate gets either: (a) assigned to an existing entity
+    type with rationale, (b) identified as needing a new entity
+    type (with schema proposal), or (c) explicitly scoped out
+    with reasoning.
+
+STG_009:
+  type: staging
+  origin: engagement model enrichment — data_access and trust fields
+  status: open
+  content: >
+    Engagement models (M1-M8) could be enriched with data_access
+    (what data does the model need?) and trust (what trust does
+    the user need to extend?) fields. These are structurally
+    relevant for L2→L3 mapping and product architecture
+    decisions. Currently not blocking any analysis but would
+    improve the engagement model entities' utility.
+  promotion_condition: >
+    Promote when the requirements-layer evaluation (STG_007) is
+    resolved — these fields may belong in the requirements layer
+    rather than the phenomena layer.
+
+STG_010:
+  type: staging
+  origin: technology assessment — S9 entity encoding
+  status: open
+  content: >
+    S9B-S9J contain 9 technology research documents covering
+    architecture, AI capabilities, and implementation patterns.
+    These have not been parsed into SoR entities. The technology
+    research is quarantined from the phenomena layer by design
+    (NO SOLUTIONING constraint). Whether and how to encode
+    technology entities depends on resolving the requirements-
+    layer question (STG_007) and potentially adding a technology
+    layer to the SoR schema.
+  promotion_condition: >
+    Promote when a decision is made on whether the SoR should
+    include a technology layer. If yes, define schema and parse
+    S9 content. If no, retain S9 files as external references.
+
+STG_011:
+  type: staging
+  origin: source encoding — weak source assessment
+  status: open
+  content: >
+    The SoR's source entities carry minimal metadata (type, tier,
+    name, notes). Whether to enrich them with richer fields
+    (methodology, sample size, limitations, specific findings) is
+    an open question. The current sparse encoding may be
+    intentional — sources exist primarily as attribution anchors
+    for claims, not as independently queryable entities. Enriching
+    them would improve derivability of S1-style source summaries
+    but may not justify the maintenance cost.
+  promotion_condition: >
+    Assess whether any downstream use case (report generation,
+    evidence audit, systematic review) requires richer source
+    metadata. If yes, define enriched schema. If current encoding
+    is sufficient for all use cases, close as intentional.
+
+STG_012:
+  type: staging
+  origin: FP13 Waiting Mode — demoted from active problem
+  status: open
+  content: >
+    "Waiting Mode" / anticipatory paralysis: an upcoming obligation
+    blocks productive work on everything else, even hours beforehand.
+    Temporal paralysis across ALL tasks — not task-specific like FP01.
+
+    Demoted because:
+    (1) Added from Morning_Extraction_Feb25, never entered via S1→S2→S3.
+    (2) Never went through gate evaluations. Gate 1 (software amenability)
+        is questionable — the core deficit is temporal anxiety about
+        scheduled events; software cannot suppress that awareness.
+    (3) ID collision — S1/S2 FP13 is Attendance (now FP13b). This entity
+        claimed an ID that belonged to a different problem.
+    (4) STG_001 mislabeled it as "context switching cost" (that is FP10).
+    (5) No claims linked. No cluster membership. Tier 3 evidence only.
+    (6) Scores were reconstructed from extraction, not formally assessed.
+
+    The phenomenon IS real and widely reported in ADHD communities.
+    High differentiation from neurotypical experience. Mechanism
+    alignment with MECH01 (time perception) and MECH02 (reward
+    sensitivity). If re-evaluated, needs: formal gate assessment,
+    proper ID assignment (not FP13), at least one supporting claim,
+    and a decision on whether software can meaningfully address
+    temporal anticipatory paralysis vs only its downstream effects.
+
+    Preserved data: frequency 3, differentiation 4, connectedness 2
+    (total 9, all Tier 3). Refs: MECH01, MECH02. No claims.
+  promotion_condition: >
+    Promote if: (a) formal gate assessment confirms software
+    amenability, (b) at least one claim with Tier 2+ evidence is
+    created, and (c) a non-colliding ID is assigned. Otherwise
+    close as "real phenomenon, not a software-addressable FP."
