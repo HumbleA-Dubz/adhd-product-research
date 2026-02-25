@@ -16,14 +16,8 @@ The funnel:
 - 3 causal clusters with clear hub problems
 - 4 white spaces where zero ADHD-specific tools exist
 
-The market:
-- $2.0–2.4B ADHD apps market, growing 11–16% CAGR
-- No ADHD-specific productivity app has raised a Series A
-- General productivity is saturated; ADHD-specific is nearly empty
-
 Where everything lives:
 - This repository contains the canonical knowledge graph (`System_of_Record.yaml`)
-- Interactive knowledge graph: [humblea-dubz.github.io/adhd-product-research](https://humblea-dubz.github.io/adhd-product-research)
 
 ---
 
@@ -126,17 +120,6 @@ FP02 Inconsistent Focus (13/15, Tier 1.0)
 - Most saturated market (44+ apps) but ADHD-specific mechanism (oscillation between hyperfocus and inability to focus) is poorly served
 - Hub of Cluster C: causes detail errors and contributes to deadline misses
 
-### Phase 3 Deep Dives
-
-Two problems received targeted deeper investigation. Both rose from 10 to 11 and had evidence tiers strengthened:
-
-| Problem | What Changed | Key Finding | New Tier |
-|---------|-------------|-------------|:--------:|
-| FP09 Email Management | Score 10→11 (Q3: 2→3) | Not inbox overload — prospective memory failure. Users read emails, form intention to reply, then the intention vanishes. Effect size d=1.60. | 1.5 (was 3.0) |
-| FP07 Meeting Memory | Score 10→11 (Q2: 4→5) | Not retrieval failure — encoding deficit. Reduced P3 amplitude during encoding means information was never properly stored. Working memory impairment d=1.63–2.03 in 75–81% of ADHD individuals. | 1.7 (was 2.7) |
-
-Product design implication: FP07 requires full capture (information was never encoded), not memory aids (which assume partial encoding).
-
 ---
 
 ## Causal Clusters
@@ -207,14 +190,7 @@ The market gap scores for FP07, FP09, and FP05 (all 8/15) understate the ADHD-sp
 
 If scored against ADHD-specific tools only, these would score 12–13/15.
 
-### Four True White Spaces (zero ADHD-specific tools)
-
-1. Meeting memory — the encoding deficit problem
-2. Email management — the "read-and-forgot" pattern
-3. Documentation paralysis — the "write" to "speak" opportunity
-4. Multi-channel commitment tracking — the cross-channel prospective memory gap
-
-### The PKM Failure Cycle
+### The Personal Knowledge Manager Failure Cycle
 
 Every "second brain" tool fails ADHD users in the same three-step pattern:
 
@@ -329,10 +305,6 @@ Canonical data store: `System_of_Record.yaml` (4,061 lines, 240KB) in this repos
 | Cross-Cutting Concerns | 4 | Population-level observations |
 | Engagement Models | 8 | Product interaction archetypes |
 
-### The Visual Explorer
-
-A D3.js interactive graph explorer was built and deployed to GitHub Pages — 122 nodes, 417 edges, 4 visual encoding presets, Ctrl+K search. It went through two build cycles (Next.js → D3+SVG). Source code was cleared for a rebuild; the last working build remains live at [humblea-dubz.github.io/adhd-product-research](https://humblea-dubz.github.io/adhd-product-research).
-
 ### Research File Codes
 
 The analysis pipeline produced the following deliverables (referenced throughout this briefing):
@@ -352,18 +324,3 @@ The analysis pipeline produced the following deliverables (referenced throughout
 | S9 | Technology Assessment (7 step-change technologies) | Analysis |
 | S10 | Final Synthesis (opportunity assessment) | Synthesis |
 | CS1–CS5 | Choice Space (methodology, map, cross-layer mapping, engagement models, meta-challenges) | Choice Space |
-
----
-
-## Open Questions
-
-What's decided:
-- The problem space is validated (predominantly Tier 1–2 evidence)
-- The market opportunity is real and underserved
-- The technology stack is ready (5 of 7 enabling technologies are production-ready)
-
-What's open:
-- Which specific product configuration to pursue — CS2–CS4 maps the option space but no product decision has been made
-- Individual vs enterprise targeting — the disclosure meta-challenge (MC4) makes this a non-trivial positioning decision
-- Whether to rebuild the visual knowledge graph explorer
-- Timeline for moving from research to product specification
