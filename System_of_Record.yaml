@@ -1,0 +1,4061 @@
+# System_of_Record.yaml
+# Canonical data store for ADHD workplace phenomena research.
+# All documentation and visualizations derived from this file.
+#
+# Schema defined in _framework section below. Entity data follows.
+#
+# NOT INCLUDED (deferred):
+# - Technologies (TECH_01-TECH_10) -> _archived/Technologies.yaml
+# - Foundations (FDN01-FDN07) -> deferred until technologies ready
+# - Raw evidence bases -> referenced via source IDs and analysis_docs fields
+
+# _framework_draft.yaml
+# Schema definitions for System_of_Record.yaml
+# DRAFT v2 — revised after review session.
+#
+# This section defines:
+#   1. Entity type definitions (fields, required/optional, valid values)
+#   2. Evaluation dimensions (gates, scoring rubrics, market gap)
+#   3. Derivation formulas
+#   4. Confidence model (including compound propagation)
+#   5. Staging conventions
+
+_framework:
+
+  # ─────────────────────────────────────────────────────────────
+  # SCOPE
+  # ─────────────────────────────────────────────────────────────
+  scope:
+    domain: "ADHD workplace functional problems"
+    population: "Working adults with ADHD in the UK"
+    constraint: "Software products only — no clinical validation, no service/content dependencies"
+    default_outcome: "Do not pursue. Analysis must surface something compelling to override."
+
+  # ─────────────────────────────────────────────────────────────
+  # KEY DEFINITIONS
+  # ─────────────────────────────────────────────────────────────
+  definitions:
+    functional_problem: >
+      An observable failure to complete, maintain, or perform a
+      work-relevant task or behaviour. Defined by what goes wrong
+      in practice, not by underlying symptom or internal experience.
+    problem_cluster: >
+      A set of functional problems that share root causes, co-occur
+      frequently, or where addressing one meaningfully affects others.
+      Clusters are identified during analysis, not assumed in advance.
+      A problem may be standalone or part of a cluster — this is an
+      emergent property of the research. A cluster requires multiple
+      member problems; single-problem relationships (amplification,
+      convergence) are properties of the problem, not clusters.
+    mechanism: >
+      An explanatory cognitive or neurological process that produces
+      one or more functional problems. Mechanisms describe WHY problems
+      occur. A mechanism is NOT a restated problem — it must explain
+      something that the problem description alone does not.
+    meta_challenge: >
+      A cross-cutting structural constraint that applies to ANY product
+      targeting ADHD workplace productivity, regardless of problem
+      cluster, engagement model, or implementation approach. Not a risk
+      that can be solved by a feature. A persistent environmental or
+      neurological constraint that shapes the entire solution space.
+    cross_cutting_concern: >
+      A population-level observation that modifies or contextualises
+      the problem landscape but is not itself a targetable problem.
+      Contextual facts about the population, research, or treatment
+      landscape that any solution must account for.
+    engagement_model: >
+      A structural archetype of user-product interaction. Describes
+      how an intervention reaches the user — initiation, effort,
+      timing, and integration characteristics. Not a product
+      specification; a pattern that makes meta-challenge severity
+      and problem addressability concrete.
+    claim: >
+      An evidence-backed assertion about ADHD workplace phenomena.
+      Claims are the atomic units of evidence. Each claim has a
+      statement, source references, and a confidence level.
+      Claims may reference external sources (primary evidence) or
+      internal entity data (derived conclusions).
+    source: >
+      A citable piece of primary evidence: a study, survey, consensus
+      statement, or curated community evidence aggregate. Sources are
+      the root of the evidence chain — they are not derived from other
+      entities in this system.
+
+  # ─────────────────────────────────────────────────────────────
+  # EVIDENCE TIERS
+  # ─────────────────────────────────────────────────────────────
+  evidence_tiers:
+    1:
+      label: High
+      description: "Peer-reviewed research, government/NHS data, systematic reviews"
+    2:
+      label: Moderate
+      description: "Industry reports, large-scale surveys (n>500), expert opinion, user reviews/forum synthesis"
+    3:
+      label: Low-Moderate
+      description: "Smaller surveys, multiple consistent anecdotal sources"
+    4:
+      label: Low
+      description: "Single studies, individual anecdotes, extrapolation from adjacent domains"
+
+  # ─────────────────────────────────────────────────────────────
+  # CONFIDENCE MODEL
+  # ─────────────────────────────────────────────────────────────
+  #
+  # Every claim and evaluation carries a confidence value.
+  #
+  # For claims referencing only external sources:
+  #   confidence = evidence_tier of source(s)
+  #   When multiple sources: use the best (lowest number) tier
+  #   that substantively supports the assertion.
+  #
+  # For claims referencing internal entities (derived conclusions):
+  #   confidence = compound, computed as follows.
+  #
+  confidence_model:
+    primary_confidence:
+      description: >
+        For claims whose evidence is entirely from external sources.
+        Confidence equals the evidence tier of the strongest
+        substantive source supporting the assertion.
+      rule: "best_tier(sources)"
+
+    compound_confidence:
+      description: >
+        For claims whose evidence includes or consists of internal
+        entity evaluations (other claims, entity scores, etc.).
+        Compound confidence reflects that derived conclusions inherit
+        the uncertainty of their inputs AND add inferential distance.
+      rule: >
+        1. Collect the confidence values of all referenced inputs
+           (source tiers for external refs, compound confidence for
+           internal refs).
+        2. Take the WEAKEST input (highest tier number) as the floor.
+           A chain is only as strong as its weakest link.
+        3. Add an inferential penalty of +0.5 per derivation step
+           beyond direct observation. A claim derived from two
+           first-order claims gets +0.5. A claim derived from
+           second-order claims gets +1.0. Cap at Tier 4.
+        4. Round to nearest 0.5.
+      examples:
+        - description: >
+            "Noisy General, Quiet Specific" — derived from market gap
+            evaluations on FP07 (tier 2), FP09 (tier 2), FP05 (tier 2).
+          calculation: "weakest input = 2.0, one derivation step = +0.5, result = 2.5"
+        - description: >
+            "FP03 is highest-leverage intervention point" — derived from
+            connectedness scores (tier 1-2), cluster hub analysis (tier 1-2),
+            downstream problem counts (tier 1).
+          calculation: "weakest input = 2.0, one derivation step = +0.5, result = 2.5"
+        - description: >
+            A strategic conclusion built on two second-order claims
+            (each at compound confidence 2.5).
+          calculation: "weakest input = 2.5, one derivation step = +0.5, result = 3.0"
+
+    staleness: >
+      When any input to a compound claim changes, the claim's confidence
+      is marked stale until re-evaluated. The entity retains its last
+      computed confidence with a `stale: true` flag. Maintenance
+      procedure: search all claims referencing the changed entity ID,
+      mark them stale, re-evaluate in dependency order (leaves first).
+
+  # ─────────────────────────────────────────────────────────────
+  # REF CONVENTIONS
+  # ─────────────────────────────────────────────────────────────
+  #
+  # Relationships are stored in one canonical direction only.
+  # No reverse refs. To resolve the reverse direction, scan
+  # entities of the relevant type. This eliminates sync risk —
+  # acceptable for AI agents that load the full file into context.
+  #
+  ref_conventions:
+    principle: >
+      Each relationship is stored once, in one canonical direction.
+      No reverse refs are maintained. To resolve the reverse
+      direction, scan entities of the relevant type for references
+      to the target ID.
+    canonical_directions:
+      - relationship: "evidence supports entity"
+        canonical: "entity.refs.claims lists its supporting claim IDs"
+        reverse: "to find what entities a claim supports, scan all entities' refs.claims"
+      - relationship: "mechanism explains problem"
+        canonical: "problem.refs.mechanisms lists its explanatory mechanism IDs"
+        reverse: "to find what problems a mechanism explains, scan all problems' refs.mechanisms"
+      - relationship: "problem belongs to cluster"
+        canonical: "cluster.refs.members lists its member problem IDs"
+        reverse: "to find what clusters a problem belongs to, scan all clusters' refs.members"
+      - relationship: "meta-challenge amplifies meta-challenge"
+        canonical: "meta_challenge.refs.amplifies lists MC IDs it amplifies"
+        reverse: "to find what amplifies a given MC, scan all MCs' refs.amplifies"
+      - relationship: "engagement model addresses problem"
+        canonical: "engagement_model.refs.primary_problems lists FP IDs it addresses"
+        reverse: "to find what models address a problem, scan all engagement_models' refs.primary_problems"
+
+  # ─────────────────────────────────────────────────────────────
+  # ENTITY TYPE: source
+  # ─────────────────────────────────────────────────────────────
+  entity_types:
+    source:
+      description: "Citable primary evidence — studies, surveys, curated aggregates"
+      fields:
+        type:           { required: true,  values: ["source"] }
+        name:           { required: true,  format: "string — Author/Title/Year" }
+        description:    { required: true,  format: "prose — what the source covers" }
+        source_type:    { required: true,  values: ["clinical_study", "population_cohort", "consensus_statement", "rct", "meta_analysis", "community_aggregate", "practitioner_survey", "case_series"] }
+        evidence_tier:  { required: true,  format: "Tier N or Tier N-M for ranges" }
+        url:            { required: false, format: "URL or DOI" }
+        analysis_docs:  { required: false, format: "list of doc IDs (P1A, P2B, etc.)" }
+        limitations:    { required: true,  format: "prose — known limitations, caveats, generalisability constraints" }
+
+    # ─────────────────────────────────────────────────────────────
+    # ENTITY TYPE: claim
+    # ─────────────────────────────────────────────────────────────
+    claim:
+      description: >
+        An evidence-backed assertion. Claims are the atomic units of
+        the evidence graph. All evaluations, scores, and conclusions
+        ultimately trace back to claims.
+      fields:
+        type:           { required: true,  values: ["claim"] }
+        statement:      { required: true,  format: "prose — the assertion being made" }
+        confidence:     { required: true,  format: "number 1.0-4.0 (computed per confidence_model)" }
+        refs:
+          sources:       { required: false, format: "list of source IDs (for primary evidence)" }
+          depends_on:    { required: false, format: "list of claim IDs (for derived claims)" }
+          entities:      { required: false, format: "list of entity IDs (for derived claims referencing entity data)" }
+          challenged_by: { required: false, format: "list of claim IDs (adversarial — claims that contradict or qualify this one)" }
+        comments:       { required: false, format: "prose — provenance, caveats, notes on evidence quality" }
+        stale:          { required: false, format: "boolean — true when inputs have changed since last evaluation" }
+      groups:
+        thesis:
+          description: >
+            A claim with group: thesis represents a contested assumption
+            where a change in confidence would prompt strategic
+            reconsideration — not just an update to scores or evaluations.
+            Theses are identified through strategic judgment, not
+            mechanical classification. A thesis requires a counter_thesis
+            sub-object articulating the strongest argument against it.
+          additional_fields:
+            group:           { required: true, values: ["thesis"] }
+            counter_thesis:
+              statement:     { required: true, format: "prose — the strongest argument against this thesis" }
+              evidence:      { required: true, format: "list of source/claim IDs supporting the counter-argument" }
+              strength:      { required: true, format: "prose — where and why the counter-argument has force" }
+
+    # ─────────────────────────────────────────────────────────────
+    # ENTITY TYPE: problem
+    # ─────────────────────────────────────────────────────────────
+    problem:
+      description: "Observable workplace functional failure"
+      fields:
+        type:           { required: true,  values: ["problem"] }
+        name:           { required: true,  format: "string" }
+        plain_language: { required: true,  format: "prose — what the failure looks like in practice" }
+        status:         { required: true,  values: ["active", "filtered_out", "below_threshold"], default: "active" }
+        cluster_notes:  { required: false, format: "prose — analytical reasoning about cluster membership or absence thereof" }
+        amplification_mechanism: { required: false, format: "prose — how this problem worsens other clusters (for cross-cluster amplifiers)" }
+        refs:
+          mechanisms:          { required: true,  format: "list of MECH IDs" }
+          amplifies_clusters:  { required: false, format: "list of CL IDs (for problems that amplify clusters they don't belong to)" }
+          claims:              { required: true,  format: "list of claim IDs" }
+        derived_from:   { required: true,  format: "source doc ID" }
+        # ── Evaluations (added during enrichment) ──
+        evaluations:
+          gates:
+            description: "Binary pass/fail on two gates. Present for ALL problems including filtered."
+            fields:
+              software_amenability:
+                result:    { required: true, values: ["pass", "fail", "conditional_pass"] }
+                rationale: { required: true, format: "prose — why it passed or failed" }
+                evidence:  { required: true, format: "list of source/claim IDs" }
+              individual_addressability:
+                result:    { required: true, values: ["pass", "fail", "conditional_pass"] }
+                rationale: { required: true, format: "prose — why it passed or failed" }
+                evidence:  { required: true, format: "list of source/claim IDs" }
+                caveat:    { required: false, format: "prose — for conditional results" }
+          scoring:
+            description: >
+              Three-dimension scoring. Only present for problems with
+              status=active (i.e., passed both gates).
+            fields:
+              frequency:
+                score:     { required: true, format: "integer 1-5" }
+                rationale: { required: true, format: "prose — assessment and reasoning" }
+                evidence:  { required: true, format: "list of source/claim IDs with tier annotations" }
+                tier:      { required: true, format: "number 1-4" }
+              differentiation:
+                score:     { required: true, format: "integer 1-5" }
+                rationale: { required: true, format: "prose" }
+                evidence:  { required: true, format: "list of source/claim IDs with tier annotations" }
+                tier:      { required: true, format: "number 1-4" }
+              connectedness:
+                score:     { required: true, format: "integer 1-5" }
+                rationale: { required: true, format: "prose" }
+                evidence:  { required: true, format: "list of source/claim IDs with tier annotations" }
+                tier:      { required: true, format: "number 1-4" }
+              total:       { derived: true, formula: "frequency + differentiation + connectedness" }
+              evidence_tier_avg: { derived: true, formula: "mean(frequency.tier, differentiation.tier, connectedness.tier)" }
+          market_gap:
+            description: >
+              Five-dimension market assessment. Present for problems
+              scoring >= 10 on the Problem Layer.
+            fields:
+              noise:
+                score:     { required: true, format: "integer 1-5" }
+                rationale: { required: true, format: "prose" }
+              product_enumeration:
+                description: "Existing products targeting this problem"
+                format: >
+                  Array of { product, positioning, maturity } objects.
+              maturity:
+                score:     { required: true, format: "integer 1-5" }
+                rationale: { required: true, format: "prose" }
+              adhd_user_reviews:
+                score:     { required: true, format: "integer 1-5" }
+                rationale: { required: true, format: "prose" }
+              root_cause_of_failure:
+                description: "Why existing solutions fail for ADHD users"
+                format: >
+                  Array of { cause, reasoning } objects. Each identifies
+                  a distinct failure pattern in existing products.
+              market_gap_score: { derived: true, formula: "noise + maturity + adhd_user_reviews" }
+          phase_3:
+            description: >
+              Phase 3 deep-dive selection decision. Records whether
+              further research was warranted and what was found.
+            fields:
+              selected:  { required: true,  values: [true, false] }
+              rationale: { required: true,  format: "prose — why selected or not" }
+              what_was_missing: { required: false, format: "prose — evidence gaps that triggered selection" }
+              templates_used:   { required: false, format: "list of template IDs (3A, 3B, 3C)" }
+              outcome:          { required: false, format: "prose — what Phase 3 research found" }
+      status_definitions:
+        active: "Passed both gates. Scored. Eligible for market gap and downstream analysis."
+        filtered_out: >
+          Failed one or both gates. Entity exists with full gate
+          evaluation data. Not scored. May be revisited if gate
+          criteria change or new evidence emerges.
+        below_threshold: >
+          Passed gates but scored too low to warrant further analysis.
+          Retains scoring data.
+
+    # ─────────────────────────────────────────────────────────────
+    # ENTITY TYPE: mechanism
+    # ─────────────────────────────────────────────────────────────
+    mechanism:
+      description: >
+        Explanatory cognitive/neurological process producing functional
+        problems. Must explain something the problem description alone
+        does not. Must NOT merely restate the problem at a different
+        abstraction level.
+      fields:
+        type:             { required: true,  values: ["mechanism"] }
+        name:             { required: true,  format: "string" }
+        plain_language:   { required: true,  format: "prose — what the process is and how it produces problems" }
+        variability:      { required: true,  format: "prose — how stable/variable across days, contexts, individuals" }
+        does_not_explain: { required: true,  format: "prose — explicit boundaries of what this mechanism does NOT account for" }
+        refs:
+          underlies_challenges: { required: false, format: "list of MC IDs" }
+          evidence:             { required: true, format: "list of claim IDs" }
+        derived_from:     { required: true, format: "source doc ID" }
+
+    # ─────────────────────────────────────────────────────────────
+    # ENTITY TYPE: cluster
+    # ─────────────────────────────────────────────────────────────
+    cluster:
+      description: >
+        Observed co-occurrence grouping of multiple functional problems.
+        Describes WHAT goes together. Mechanisms describe WHY.
+        A cluster must have multiple member problems. Single-problem
+        relationships (amplification, convergence, standalone status)
+        are properties of the problem entity, not separate clusters.
+      identification_criteria: >
+        Clusters are identified based on evidence of co-occurrence,
+        shared root causes, and cascading effects. Per methodology:
+        "Do not force clustering; record what emerges." A cluster
+        requires evidence from at least two independent sources.
+      fields:
+        type:             { required: true,  values: ["cluster"] }
+        name:             { required: true,  format: "string" }
+        causal_direction: { required: true,  format: "prose — direction, nature, and strength of causal relationships between members" }
+        refs:
+          hub:              { required: true,  format: "FP ID — the problem that causes/exacerbates others in this cluster" }
+          members:          { required: true,  format: "list of FP IDs (includes hub)" }
+          primary_mechanism: { required: true,  format: "MECH ID" }
+          claims:           { required: true,  format: "list of claim IDs" }
+        derived_from:     { required: true, format: "source doc ID" }
+
+    # ─────────────────────────────────────────────────────────────
+    # ENTITY TYPE: meta_challenge
+    # ─────────────────────────────────────────────────────────────
+    meta_challenge:
+      description: "Cross-cutting structural constraint on all ADHD workplace products"
+      inclusion_criteria:
+        all_required:
+          - criterion: "cross_cluster"
+            test: "Applies to at least 2 of the 3 primary problem clusters"
+          - criterion: "cross_engagement_model"
+            test: "Applies to at least 2 engagement models"
+          - criterion: "not_implementation_solvable"
+            test: "Cannot be resolved by building a specific feature"
+          - criterion: "evidenced"
+            test: "Supported by evidence beyond speculation"
+      fields:
+        type:           { required: true, values: ["meta_challenge"] }
+        name:           { required: true, format: "string" }
+        plain_language: { required: true, format: "prose" }
+        severity:       { required: true, values: ["Critical", "High", "Moderate-High", "Moderate"] }
+        severity_rationale: { required: true, format: "prose — reasoning for the severity assignment" }
+        severity_evidence:  { required: true, format: "list of source/claim IDs supporting the severity level" }
+        evidence_tier:  { required: true, format: "Tier range" }
+        key_evidence:   { required: true, format: "prose — summary of strongest evidence" }
+        evaluations:
+          inclusion_test:
+            description: "Per-criterion pass/fail with reasoning"
+            format: >
+              Map of criterion name → { met: boolean, reasoning: prose }.
+              All four criteria must be met for confirmation.
+        refs:
+          clusters_affected: { required: true, format: "list of CL IDs" }
+          claims:            { required: true, format: "list of claim IDs" }
+          amplifies:         { required: true, format: "list of MC IDs" }
+        derived_from:   { required: true, format: "source doc ID" }
+
+    # ─────────────────────────────────────────────────────────────
+    # ENTITY TYPE: cross_cutting_concern
+    # ─────────────────────────────────────────────────────────────
+    cross_cutting_concern:
+      description: >
+        Population-level observation that contextualises the problem
+        landscape. Not targetable, not scorable, but must be accounted
+        for in any solution design.
+      fields:
+        type:           { required: true, values: ["cross_cutting_concern"] }
+        name:           { required: true, format: "string" }
+        plain_language: { required: true, format: "prose" }
+        implications:   { required: true, format: "list of prose implication statements" }
+        refs:
+          claims:       { required: true, format: "list of claim IDs" }
+        derived_from:   { required: true, format: "source doc ID" }
+
+    # ─────────────────────────────────────────────────────────────
+    # ENTITY TYPE: engagement_model
+    # ─────────────────────────────────────────────────────────────
+    engagement_model:
+      description: >
+        Structural archetype of user-product interaction. Describes
+        how an intervention reaches the user — initiation, effort,
+        timing, and integration characteristics. Not a product
+        specification; a pattern that makes meta-challenge severity
+        and problem addressability concrete.
+      fields:
+        type:           { required: true, values: ["engagement_model"] }
+        name:           { required: true, format: "string" }
+        plain_language: { required: true, format: "prose — what this interaction pattern looks like" }
+        dimensions:
+          initiation:   { required: true, format: "prose — user-initiated to product-initiated spectrum" }
+          effort:       { required: true, format: "prose — effort level required from user" }
+          timing:       { required: true, format: "prose — before/during/after problem" }
+          continuity:   { required: true, format: "prose — separate surface vs embedded" }
+        retention_risk: { required: true, format: "prose — structural retention characteristics" }
+        habit_burden:   { required: true, format: "prose — degree of habit formation required" }
+        evaluations:
+          meta_challenge_vulnerability:
+            description: "Per-MC vulnerability assessment for this engagement pattern"
+            format: "Map of MC ID → { level: Very High/High/Moderate/Low, rationale: prose }"
+        refs:
+          primary_problems:   { required: true,  format: "list of FP IDs" }
+          secondary_problems: { required: false, format: "list of FP IDs" }
+          claims:             { required: true,  format: "list of claim IDs" }
+        derived_from: { required: true, format: "source doc ID" }
+
+  # ─────────────────────────────────────────────────────────────
+  # EVALUATION RUBRICS
+  # Transcribed from S0 methodology. These are the canonical
+  # definitions — entity evaluations reference these.
+  # ─────────────────────────────────────────────────────────────
+  evaluation_rubrics:
+
+    gates:
+      gate_1_software_amenability:
+        question: >
+          Can software provide meaningful support for this problem
+          without requiring clinical validation or human services?
+        pass: >
+          Software can fully address, substantially reduce impact,
+          or provide meaningful support as part of a broader approach.
+        fail: >
+          Software can only assist while primary intervention requires
+          human/clinical support, or problem fundamentally requires
+          clinical intervention.
+        data_sources: >
+          Clinical guidelines on ADHD workplace interventions,
+          occupational therapy literature, intervention studies
+          comparing software vs. human-supported approaches.
+
+      gate_2_individual_addressability:
+        question: >
+          Can the user achieve meaningful improvement through their
+          own actions, without requiring cooperation from managers,
+          colleagues, or organisational systems?
+        pass: >
+          User can address fully through own actions, or external
+          cooperation is helpful but not required, or partial solution
+          possible alone with full solution requiring some cooperation.
+        fail: >
+          Requires manager/colleague/system cooperation for meaningful
+          improvement, or problem primarily resides in workplace/systems
+          such that individual action is insufficient.
+        data_sources: >
+          Workplace accommodation literature, ADHD coaching case studies,
+          user community discussions about what they can vs. cannot control.
+
+    problem_layer:
+      scoring_convention: "Higher scores are better (more attractive problem to address)"
+      total_formula: "Q1 + Q2 + Q3"
+
+      Q1_frequency:
+        question: "How frequently does this problem disrupt work tasks or workflow?"
+        anchors:
+          5: "Multiple times per day"
+          4: "Daily"
+          3: "Several times per week"
+          2: "Weekly"
+          1: "Monthly or less"
+        data_sources: >
+          ADHD prevalence studies with frequency data, workplace
+          productivity research, self-report surveys, time-tracking
+          or diary studies.
+
+      Q2_differentiation:
+        question: "How differentiated is the ADHD experience of this problem?"
+        note: >
+          Measures whether ADHD-specific design would provide meaningful
+          advantage, not whether the problem is exclusive to ADHD.
+        anchors:
+          5: "Highly differentiated: qualitatively different triggers, patterns, or failure modes requiring specific design"
+          4: "Substantially differentiated: same problem but significantly more severe/frequent; standard solutions often fail"
+          3: "Moderately differentiated: common problem with ADHD-specific aspects affecting which solutions work"
+          2: "Slightly differentiated: general problem, ADHD adds some nuance but standard solutions mostly work"
+          1: "Not differentiated: ADHD users experience this the same way as everyone else"
+        data_sources: >
+          Comparative studies of ADHD vs. neurotypical task performance,
+          qualitative research on ADHD lived experience, user reviews
+          comparing ADHD vs. general user feedback on existing tools.
+
+      Q3_connectedness:
+        question: "Does this problem connect to other functional problems?"
+        note: >
+          Problems that act as hubs — causing or exacerbating multiple
+          downstream failures — are more valuable to solve.
+        anchors:
+          5: "Hub problem: addressing this would meaningfully reduce 4+ other identified problems"
+          4: "Cluster centre: addressing this would meaningfully reduce 2-3 other problems"
+          3: "Connected: addressing this would meaningfully reduce 1 other problem"
+          2: "Loosely related: shares context with others but addressing it wouldn't directly reduce them"
+          1: "Isolated: standalone problem with no meaningful connection to others"
+        data_sources: >
+          Causal models of ADHD workplace dysfunction, coaching/therapy
+          literature on intervention sequencing, user narratives
+          describing cascading failures.
+
+    market_gap_layer:
+      scoring_convention: "Higher scores indicate larger opportunity (less competition, poorer existing solutions)"
+      market_gap_formula: "Q1 + Q3 + Q4"
+      combined_formula: "problem_layer.total + market_gap_layer.market_gap_score"
+      combined_note: "Combined score is indicative, not mechanically determinative."
+
+      Q1_noise:
+        question: "How noisy is the market for solutions to this problem?"
+        anchors:
+          5: "Very quiet: few products, clear signal"
+          4: "Quiet: small number of identifiable solutions"
+          3: "Moderate: established players exist"
+          2: "Noisy: crowded market, difficult to differentiate"
+          1: "Very noisy: saturated market"
+        data_sources: >
+          App store searches, Google search results, Product Hunt,
+          G2/Capterra, ADHD community tool recommendation threads.
+
+      Q2_product_enumeration:
+        question: "What products exist that target this problem?"
+        format: >
+          Array of { product, positioning, maturity } objects.
+          Include: ADHD-specific vs general, estimated maturity,
+          funding if known.
+        data_sources: >
+          App stores, ProductHunt, Crunchbase, company websites,
+          ADHD community recommendations, review aggregators.
+
+      Q3_maturity:
+        question: "How mature are the leading products in this space?"
+        anchors:
+          5: "Nascent: no established players, early-stage or none"
+          4: "Emerging: products exist but still evolving"
+          3: "Established: clear market leaders, 2-5 years, funded"
+          2: "Mature: dominant players, 5+ years, feature-complete"
+          1: "Consolidated: category owned by 1-2 players, high switching costs"
+        data_sources: >
+          Crunchbase funding history, company pages, Wayback Machine,
+          press coverage.
+
+      Q4_adhd_user_reviews:
+        question: "What do user reviews indicate about effectiveness for ADHD users?"
+        anchors:
+          5: "Consistently negative: complaints about ineffectiveness, high abandonment"
+          4: "Mixed-negative: some positive but frequent frustrations, workarounds needed"
+          3: "Mixed: roughly balanced positive and negative"
+          2: "Mixed-positive: generally positive with common specific complaints"
+          1: "Consistently positive: ADHD users report effectiveness, strong retention"
+        data_sources: >
+          App store reviews filtered for ADHD mentions, Reddit threads,
+          ADDitude magazine reviews, ADHD coach/therapist recommendations.
+
+      Q5_root_cause_of_failure:
+        question: "Where existing solutions fall short, what appears to be the root cause?"
+        format: >
+          Array of { cause, reasoning } objects. Each identifies a
+          distinct failure pattern. Do not force categories; describe
+          what you observe.
+        data_sources: >
+          Negative review patterns, product shutdown post-mortems,
+          founder interviews, user community complaints.
+
+    phase_3_selection:
+      description: >
+        Criteria for selecting problems for deep-dive research.
+        Selection is warranted when any of the following apply.
+      criteria:
+        - id: "high_score_low_evidence"
+          description: "Problem scores well (total >= 10) but key scores rely on Tier 3-4 evidence"
+        - id: "borderline_gate"
+          description: "Problem passed gates with caveats; better evidence could flip the decision"
+        - id: "hub_requiring_confidence"
+          description: "Problem is a cluster hub, making scoring accuracy especially important"
+        - id: "market_gap_needs_data"
+          description: "Existing research lacks competitive landscape detail"
+      templates:
+        3A: "Problem behaviour detail (frequency, triggers, downstream consequences, ADHD differentiation)"
+        3B: "Existing solutions for specific problem (software tools, pricing, maturity, funding)"
+        3C: "User experience with specific tools (what works, what fails, why abandoned, what wished for)"
+
+  # ─────────────────────────────────────────────────────────────
+  # DERIVATION FORMULAS
+  # Named formulas that produce derived values from entity data.
+  # ─────────────────────────────────────────────────────────────
+  derivation_formulas:
+    problem_score:
+      formula: "frequency + differentiation + connectedness"
+      inputs: "evaluations.scoring.{frequency,differentiation,connectedness}.score"
+      output: "evaluations.scoring.total"
+
+    evidence_tier_avg:
+      formula: "mean(frequency.tier, differentiation.tier, connectedness.tier)"
+      inputs: "evaluations.scoring.{frequency,differentiation,connectedness}.tier"
+      output: "evaluations.scoring.evidence_tier_avg"
+
+    market_gap_score:
+      formula: "noise + maturity + adhd_user_reviews"
+      inputs: "evaluations.market_gap.{noise,maturity,adhd_user_reviews}.score"
+      output: "evaluations.market_gap.market_gap_score"
+
+    combined_score:
+      formula: "problem_score + market_gap_score"
+      inputs: ["evaluations.scoring.total", "evaluations.market_gap.market_gap_score"]
+      output: "evaluations.combined_score"
+      note: "Indicative, not mechanically determinative."
+
+  # ─────────────────────────────────────────────────────────────
+  # STAGING CONVENTIONS
+  # Items that don't fit any current entity type.
+  # ─────────────────────────────────────────────────────────────
+  staging:
+    description: >
+      Observations, candidates, and conclusions that do not currently
+      fit any defined entity type. Items are placed here when an AI
+      agent encounters data it cannot confidently classify. Items
+      remain until a human reviews and either assigns them a type
+      (moving them into the main entity set) or discards them.
+    fields:
+      id:             { required: true,  format: "STG_NNN" }
+      observation:    { required: true,  format: "prose — the thing observed" }
+      source:         { required: true,  format: "doc or entity ID where it was found" }
+      added:          { required: true,  format: "ISO date" }
+      context:        { required: false, format: "prose — any additional context" }
+
+  # ─────────────────────────────────────────────────────────────
+  # RECORDING REQUIREMENTS
+  # What must be recorded for every evaluation.
+  # ─────────────────────────────────────────────────────────────
+  recording_requirements:
+    every_evaluation:
+      - "Score or result"
+      - "Rationale (prose reasoning)"
+      - "Evidence references (source/claim IDs)"
+      - "Evidence tier"
+    every_entity:
+      - "All required fields per entity type"
+      - "derived_from reference to source document"
+    interpretation_note: >
+      Scores are indicative. They provide structure for comparison
+      but do not mechanically determine outcomes. Decisions are
+      judgment calls informed by patterns of scores, evidence
+      quality, and factors outside this framework.
+
+  # ─────────────────────────────────────────────────────────────
+  # SCHEMA REVIEW
+  # Deferred fields, structural questions, and maintenance flags.
+  # ─────────────────────────────────────────────────────────────
+  schema_review:
+    last_reviewed: "2025-02-25"
+    items:
+      - id: SR_001
+        subject: "claim (thesis group) — test_surface ref"
+        status: deferred
+        description: >
+          Planned ref type on thesis claims: list of entity IDs where the
+          thesis can be independently evidenced. Deferred because the
+          actual theses and their evidence maps don't exist yet — the
+          shape of this field should emerge from the data, not precede it.
+        added: "2025-02-25"
+
+      - id: SR_002
+        subject: "claim (thesis group) — evidence landscape"
+        status: deferred
+        description: >
+          Structured field for gradient evidence assessment on theses:
+          where the thesis holds strongly, where the counter-thesis has
+          force, and where neither side has meaningful evidence. Deferred
+          for same reason as SR_001 — needs populated theses first.
+        added: "2025-02-25"
+
+      - id: SR_003
+        subject: "claim — derived_from formalisation"
+        status: flagged
+        description: >
+          derived_from is used on many claims in practice but is not in
+          the claim type definition. Either add it as an optional field
+          or remove it from entities. Affects all entity types that use it.
+        added: "2025-02-25"
+
+      - id: SR_004
+        subject: "claim (thesis group) — settled status derivation"
+        status: deferred
+        description: >
+          Whether a thesis still represents strategic exposure or has
+          been resolved is currently a manual judgment during review.
+          Mechanical derivation would require numeric counter-thesis
+          confidence, which creates a circular dependency (need to
+          identify theses before scoring counter-theses). Using manual
+          status flag for now. Revisit if thesis count grows large enough
+          that review-by-reading becomes impractical, or if a lighter
+          derivation method becomes apparent.
+        added: "2025-02-25"
+
+      - id: SR_005
+        subject: "claim (thesis group) — populate settled flags"
+        status: todo
+        description: >
+          Thesis entities now exist (C054-C063). Each needs a manual
+          settled assessment recorded. Field TBD (likely status value
+          or boolean). Must be done before first strategic review
+          cycle can use theses as intended. All 10 theses carry
+          draft_review: true pending user review.
+        added: "2025-02-25"
+        updated: "2025-02-25"
+
+# ─────────────────────────────────────────────────────────────
+# CURRENT COUNTS
+# ─────────────────────────────────────────────────────────────
+# source:                 20
+# claim:                  64  (53 standard + 11 thesis group)
+# problem:                14
+# mechanism:              6
+# cluster:                3
+# meta_challenge:         6
+# cross_cutting_concern:  4
+# engagement_model:       8
+# staging:                4
+
+
+# ═══════════════════════════════════════════════════════════════
+# SOURCES
+# Bibliography of original cited research and evidence.
+# Claims reference these source IDs.
+# ═══════════════════════════════════════════════════════════════
+
+Fuermaier_2021:
+  type: source
+  name: "Fuermaier et al., 2021 — ADHD at the Workplace (WFIRS)"
+  description: >
+    German outpatient study using Weiss Functional Impairment
+    Rating Scale. n=134 ADHD adults vs matched controls and
+    general community sample. Primary source for WFIRS work
+    item prevalence data.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC8295111/
+  analysis_docs: [P1A, P1C]
+  limitations: >
+    Clinical outpatient sample — may over-represent impairment
+    vs community ADHD population. German sample — cultural
+    context may affect workplace norms.
+
+deGraaf_2008:
+  type: source
+  name: "de Graaf et al., 2008 — WHO World Mental Health Survey"
+  description: >
+    WHO survey of 7,075 workers across 10 countries measuring
+    productivity loss (presenteeism and absenteeism) in workers
+    with ADHD. Source of the 22.1 extra lost days figure.
+  source_type: population_cohort
+  evidence_tier: Tier 1
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC2665789/
+  analysis_docs: [P1A]
+  limitations: >
+    Self-report measure of role performance. "Lost days" are
+    estimated equivalents, not direct observation.
+
+Swedish_Population_2021:
+  type: source
+  name: "Swedish population cohort, 2021 — Employment outcomes"
+  description: >
+    Population register study. N=~64,000 including 9,718 ADHD,
+    48,590 controls, 5,582 siblings. Source of 10.2x disability
+    pension risk, 2.7x long-term sickness absence risk.
+  source_type: population_cohort
+  evidence_tier: Tier 1
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC10009402/
+  analysis_docs: [P1A, P1C]
+  limitations: >
+    Register-based diagnoses — captures treated ADHD, may miss
+    undiagnosed individuals. Swedish welfare system context.
+
+Barkley_Murphy_2010:
+  type: source
+  name: "Barkley & Murphy, 2010 — Occupational functioning in ADHD"
+  description: >
+    Structured occupational history interviews. Documented
+    higher rates of jobs quit, formal discipline, interpersonal
+    trouble, and impaired employer ratings in ADHD adults.
+    Cited by 751+ papers.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: https://academic.oup.com/acn/article/25/3/157/3840
+  analysis_docs: [P1A, P1C]
+  limitations: >
+    Retrospective occupational history — subject to recall bias.
+
+Adamou_2013:
+  type: source
+  name: "Adamou et al., 2013 — Occupational health consensus"
+  description: >
+    International occupational health consensus concluding ADHD
+    causes impairment "in all aspects related to employment."
+    Safety risk documentation.
+  source_type: consensus_statement
+  evidence_tier: Tier 1
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3599848/
+  analysis_docs: [P1A]
+  limitations: >
+    Consensus statement — reflects expert opinion at time of
+    publication.
+
+Norwegian_Employment_Study:
+  type: source
+  name: "Norwegian study — Inattention and employment status"
+  description: >
+    N=149. Found inattention significantly predicted employment
+    status while hyperactivity/impulsivity, comorbidities, and
+    demographics did not. Inattention correlations r=0.40-0.60
+    with work problems.
+  source_type: clinical_study
+  evidence_tier: Tier 1-2
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12128943/
+  analysis_docs: [P1C]
+  limitations: >
+    Smaller sample (n=149). Single-country context.
+
+Burnout_Mediation_2024:
+  type: source
+  name: "Job burnout mediation study, 2024 — EF deficit pathways"
+  description: >
+    Field study of 171 employees. Identified self-management
+    to time as the most significant executive function deficit
+    mediating the ADHD → burnout relationship.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11007411/
+  analysis_docs: [P1C, P2C]
+  limitations: >
+    Mediation analysis — identifies pathways but the specific
+    mediators tested may not be exhaustive. Emotional regulation
+    was not included as a mediator variable.
+
+Alderson_2020:
+  type: source
+  name: "Alderson et al., 2020 — Working memory bifactor model"
+  description: >
+    Bifactor modelling of working memory deficits in ADHD.
+    Effect sizes d=1.63-2.03, with 75-81% of ADHD individuals
+    showing measurable impairment in central executive WM.
+  source_type: meta_analysis
+  evidence_tier: Tier 1
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7483636/
+  analysis_docs: [P3B]
+  limitations: >
+    Meta-analytic — aggregates across studies with varying
+    methods and populations.
+
+Missonnier_2013:
+  type: source
+  name: "Missonnier et al., 2013 — Encoding deficit neural evidence"
+  description: >
+    First neural evidence of impaired encoding in adult ADHD.
+    Lower P3 amplitude during working memory encoding stage,
+    indicating ineffective attentional resource allocation.
+    Published in Clinical Neurophysiology.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: https://www.sciencedirect.com/science/article/abs/pii/S1388245713013485
+  analysis_docs: [P3B]
+  limitations: >
+    Neural study — sample size not noted in our documents.
+    Measures neural correlates, not directly workplace behaviour.
+
+Bonilla_2020:
+  type: source
+  name: "Bonilla et al., 2020 — WM encoding/retrieval in ADHD"
+  description: >
+    Confirmed that while binding processes are intact, attention-
+    related encoding and retrieval processes are compromised in
+    ADHD. Published in Scientific Reports.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: https://www.nature.com/articles/s41598-020-64678-x
+  analysis_docs: [P3B]
+  limitations: >
+    Laboratory task — ecological validity for workplace meetings
+    is inferred, not directly measured.
+
+Fuermaier_2013:
+  type: source
+  name: "Fuermaier et al., 2013 — Prospective memory in ADHD"
+  description: >
+    Large-scale impairment in task planning abilities. 45 ADHD
+    adults vs 45 matched controls. Published in PLOS ONE.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0058338
+  analysis_docs: [P3B]
+  limitations: >
+    Relatively small sample (n=90 total).
+
+Fuermaier_2016:
+  type: source
+  name: "Fuermaier et al., 2016 — Methylphenidate effects on memory"
+  description: >
+    Found medication improves memory but leaves considerable
+    impairments vs normal functioning. Large deficits persist
+    in story recall and prospective memory even when treated.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: https://www.tandfonline.com/doi/full/10.1080/23279095.2015.1124108
+  analysis_docs: [P3B, S10]
+  limitations: >
+    Single medication (methylphenidate). Other medications may
+    show different effects.
+
+Lauder_2024:
+  type: source
+  name: "Lauder et al., 2024 — Meta-analysis of workplace interventions"
+  description: >
+    Meta-analysis comparing pharmacological (d=0.19) and
+    psychosocial (d=0.56) interventions on work-relevant
+    outcomes for adults with ADHD. Psychosocial interventions
+    showed significantly larger effects.
+  source_type: meta_analysis
+  evidence_tier: Tier 1
+  url: https://journals.sagepub.com/doi/10.1177/27546330241292984
+  analysis_docs: [P2C]
+  limitations: >
+    Meta-analytic — pooled effect sizes may mask heterogeneity.
+    Work-relevant outcomes defined broadly.
+
+WorkMAP_RCT:
+  type: source
+  name: "Grinblat & Rosenblum, 2023 — Work-MAP telehealth RCT"
+  description: >
+    Randomised controlled trial of telehealth metacognitive
+    intervention for adults with ADHD. 11 weekly sessions.
+    15-19% of participants improved EF scores from abnormal to
+    normal range, sustained at 3-month follow-up.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC10336612/
+  analysis_docs: [P2C]
+  limitations: >
+    Structured therapeutic programme with clinician — not
+    directly comparable to software-delivered intervention.
+
+Medication_Adherence_2024:
+  type: source
+  name: "Medication adherence observational study (n=4,011)"
+  description: >
+    Found average medication adherence of 56%, with only 27.5%
+    meeting the 80% coverage threshold for therapeutic benefit.
+  source_type: clinical_study
+  evidence_tier: Tier 1
+  url: "Pubmed: 40357727"
+  analysis_docs: [Meta_Challenges]
+  limitations: >
+    Single observational study. Adherence patterns may vary
+    by medication type and healthcare system.
+
+Medication_Discontinuation_2024:
+  type: source
+  name: "Karolinska Institutet, 2024 — Multinational discontinuation"
+  description: >
+    Multinational study of 1.2M patients across 9 countries.
+    Found 50-70% of adolescents and adults discontinue ADHD
+    medication within the first year.
+  source_type: population_cohort
+  evidence_tier: Tier 1
+  url: "Karolinska Institutet, 2024"
+  analysis_docs: [Meta_Challenges]
+  limitations: >
+    Register-based data. Reasons for discontinuation not
+    captured.
+
+Digital_Intervention_Dropout:
+  type: source
+  name: "Pettersson et al., 2017 / Nordby et al., 2022 — Digital intervention dropout"
+  description: >
+    77% of ADHD adults did not complete self-guided digital
+    interventions. In broader self-guided interventions, >90%
+    drop out after 2 modules in open-distribution versions.
+    Cited in Frontiers in Digital Health.
+  source_type: meta_analysis
+  evidence_tier: Tier 1-2
+  url: "Nordby et al. 2022, Frontiers in Digital Health"
+  analysis_docs: [Meta_Challenges]
+  limitations: >
+    Self-guided only — coached digital interventions may have
+    better completion. The >90% figure is for depression
+    interventions, not ADHD-specific.
+
+P2A_Community_Reports:
+  type: source
+  name: "ADHD community self-reports (Reddit, ADDitude, forums)"
+  description: >
+    User-reported workplace struggles from r/ADHD, r/ADHD_
+    Programmers, ADDitude Magazine surveys, and ADHD community
+    forums. Source of qualitative descriptions like "invisible
+    barrier," "app graveyard," and "out of sight, out of mind."
+  source_type: user_evidence
+  evidence_tier: Tier 3
+  url: "Multiple community sources"
+  analysis_docs: [P2A, P2B]
+  limitations: >
+    Self-selected. No diagnosis verification. Recall bias.
+    Frustration likely over-represented. Not generalisable
+    to the ADHD population as a whole.
+
+ADDitude_Poll:
+  type: source
+  name: "ADDitude Magazine workplace challenges poll (n=~1,000)"
+  description: >
+    Survey of ~1,000 ADHD adults on biggest work challenges.
+    29.27% cited focusing consistently as #1, 21.86% cited
+    prioritisation.
+  source_type: user_evidence
+  evidence_tier: Tier 3
+  url: "ADDitude Magazine"
+  analysis_docs: [P2A]
+  limitations: >
+    Self-selected readership. Likely skews toward diagnosed,
+    treatment-seeking adults.
+
+ADHD_Coaching_Survey:
+  type: source
+  name: "ADHD coaching workforce survey"
+  description: >
+    Found 72.7% of ADHD coaches self-identify as having or
+    suspecting ADHD. 60.9% began practicing during/after COVID.
+    98.9% use lived experience to inform services.
+  source_type: practitioner_study
+  evidence_tier: Tier 2
+  url: "Cited in P2C"
+  analysis_docs: [P2C]
+  limitations: >
+    Self-report from practitioners. Coach qualifications and
+    methodologies vary widely.
+
+
+# ═══════════════════════════════════════════════════════════════
+# CLAIMS
+# Evidence statements with typed relationships.
+# The evidence base for the entire system of record.
+# ═══════════════════════════════════════════════════════════════
+
+C001:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Adults with ADHD show clusters of observable problems across
+    productivity, time management, reliability, interpersonal
+    behaviour and safety simultaneously, with more than 80%
+    reporting at least one significant work problem and ~60%
+    reporting three or more distinct problems.
+  refs:
+    sources: [Fuermaier_2021]
+  comments: >
+    German outpatient sample (n=134) using WFIRS scale.
+    Foundational claim establishing multi-domain impairment.
+
+C002:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Workers with ADHD lose 22.1 extra days per year of role
+    performance versus similar workers without ADHD, with more
+    than half the total loss occurring on days the worker is
+    present (presenteeism), not absent.
+  refs:
+    sources: [deGraaf_2008]
+  comments: >
+    WHO World Mental Health Survey, 7,075 workers across 10
+    countries. The presenteeism finding is significant — the
+    problem is not absence but reduced output while present.
+
+C003:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Adults with ADHD have a 10-fold higher risk of disability
+    pension and only 22-24% employment rates versus 72-79% in
+    control populations, consistent across Norwegian and Swedish
+    population cohorts.
+  refs:
+    sources: [Swedish_Population_2021, Norwegian_Employment_Study]
+    challenged_by: [C004]
+  comments: >
+    Swedish cohort N=~64,000 (including 9,718 ADHD); Norwegian
+    clinical sample. These are endpoint data showing labour
+    market exit, not just difficulty.
+
+C004:
+  type: claim
+  confidence: 1.0
+  statement: >
+    The most common self-reported work impairment (69%) is
+    "problems working to your potential" — an internal sense of
+    underperformance — while actual termination rates are lower
+    (20-23%), suggesting many ADHD adults experience their
+    performance as worse than employers perceive it.
+  refs:
+    sources: [Fuermaier_2021, Barkley_Murphy_2010]
+    challenged_by: [C005]
+  comments: >
+    WFIRS item #10 from Fuermaier; termination data from
+    Barkley & Murphy occupational history. The gap between
+    subjective distress and objective job loss matters for
+    product design.
+
+C005:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Even when blinded to ADHD diagnosis, employers rate ADHD
+    employees as having significantly greater inattentiveness,
+    poor punctuality, time management problems, and overall
+    poorer work performance than controls.
+  refs:
+    sources: [Barkley_Murphy_2010]
+  comments: >
+    Validates that impairment is observable, not just self-
+    perceived. Partially qualifies C004 — the gap between
+    self-report and employer perception may be smaller than
+    the internal/external framing suggests.
+
+C006:
+  type: claim
+  confidence: 1.5
+  statement: >
+    Inattention symptoms show the strongest correlations
+    (r=0.40-0.60) with work problems across both community and
+    clinical samples. Inattention significantly predicts
+    employment status while hyperactivity/impulsivity,
+    comorbidities, and demographics do not.
+  refs:
+    sources: [Norwegian_Employment_Study]
+  comments: >
+    N=149, multivariate analysis. This is why the mechanism
+    layer focuses on attention allocation, not hyperactivity.
+
+C007:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Objective cognitive tests account for little variance in
+    workplace functioning; self-reported everyday behaviours
+    predict work outcomes much better.
+  refs:
+    sources: [Barkley_Murphy_2010]
+  comments: >
+    Drawn from occupational history comparison of neuropsych
+    measures versus structured interview data. General finding
+    replicated across the ADHD workplace literature — ecological
+    validity of laboratory tests is poor.
+
+C008:
+  type: claim
+  confidence: 3.5
+  statement: >
+    Time blindness in ADHD is a fundamental difference in time
+    perception, not merely poor planning. Standard time
+    management tools (calendars, to-do lists) consistently fail
+    for ADHD users because they assume an internal time sense
+    that does not exist.
+  refs:
+    sources: [Burnout_Mediation_2024, Fuermaier_2021, P2A_Community_Reports]
+    depends_on: [C009]
+  comments: >
+    Burnout mediation study identified time management as key
+    EF deficit; Fuermaier WFIRS data quantified the impairment;
+    community reports document consistent tool failure. The
+    "assume an internal time sense" framing is our analytical
+    interpretation of why tools fail, hence typed as
+    interpretation.
+
+C009:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Self-management to time was identified as the most
+    significant executive function deficit mediating the
+    relationship between ADHD and job burnout.
+  refs:
+    sources: [Burnout_Mediation_2024]
+  comments: >
+    Field study of 171 employees. Mediation analysis
+    identifying time management as the strongest EF pathway
+    from ADHD to occupational failure.
+
+C010:
+  type: claim
+  confidence: 2.5
+  statement: >
+    Coaches and occupational therapists consistently prioritise
+    time management as the foundation for intervention because
+    it creates cascading effects: missed deadlines, incomplete
+    projects, chronic lateness, and job instability all follow
+    from time management deficits.
+  refs:
+    sources: [ADHD_Coaching_Survey, Burnout_Mediation_2024]
+    depends_on: [C009]
+  comments: >
+    Practitioner consensus on causal ordering, corroborated by
+    the mediation study's quantitative identification of time
+    management as primary EF mediator.
+
+C011:
+  type: claim
+  confidence: 3.0
+  statement: >
+    Task initiation failure in ADHD is qualitatively different
+    from procrastination. Users describe an "invisible barrier"
+    where they know exactly what to do but cannot start, due to
+    altered reward-processing systems. Standard productivity
+    advice ("just start") fails because it assumes a functioning
+    initiation system.
+  refs:
+    sources: [P2A_Community_Reports, ADDitude_Poll]
+  comments: >
+    Community self-reports (Reddit threads) and ADDitude poll
+    data on task initiation. The phenomenology ("invisible
+    barrier") is directly reported. The causal attribution to
+    reward processing is our interpretation, hence the type.
+
+C012:
+  type: claim
+  confidence: 2.0
+  statement: >
+    The ADHD brain activates on urgency, novelty, interest,
+    challenge, and passion (the INCUP framework) rather than
+    importance. Standard importance-based appeals (long-term
+    consequences, obligation) are structurally mismatched to
+    ADHD activation patterns.
+  refs:
+    sources: [P2A_Community_Reports, ADHD_Coaching_Survey]
+  comments: >
+    INCUP framework originates from Dodson's clinical work
+    (not a formal study in our bibliography — established
+    clinical knowledge). Community reports and practitioner
+    data provide the evidence that importance-based tools
+    fail in practice. Our contribution is applying the
+    framework to product design implications.
+
+C013:
+  type: claim
+  confidence: 3.0
+  statement: >
+    Delay discounting is a documented mechanism in ADHD where
+    distant rewards lose motivational value exponentially,
+    directly causing long-term project neglect despite
+    intellectual understanding of importance.
+  refs:
+    sources: [P2A_Community_Reports]
+  comments: >
+    Delay discounting is well-established in ADHD neuroscience
+    literature but no specific delay discounting study is in
+    our bibliography. The project neglect manifestation is
+    evidenced by community reports of long-term task
+    abandonment patterns. Consider adding a primary delay
+    discounting study if this claim needs strengthening.
+
+C014:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Working memory impairment in ADHD shows effect sizes of
+    d=1.63-2.03 with 75-81% of individuals showing measurable
+    impairment. Neurophysiological evidence shows lower P3
+    amplitude during encoding, indicating ineffective
+    attentional resource allocation at the encoding stage.
+  refs:
+    sources: [Alderson_2020, Missonnier_2013]
+  comments: >
+    Tier 1 clinical evidence. Alderson meta-analysis (effect
+    sizes and prevalence), Missonnier study (P3 neural
+    evidence). Separates encoding deficit from retrieval
+    failure — information never reaches storage.
+
+C015:
+  type: claim
+  confidence: 3.5
+  statement: >
+    Meeting memory failure occurs despite active engagement
+    and comprehension during the meeting. Users understand
+    content in real time but encoding fails silently — users
+    cannot recall even the gist afterward.
+  refs:
+    sources: [Missonnier_2013, Bonilla_2020, P2A_Community_Reports]
+    depends_on: [C014]
+  comments: >
+    Neural evidence (Missonnier, Bonilla) combined with user
+    self-reports of the lived experience. The "despite active
+    engagement" qualifier is critical — this is not an attention
+    problem but an encoding problem.
+
+C016:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Medication improves memory performance but leaves
+    considerable impairments compared to normal functioning,
+    with large deficits persisting in story recall and
+    prospective memory even in treated adults with ADHD.
+  refs:
+    sources: [Fuermaier_2016]
+  comments: >
+    Methylphenidate study. Key caveat: medication does not
+    normalise these deficits. Tools addressing encoding and
+    prospective memory are necessary even for medicated
+    populations.
+
+C017:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Email management failure manifests as reading emails, forming
+    intention to reply, then the intention vanishing from
+    awareness entirely — the "read and forgot" pattern. One
+    user was terminated specifically for failing to send a
+    calendar invite.
+  refs:
+    sources: [Fuermaier_2013, P2A_Community_Reports]
+  comments: >
+    Fuermaier 2013 documents the prospective memory impairment
+    mechanism (d=large, n=90); community reports provide the
+    workplace manifestation and employment consequences.
+
+C018:
+  type: claim
+  confidence: 1.0
+  statement: >
+    No existing email tool addresses the core ADHD email failure
+    mechanism: prospective memory failure for reply intentions.
+    All tools focus on inbox volume, processing speed, search,
+    or visual overwhelm, but none proactively resurface
+    forgotten reply intentions.
+  refs:
+    sources: [Fuermaier_2013, P2A_Community_Reports]
+  comments: >
+    Gap analysis: Fuermaier 2013 establishes the prospective
+    memory mechanism; community reports document which tool
+    features users actually encounter (none addressing PM).
+    Typed as interpretation because "no tool" is based on our
+    review's coverage, which may not be exhaustive.
+
+C019:
+  type: claim
+  confidence: 3.0
+  statement: >
+    The "out of sight, out of mind" pattern is described as
+    fundamental by users: "Those apps will NEVER WORK because
+    you have to remember to look at them, which you won't."
+  refs:
+    sources: [P2A_Community_Reports]
+  comments: >
+    Direct user quote from r/ADHD_Programmers. This is the
+    circular dependency expressed as a prospective memory
+    problem — the tool itself becomes subject to the deficit
+    it addresses.
+
+C020:
+  type: claim
+  confidence: 2.0
+  statement: >
+    The overwhelm-burnout cycle follows a documented pattern:
+    time management difficulties → missed deadlines → overtime
+    compensation → energy depletion → stress → emotional
+    dysregulation increases → performance decline → negative
+    feedback → job instability → repeat.
+  refs:
+    sources: [ADHD_Coaching_Survey]
+  comments: >
+    Practitioner-documented cascade pattern reported by
+    coaches and occupational therapists. Emotional
+    dysregulation is both a component and an amplifier.
+
+C021:
+  type: claim
+  confidence: 3.0
+  statement: >
+    Users report standard ADHD strategies as explicitly
+    counterproductive: Pomodoro technique interrupts hyperfocus
+    and creates "2 opportunities for failure an hour"; starting
+    with hardest task requires warm-up that doesn't exist;
+    increased pressure causes "brain shutdown."
+  refs:
+    sources: [P2A_Community_Reports]
+  comments: >
+    The "brain shutdown" under pressure is an emotional
+    dysregulation response. The Pomodoro/hardest-task failures
+    are reward-processing mismatches. Both are active harm
+    from neurotypical-designed tools.
+
+C022:
+  type: claim
+  confidence: 3.0
+  statement: >
+    No productivity tool tested by ADHD users shows sustained
+    success. Users report setup hyperfocus (spending days
+    configuring), followed by abandonment within 3-14 days,
+    creating an "app graveyard." Not a single tool shows
+    >90-day sustained use in community reports.
+  refs:
+    sources: [P2A_Community_Reports]
+  comments: >
+    Universal pattern across Notion, Todoist, Trello, ClickUp,
+    Asana, Habitica, Finch. Structural failure, not incidental.
+
+C023:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Five meta-challenges apply universally to any ADHD product:
+    Novelty Decay, Circular Dependency, Shame-Avoidance Spiral,
+    Disclosure Constraint, and Notification Desensitisation.
+  refs:
+    sources:
+      - P2A_Community_Reports
+      - ADHD_Coaching_Survey
+      - Medication_Adherence_2024
+      - Medication_Discontinuation_2024
+      - Digital_Intervention_Dropout
+  comments: >
+    Our analytical framework, constructed from five evidence
+    streams: community reports (novelty decay, circular
+    dependency), practitioner data (shame-avoidance, disclosure
+    constraint), and clinical studies (medication adherence and
+    digital intervention dropout as baseline comparators for
+    notification desensitisation and novelty decay). The
+    grouping into five named challenges is our construction;
+    each individual challenge traces to specific evidence.
+
+C024:
+  type: claim
+  confidence: 1.0
+  statement: >
+    ADHD medication adherence averages 56%, with only 27.5%
+    meeting the 80% coverage threshold, and 50-70% discontinuing
+    within the first year. If the gold-standard intervention
+    fails retention, digital tools should expect equal or worse.
+  refs:
+    sources: [Medication_Adherence_2024, Medication_Discontinuation_2024]
+  comments: >
+    Two studies: adherence study (n=4,011) for the 56% and
+    27.5% figures; Karolinska multinational study (1.2M
+    patients, 9 countries) for the 50-70% discontinuation
+    figure. The final sentence is our interpretation.
+
+C025:
+  type: claim
+  confidence: 1.5
+  statement: >
+    77% of ADHD adults did not complete self-guided digital
+    interventions in a meta-analysis of treatment dropout.
+    More than 90% drop out after 2 modules in open-distribution
+    self-guided interventions.
+  refs:
+    sources: [Digital_Intervention_Dropout]
+  comments: >
+    Pettersson et al. 2017 / Nordby et al. 2022. The >90%
+    figure is from broader self-guided interventions (not
+    ADHD-specific). This distinction matters for applying the
+    dropout rate to ADHD-specific products.
+
+C026:
+  type: claim
+  confidence: 2.0
+  statement: >
+    Both coaches and OTs report that ADHD adults face a
+    consistent disclosure dilemma at work: fear of
+    discrimination, uncertainty about whether disclosure helps,
+    managers who don't know how to respond, and lack of
+    organisational ADHD understanding.
+  refs:
+    sources: [ADHD_Coaching_Survey]
+  comments: >
+    Practitioner-reported pattern. Products must work without
+    requiring the user to explain or justify their ADHD to
+    colleagues.
+
+C027:
+  type: claim
+  confidence: 3.0
+  statement: >
+    Users want tools that "intervene before we get stuck, not
+    assistants waiting for us to remember to ask."
+  refs:
+    sources: [P2A_Community_Reports]
+  comments: >
+    Direct user quote. Explicit demand for product-initiated
+    intervention over user-initiated tools.
+
+C028:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Passive Capture and Structured Delivery has zero habit-
+    formation burden and the strongest retention profile because
+    the user changes nothing about how they work. Value
+    compounds over time as the knowledge graph grows.
+  refs:
+    sources: [P2A_Community_Reports, Fuermaier_2013]
+  comments: >
+    Community reports provide the evidence base (tool
+    abandonment patterns, habit-formation as failure point);
+    Fuermaier 2013 establishes why prospective memory burden
+    predicts failure. The retention and compounding claims are
+    hypothesised from these structural characteristics, not
+    observed in longitudinal data.
+
+C029:
+  type: claim
+  confidence: 2.0
+  statement: >
+    Structured Check-In / Guided Routine is the model most
+    recommended by practitioners and most abandoned by users.
+    It has the worst meta-challenge vulnerability profile of
+    any engagement model.
+  refs:
+    sources: [ADHD_Coaching_Survey, P2A_Community_Reports]
+    challenged_by: [C030]
+  comments: >
+    Practitioner recommendation from coaching survey;
+    abandonment from community data. The paradox is explained
+    by practitioners providing external accountability that
+    software cannot replicate.
+
+C030:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Psychosocial interventions (particularly CBT) show
+    significantly larger effects (d=0.56) on work-relevant
+    outcomes than pharmacological interventions (d=0.19) in
+    a 2024 meta-analysis of adult ADHD workplace outcomes.
+  refs:
+    sources: [Lauder_2024]
+  comments: >
+    Tier 1 meta-analysis. Partially qualifies C029 — structured
+    interventions DO work, but the evidence is for human-
+    delivered structured interventions, not software-delivered.
+
+C031:
+  type: claim
+  confidence: 1.0
+  statement: >
+    ADHD coaching/OT interventions incorporating external
+    structure, accountability, and client-selected goals show
+    15-19% improvement in executive function scores from
+    abnormal to normal range, sustained at 3-month follow-up.
+  refs:
+    sources: [WorkMAP_RCT]
+  comments: >
+    Randomised controlled trial (Tier 1). 11 weekly telehealth
+    sessions. External structure is clinically effective. The
+    question is whether software can deliver "external structure"
+    without the human.
+
+C032:
+  type: claim
+  confidence: 1.0
+  statement: >
+    No single engagement model addresses all problem clusters
+    at the "strongly compatible" level. Any product addressing
+    the full problem space requires combining multiple
+    engagement models.
+  refs:
+    sources: [Fuermaier_2021, P2A_Community_Reports, ADHD_Coaching_Survey, Lauder_2024]
+  comments: >
+    Derived from our compatibility analysis, which synthesizes
+    across clinical evidence (Fuermaier — problem breadth),
+    community data (tool failure patterns), practitioner
+    reports (intervention modalities), and the Lauder meta-
+    analysis (intervention effect sizes by type). The
+    conclusion that no single model covers all clusters is
+    structural, not directly measured.
+
+C033:
+  type: claim
+  confidence: 1.0
+  statement: >
+    ADHD is heterogeneous. The same engagement model may work
+    well for one profile (primarily inattentive) and poorly
+    for another (primarily hyperactive/impulsive, combined).
+    The research does not differentiate engagement patterns
+    by ADHD subtype.
+  refs:
+    sources: [Fuermaier_2021, Norwegian_Employment_Study]
+  comments: >
+    Both studies note sample composition and the inattentive-
+    predominant finding (C006), but neither differentiates
+    engagement or intervention response by subtype. ADHD
+    heterogeneity is universally acknowledged in the clinical
+    literature.
+
+C034:
+  type: claim
+  confidence: 3.0
+  statement: >
+    Engagement model retention profiles are hypothesised based
+    on structural characteristics, not observed in longitudinal
+    data. The "app graveyard" evidence provides negative data
+    on Structured Check-In but limited positive data on other
+    models.
+  refs:
+    sources: [P2A_Community_Reports]
+  comments: >
+    The positive evidence for tool abandonment is strong
+    (community data on the failure case). The absence of
+    longitudinal retention data for alternative models is
+    the caveat — our retention predictions are structural
+    inferences, not measurements.
+
+C035:
+  type: claim
+  confidence: 2.0
+  statement: >
+    Most ADHD coaching workforce (72.7%) self-identifies as
+    having or suspecting ADHD, with 98.9% using lived
+    experience to inform services. This creates both credibility
+    (lived experience) and potential methodological bias.
+  refs:
+    sources: [ADHD_Coaching_Survey]
+  comments: >
+    Affects interpretation of all practitioner evidence.
+    Coaches may recommend strategies that work for their own
+    neurotype. The population they serve may not be
+    representative.
+
+C036:
+  type: claim
+  confidence: 2.5
+  statement: >
+    Deadline misses (FP04) receive causal pressure from both time
+    blindness (insufficient time allocated) and focus failure
+    (insufficient output produced). Eliminating deadline misses
+    likely requires addressing both upstream causes simultaneously.
+  refs:
+    depends_on: [C008, C006]
+  comments: >
+    Convergence claim from cluster analysis. FP04 sits at the
+    intersection of CL_A (time-based) and CL_C (focus-based)
+    clusters.
+  derived_from: Our_S4
+
+C037:
+  type: claim
+  confidence: 2.5
+  statement: >
+    Long-term project neglect (FP08) receives causal pressure from
+    both time blindness (delay discounting compresses time horizon)
+    and initiation failure (activation energy highest for low-urgency
+    work). Effective intervention likely requires addressing both
+    upstream causes simultaneously.
+  refs:
+    depends_on: [C008, C011]
+  comments: >
+    Convergence claim from cluster analysis. FP08 sits at the
+    intersection of CL_A (time-based) and CL_B (activation-based)
+    clusters.
+  derived_from: Our_S4
+
+C038:
+  type: claim
+  confidence: 2.0
+  statement: >
+    Co-occurring neurodevelopmental conditions (autism, dyslexia,
+    dyscalculia, anxiety) substantially change the functional
+    profile of ADHD at work. Interview data shows 7/12 ADHD adults
+    had co-occurring conditions, and practitioners emphasise that
+    ADHD-plus-dyslexia and ADHD-plus-autism produce qualitatively
+    different functional patterns.
+  refs:
+    sources: [Fuermaier_2021, ADHD_Coaching_Survey]
+  comments: >
+    Comorbidity prevalence from P2E interviews (n=12). Practitioner
+    emphasis from P2E (Andrew). WFIRS data (Fuermaier) shows variable
+    profiles consistent with comorbidity-driven differences.
+  derived_from: Our_KG
+
+C039:
+  type: claim
+  confidence: 1.0
+  statement: >
+    ADHD functional problems do not confine to work — the same
+    mechanisms that cause task initiation failure at work operate
+    across domestic and social contexts. Users do not separate
+    "work ADHD" from "life ADHD" and describe struggles spanning
+    domains without distinction.
+  refs:
+    sources: [Fuermaier_2021, P2A_Community_Reports]
+  comments: >
+    WFIRS explicitly measures impairment across multiple life
+    domains (not work-only). P2I community evidence and P2E
+    interviews confirm cross-domain spillover as consistent
+    pattern.
+  derived_from: Our_KG
+
+C040:
+  type: claim
+  confidence: 3.0
+  statement: >
+    ADHD users can articulate functional pain in vivid detail but
+    struggle to describe what a solution would look like. Wishlists
+    tend to restate the problem rather than specify tool features.
+    Standard "what would you want?" research questions yield vague
+    responses.
+  refs:
+    sources: [P2A_Community_Reports]
+  comments: >
+    P2E interview evidence (Sarah: unable to specify what "one"
+    looks like). P2I/P2G community wishlists describe pain relief
+    rather than specific mechanisms. Implies behavioural observation
+    outweighs stated preference for feature discovery.
+  derived_from: Our_KG
+
+C041:
+  type: claim
+  confidence: 1.0
+  statement: >
+    Medication reduces but does not resolve functional workplace
+    problems. Adults on medication still experience the full range
+    of functional failures, sometimes at reduced intensity.
+    Workplace accommodations provide additional benefit beyond
+    medication alone.
+  refs:
+    sources: [WorkMAP_RCT, P2A_Community_Reports]
+  comments: >
+    Work-MAP RCT showed accommodation benefits beyond medication.
+    P2A/P2E: medicated users still report all major functional
+    problems. Medication is not an alternative to structural support.
+  derived_from: Our_KG
+
+C042:
+  type: claim
+  confidence: 1.5
+  statement: >
+    No engagement model is strongly compatible with all six
+    problem areas. Any product addressing the full problem space
+    requires combining multiple engagement models. A single-model
+    product will likely leave gaps in coverage.
+  refs:
+    depends_on: [C032]
+  comments: >
+    Affects product architecture decisions and scope/sequencing
+    decisions.
+  derived_from: Our_CS2
+
+C043:
+  type: claim
+  confidence: 3.5
+  statement: >
+    Models where the product comes to the user (M1, M2, M6)
+    are consistently less vulnerable to bootstrapping (MC2)
+    and notification desensitisation (MC5) than models requiring
+    user initiation (M3, M5, M7, M8). This appears to be a
+    structural characteristic rather than a design detail.
+  refs:
+    depends_on: [C019, C022, C025, C027]
+  comments: >
+    Affects engagement model prioritisation and architecture
+    decisions (push vs pull).
+  derived_from: Our_CS2
+
+C044:
+  type: claim
+  confidence: 3.5
+  statement: >
+    Models that become more valuable over time (M2's knowledge
+    graph, M5's calibration data, M4's pattern learning) are
+    more resistant to novelty decay (MC1) than models delivering
+    fixed-value interactions (M7's check-in, M3's recording).
+    Compounding value may create switching cost that counteracts
+    the tendency toward disengagement.
+  refs:
+    depends_on: [C022, C024, C028]
+  comments: >
+    Affects retention strategy and build sequencing (compound-value
+    components first).
+  derived_from: Our_CS2
+
+C045:
+  type: claim
+  confidence: 3.5
+  statement: >
+    Models that operate in the background (M1, M2, M6) are
+    simultaneously resistant to shame (nothing to fall behind
+    on) and disclosure (nothing visible to colleagues).
+    Foreground models (M3, M5, M7) generate both shame
+    artefacts and workplace visibility. Both constraints may
+    be addressable through a single architectural choice.
+  refs:
+    depends_on: [C020, C022, C026]
+  comments: >
+    Affects architecture decisions (background vs foreground)
+    and enterprise/workplace deployment strategy.
+  derived_from: Our_CS2
+
+C046:
+  type: claim
+  confidence: 3.5
+  statement: >
+    Push-based delivery mitigates bootstrapping (MC2) but
+    creates notification desensitisation vulnerability (MC5).
+    Pull-based delivery avoids MC5 but creates MC2 vulnerability.
+    One potential resolution is embedding in existing workflows
+    rather than using either push or pull as primary delivery —
+    the ambient presence pattern (M2, M6).
+  refs:
+    depends_on: [C019, C025]
+  comments: >
+    Affects notification/delivery architecture and integration
+    strategy.
+  derived_from: Our_CS2
+
+C047:
+  type: claim
+  confidence: 2.5
+  statement: >
+    Structured Check-In (M7) has strong practitioner endorsement
+    alongside the weakest meta-challenge profile in our analysis.
+    Practitioners provide external accountability that makes
+    check-ins work — the practitioner IS the bootstrapping
+    mechanism, the shame regulator, and the novelty source.
+    These functions may be difficult to replicate in software
+    alone.
+  refs:
+    depends_on: [C029, C030, C031]
+  comments: >
+    Affects whether to include structured check-in at all and
+    human-in-loop vs pure software decisions.
+  derived_from: Our_CS2
+
+C048:
+  type: claim
+  confidence: 4.0
+  statement: >
+    Passive Capture (M2) shows fewer high vulnerabilities in our
+    analysis and strong clinical evidence (Tier 1 encoding/PM
+    data), but is strongly compatible with only 2 of 6 problem
+    areas (FP07, FP09). The broadest model (M1 Ambient Monitor)
+    has weaker evidence and high privacy requirements. The models
+    with stronger evidence tend to address fewer problem areas.
+  refs:
+    depends_on: [C014, C015, C017, C028]
+  comments: >
+    Affects product scope decisions and evidence-based vs
+    coverage-based prioritisation.
+  derived_from: Our_CS2
+
+C049:
+  type: claim
+  confidence: 2.0
+  statement: >
+    If 56% medication adherence and 50-70% first-year
+    discontinuation are the baseline for the gold-standard
+    intervention, digital tools may face similar or worse
+    retention challenges. Any retention claim for a digital
+    product that assumes better retention than medication needs
+    strong justification. This reframes retention as "how do
+    we deliver value assuming poor retention."
+  refs:
+    depends_on: [C024, C025]
+  comments: >
+    Affects retention strategy and value delivery architecture
+    (front-load vs compound).
+  derived_from: Our_CS5
+
+C050:
+  type: claim
+  confidence: 4.0
+  statement: >
+    Meeting memory (FP07) and email (FP09) have the strongest
+    clinical evidence (Tier 1), no ADHD-specific tools identified
+    in our research, an engagement model with no high
+    vulnerabilities in our analysis (M2), and minimal user
+    behaviour requirements (passive capture). If risk minimisation
+    is a priority, this cluster appears favourable. The tradeoff
+    is narrow applicability — only 2 of 13 problems are addressed.
+  refs:
+    depends_on: [C014, C015, C017, C018, C028]
+  comments: >
+    Affects product scope decisions and MVP definition.
+  derived_from: Our_CS2
+
+C051:
+  type: claim
+  confidence: 3.5
+  statement: >
+    Task initiation (FP01) scores highest on frequency (5/5) and
+    is among the most-discussed problems in our sources. But the
+    most compatible model (M1 Ambient Monitor) has high privacy
+    requirements, significant build complexity, and an unresolved
+    stuck-vs-thinking detection problem. High demand, high risk.
+    The alternative path through M4 (Intelligent Reordering) is
+    lower-risk but addresses initiation only partially.
+  refs:
+    depends_on: [C011, C012, C027]
+  comments: >
+    Affects product scope decisions and technical risk assessment.
+  derived_from: Our_CS2
+
+C052:
+  type: claim
+  confidence: 2.5
+  statement: >
+    ADHD is heterogeneous. Engagement patterns, problem severity,
+    and intervention response vary by subtype (inattentive,
+    hyperactive/impulsive, combined), comorbidity profile,
+    medication status, and job type. The research does not
+    differentiate by these factors. All claims in this system
+    are averages across a heterogeneous population.
+  refs:
+    depends_on: [C033, C035]
+  comments: >
+    Affects target user definition, personalisation requirements,
+    and confidence in universal claims.
+  derived_from: Our_CS2
+
+C053:
+  type: claim
+  confidence: 3.5
+  statement: >
+    Engagement model retention profiles are hypothesised from
+    structural characteristics, not observed in longitudinal
+    data. The only empirically supported retention finding in
+    our reviewed literature is negative: Structured Check-In
+    models are abandoned. Positive retention claims for other
+    models (especially M2's strongest retention) are structural
+    inferences that need testing.
+  refs:
+    depends_on: [C034]
+  comments: >
+    Affects confidence in retention claims, test design
+    priorities, and what to validate first.
+  derived_from: Our_CS2
+
+
+# ─────────────────────────────────────────────────────────────
+# THESIS CLAIMS (group: thesis)
+# Contested assumptions where a change in confidence would
+# prompt strategic reconsideration. Draft set — developed from
+# STG_005 candidates plus one identified gap (C063).
+# All marked draft_review: true pending user review.
+# ─────────────────────────────────────────────────────────────
+
+C054:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 1.5
+  statement: >
+    ADHD produces persistent, measurable workplace functional
+    impairment across multiple work domains, affecting the majority
+    of diagnosed adults at rates substantially exceeding neurotypical
+    populations. This impairment is not an artefact of self-report
+    bias, poor motivation, or insufficient effort. The problem space
+    is real and material enough to warrant intervention.
+  counter_thesis:
+    statement: >
+      Workplace functional impairment is real but systematically
+      overstated by self-report instruments. WFIRS data shows 69%
+      of ADHD adults feel they are "working below potential," but
+      formal performance consequences (termination, disciplinary
+      action) affect only 20-23%. This 3-4x amplification factor
+      suggests subjective distress substantially exceeds measurable
+      dysfunction. The commercially addressable population may be
+      the smaller group with observable performance impact, not the
+      larger group experiencing subjective impairment.
+    evidence: [Fuermaier_2021, P2A_Community_Reports, C038]
+    strength: >
+      Has specific force on market sizing and population definition.
+      The discrepancy between self-perceived impairment and
+      externally observable impairment is documented in both
+      clinical (WFIRS) and community (P2I) data. The comorbidity
+      interaction (C038 — 7/12 interview participants had co-
+      occurring conditions) means some impairment attributed to
+      ADHD may be driven by co-occurring conditions, narrowing
+      the ADHD-specific addressable problem. Does NOT undermine
+      that functional problems exist — challenges the scale and
+      the sharpness of the boundary around ADHD-specific impairment.
+  refs:
+    sources: [Fuermaier_2021, WorkMAP_RCT, Norwegian_Employment_Study]
+    depends_on: [C001, C002, C003, C039]
+  comments: >
+    Highest-confidence thesis. Tier 1 evidence from multiple
+    independent sources. Counter-thesis is about magnitude and
+    boundary, not existence. If this thesis is wrong, the entire
+    SoR is investigating a non-problem. Developed from STG_005
+    candidate "Problem space is real."
+
+C055:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 2.5
+  statement: >
+    ADHD neurology requires architecturally different product design,
+    not better execution of existing patterns. Neurological mechanisms
+    — dopamine reward signalling, working memory limits, attention
+    dysregulation, time perception distortion, prospective memory
+    failure — constrain which interventions can work. Current
+    productivity tools fail because their design assumptions (user-
+    initiated engagement, habit-dependent value, visible failure
+    accumulation, consistent daily use) are structurally incompatible
+    with these mechanisms. The failure is architectural, not a
+    quality deficiency. The tool-requires-capacity paradox — tools
+    demanding the executive function they aim to support — is the
+    signature of structural incompatibility, not poor UX.
+  counter_thesis:
+    statement: >
+      The neurological constraints are real but their design
+      implications are overstated. CBT produces larger workplace
+      effect sizes (d=0.56) than medication (d=0.19) in a 2024
+      meta-analysis, proving behavioural approaches work despite
+      neurological substrates. Many tool failures attributed to
+      ADHD-specific incompatibility are universal UX failures (poor
+      onboarding, notification fatigue, feature overwhelm) affecting
+      all users. Some ADHD users succeed with standard tools (P2E
+      interview evidence). ADHD heterogeneity (C052) means the
+      structural-incompatibility framing may apply to a subset, not
+      the population. Better general-purpose tools following
+      universal accessibility principles would address ADHD users
+      as a side effect of good design, not through ADHD-specific
+      architecture.
+    evidence: [Lauder_2024, C030, C031, P2A_Community_Reports, C029, C033, C052]
+    strength: >
+      Strongest where tool failures overlap with neurotypical
+      experience — notification fatigue, setup complexity, and
+      feature overwhelm affect everyone. The CBT evidence (Tier 1)
+      directly demonstrates structured behavioural intervention
+      works for this population. P2E interview data shows ADHD
+      users succeeding with standard tools (particularly milder
+      presentations or effective medication). Counter weakens where
+      failures are ADHD-specific at severity levels absent in
+      neurotypical populations: tool-requires-capacity paradox
+      (needing executive function to use executive function tools),
+      prospective memory failure to use the tool at all, and shame
+      spirals from visible failure accumulation that trigger
+      complete abandonment.
+  refs:
+    sources: [Lauder_2024, Fuermaier_2021, P2A_Community_Reports, ADHD_Coaching_Survey]
+    depends_on: [C004, C005, C006, C007, C008, C009, C010, C029, C030, C032]
+    entities: [MECH01, MECH02, MECH03, MECH04, MECH05, MECH06, MC1, MC2, MC3, MC4, MC5, MC6]
+  comments: >
+    MERGED from original C055 ("Neurological, not behavioural") and
+    C057 ("Existing tools fail structurally"). These were not
+    independent axes of uncertainty — if the mechanisms do not
+    constrain design (C055 false), then the tools do not fail
+    structurally (C057 false). If tools fail for quality reasons
+    (C057 false), then the mechanisms are not the binding constraint
+    (C055 weakened). Merged to avoid double-counting the same
+    strategic risk. If the counter is correct, the strategy shifts
+    from "different kind of tool" to "better version of existing
+    tools with ADHD marketing." STG_005 candidates: "Neurological,
+    not behavioural" + "Existing tools fail structurally."
+
+C056:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 2.0
+  statement: >
+    Software can deliver the effective components of external
+    cognitive scaffolding — structure, memory augmentation, activation
+    support, accountability — that clinical evidence shows works when
+    delivered by humans. The medication gap is well-established
+    (Tier 1, see C041) and non-pharmacological external structure
+    helps (Tier 1, see C031). The contested question is whether
+    software can replicate the elements that make human-delivered
+    intervention effective, or whether human accountability,
+    adaptation, and emotional attunement are the active ingredients
+    that software cannot provide.
+  counter_thesis:
+    statement: >
+      Software cannot replicate the active ingredients of effective
+      external structure. Work-MAP RCT improvement (15-19%) came from
+      clinician-delivered intervention providing real-time adaptation,
+      relational accountability, and emotional regulation support.
+      The practitioner IS the bootstrapping mechanism, the shame
+      regulator, and the novelty source (C047). Software strips away
+      precisely these human elements. No evidence exists for software-
+      only delivery of external structure producing comparable workplace
+      outcomes. The gap between "external structure helps" and
+      "software-delivered external structure helps" is the gap between
+      evidence and hypothesis.
+    evidence: [WorkMAP_RCT, C031, C047, ADHD_Coaching_Survey, Lauder_2024]
+    strength: >
+      The strongest element: all positive evidence for non-pharma
+      workplace improvement is for HUMAN-delivered intervention.
+      Zero evidence for software-delivered structural support at
+      comparable efficacy. The practitioner accountability function
+      (C047) identifies specific human capabilities — relational
+      accountability, emotional attunement, real-time adaptation —
+      that current software cannot replicate. Counter weakens if AI
+      advances close the gap on these capabilities, particularly
+      relational modelling and adaptive scaffolding. Also weakens
+      where the software provides DIFFERENT effective components
+      (perfect memory, passive capture, tireless consistency) rather
+      than replicating the human ones.
+  refs:
+    sources: [WorkMAP_RCT, Lauder_2024]
+    depends_on: [C041]
+    entities: [CC04]
+  comments: >
+    Closely related to C054 (problem exists) but addresses a
+    different strategic question: not whether the impairment is
+    real but whether software is the right delivery mechanism for
+    addressing it. If this thesis is wrong, the product needs
+    human-in-loop delivery (coaching platform, not standalone
+    tool). Developed from STG_005 candidate "Medication is
+    insufficient."
+
+C057:
+  type: claim
+  group: thesis
+  draft_review: true
+  status: merged_into_C055
+  confidence: null
+  statement: >
+    [MERGED INTO C055] Original thesis "Existing tools fail
+    structurally" was not independent of C055 "Neurological
+    mechanisms constrain design." Both represented the same
+    strategic risk (is ADHD-specific architecture necessary?)
+    from different angles. Maintaining both would double-count
+    the same uncertainty. See C055 for the merged thesis.
+  refs:
+    depends_on: [C055]
+  comments: >
+    Merged during steel-man review. The dependency: if mechanisms
+    do not constrain design (C055 false), then tools do not fail
+    structurally (C057 false). Not independently testable.
+    Original STG_005 candidate: "Existing tools fail structurally."
+
+C058:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 4.0
+  statement: >
+    Effective ADHD workplace tools require simultaneous competence
+    in clinical neuroscience (mechanism-aware design), product
+    design (meta-challenge-aware architecture, accommodation without
+    stigma), and technical implementation (ambient capture, knowledge
+    graphs, on-device processing). This three-way competence
+    requirement creates a structural barrier to entry that partially
+    explains why no well-funded ADHD-specific productivity product
+    exists despite a multi-billion-dollar addressable market.
+  counter_thesis:
+    statement: >
+      The interdisciplinary barrier is not unique to ADHD — digital
+      health products routinely require clinical, design, and
+      technical competence. Diabetes management, mental health
+      platforms, chronic pain, and addiction recovery have all
+      produced successful products despite similar requirements.
+      The absence of funded ADHD workplace tools more likely reflects
+      correct market assessment (small, fragmented, difficult
+      monetisation) than an unusually high competence barrier. AI/LLM
+      advances further reduce the interdisciplinary requirement —
+      general-purpose AI can approximate clinical accommodation
+      insight without purpose-built neuroscience expertise.
+    evidence: [P2A_Community_Reports, C034, C049, C053]
+    strength: >
+      The digital-health comparison has real force but is weaker
+      than it appears. Noom, BetterHelp, and Headspace succeeded
+      with interdisciplinary teams — but none face the ADHD meta-
+      challenge framework. The critical difference: other health-tech
+      products can assume sustained user engagement. ADHD tools
+      cannot. Noom's habit-formation model would collapse under MC2
+      (novelty-dependent engagement). BetterHelp's scheduling model
+      assumes prospective memory. Headspace's streak-based retention
+      triggers MC1 (tool-requires-capacity paradox) — maintaining
+      a meditation habit requires the executive function meditation
+      aims to develop. The interdisciplinary barrier is not just
+      "hard health-tech" but "health-tech where the target condition
+      undermines the engagement model every other health-tech product
+      relies on." The AI-reduces-barrier argument has emerging force
+      for the clinical knowledge dimension but does not address the
+      design dimension — knowing what accommodations work is not the
+      hard part; building a product that ADHD users can sustain
+      using is the hard part. Counter is strongest where the market-
+      size explanation (investors correctly assess a small market)
+      is sufficient without invoking competence barriers at all —
+      the competence barrier may be real but irrelevant if the
+      market ceiling is genuinely low.
+  refs:
+    depends_on: [C032, C042]
+    entities: [MC1, MC2, MC3, MC4, MC5, MC6]
+  comments: >
+    Lowest-confidence thesis in the strategic set. Largely
+    inferred — no source directly studies why ADHD workplace
+    products are underfunded. The thesis matters because if the
+    barrier IS interdisciplinary competence, that is a moat. If
+    it is market size, there is no moat. Developed from STG_005
+    candidate "The gap is interdisciplinary."
+
+C059:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 4.0
+  statement: >
+    Investment markets systematically undervalue non-pharmacological
+    ADHD workplace intervention. The absence of well-funded products
+    in a multi-billion-dollar addressable market growing at 11-16%
+    CAGR reflects market mispricing driven by: investors
+    extrapolating from the failure rate of structurally flawed tools,
+    difficulty demonstrating clinical efficacy for non-pharma
+    approaches, and enterprise procurement structures that route
+    ADHD accommodation through HR/disability frameworks rather than
+    software procurement.
+  counter_thesis:
+    statement: >
+      The market is correctly valued. Professional investors evaluate
+      ADHD productivity tools and pass for articulable reasons:
+      the addressable segment is too small for VC-scale returns,
+      B2C ADHD tools have poor unit economics (high acquisition
+      cost, high churn, low willingness to pay), enterprise sales
+      face the disclosure barrier (employees will not use employer-
+      provided ADHD tools), and the app graveyard problem means
+      standard SaaS retention metrics are structurally unachievable.
+      The B2C ADHD app market exists at small scale (Tiimo, Llama
+      Life, Focusmate) — the ceiling may genuinely be low.
+    evidence: [P2A_Community_Reports, C034, C049, C053]
+    strength: >
+      The "investors are rational" argument has significant force.
+      The disclosure constraint (MC4) directly undermines enterprise
+      distribution channels. The retention data gap (C053) means
+      positive retention claims for alternative engagement models
+      are untested hypotheses, not evidence. The counter weakens
+      if structurally different engagement models (passive capture,
+      ambient monitoring) produce fundamentally different retention
+      curves than the habit-dependent models that have failed — but
+      this is precisely the untested assumption that C062 addresses.
+      Circular dependency: this thesis depends partly on C062 being
+      correct.
+  refs:
+    depends_on: [C034, C049, C053]
+    entities: [MC4]
+  comments: >
+    Market data referenced here (market size, CAGR, competitive
+    landscape) is from S10 synthesis and P2D landscape analysis,
+    not encoded as formal claims in this system. The market
+    assessment layer is outside the SoR scope — this thesis sits
+    at the boundary between research evidence and market analysis.
+    Developed from STG_005 candidate "Ecosystem incentives are
+    misaligned" (reframed from incentive mechanism to market
+    mispricing).
+
+C060:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 2.5
+  statement: >
+    User demand and practitioner recommendation converge on high-
+    structure, high-engagement intervention models — daily check-ins,
+    planning rituals, habit trackers — which are precisely the models
+    with the highest meta-challenge vulnerability profiles. Following
+    demand leads toward the design space with the highest structural
+    failure probability. The Missing Wish-List phenomenon (CC03)
+    means users cannot specify what would actually work; they
+    describe variants of what they already know.
+  counter_thesis:
+    statement: >
+      Demand signal is accurate. Users and practitioners know what
+      helps. Structured intervention produces the largest workplace
+      effect sizes (CBT d=0.56 vs medication d=0.19). The high
+      meta-challenge vulnerability of Structured Check-In (M7)
+      reflects software delivery failure, not a flaw in the
+      intervention model itself. Rather than abandoning what users
+      say they want, the correct response is to solve the software-
+      delivery problem — perhaps through AI providing human-like
+      accountability, adaptation, and relational continuity.
+      Ignoring demand to build low-engagement tools risks solving
+      the wrong problem.
+    evidence: [C029, C030, C031, C047, ADHD_Coaching_Survey, Lauder_2024]
+    strength: >
+      Strong from clinical evidence. Lauder 2024 meta-analysis
+      (Tier 1) shows structured psychosocial intervention produces
+      the largest workplace effect sizes — practitioners recommend
+      it because it works with a human. The counter's weakness:
+      no evidence exists for software replicating the human
+      accountability function that makes structured intervention
+      effective. The AI-accountability hypothesis is plausible but
+      entirely untested. If AI cannot replicate the active
+      ingredient, following demand repeats the structural failure
+      that fills the app graveyard.
+  refs:
+    sources: [Lauder_2024, ADHD_Coaching_Survey]
+    depends_on: [C029, C040, C047]
+    entities: [CC03, M7]
+  comments: >
+    This thesis and C062 are a pair: C060 says demand points the
+    wrong way, C062 says the alternative direction (passive models)
+    can work. If C060 is wrong (demand IS accurate), then C062
+    becomes less important because the right strategy is to solve
+    the software-delivery-of-structured-intervention problem.
+    Developed from STG_005 candidate "Demand signal is misleading."
+
+C061:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 3.0
+  statement: >
+    Conventional product discovery and validation methods produce
+    systematically unreliable signals when applied to ADHD workplace
+    tools. Users cannot specify desired features (CC03/C040). Early
+    engagement metrics are inflated by novelty (MC6). Standard
+    retention metrics cannot distinguish genuine value from novelty
+    engagement. A/B testing with typical time horizons cannot detect
+    meta-challenge effects that manifest over weeks to months.
+  counter_thesis:
+    statement: >
+      Product methodology challenges are not unique to ADHD. All
+      health and behavioural-change products face the same issues:
+      users cannot specify needs, novelty inflates early metrics,
+      and long-term outcomes require extended measurement windows.
+      Digital health, addiction recovery, mental health, and chronic
+      disease management have developed validated methodological
+      frameworks addressing these challenges: longitudinal cohort
+      studies, clinical-grade outcome measures, 90-day retention
+      windows, and clinical trial-style evaluation. The methodology
+      is not degraded — it is harder, and established health-tech
+      practices handle the increased difficulty.
+    evidence: [P2A_Community_Reports, C040, C034, C053]
+    strength: >
+      The health-tech parallel is reasonable but collapses under
+      ADHD-specific constraints. Standard health-tech methodology
+      assumes sustained study participation — ADHD undermines this
+      at the protocol level. A 90-day retention window requires 90
+      days of consistent tool use by a population whose signature
+      characteristic is inconsistent engagement. Longitudinal cohort
+      studies require participants to remember to log data, attend
+      check-ins, and complete surveys — prospective memory failure
+      creates systematic attrition bias that corrupts the very
+      measurements meant to assess the tool. The novelty-engagement
+      inflation (MC6) is not generic "early enthusiasm" — it is a
+      neurologically-driven dopamine response that produces weeks
+      of genuinely high engagement followed by precipitous collapse,
+      mimicking product-market fit when none exists. A/B tests with
+      standard time horizons cannot distinguish this from real
+      retention because the collapse window (4-12 weeks per C034)
+      exceeds typical test durations. The "missing wish-list"
+      problem (C040/CC03) is also more severe than generic user-
+      need elicitation difficulty — ADHD users structurally cannot
+      describe what they need because they cannot observe their own
+      failure patterns in real time. Counter retains force where
+      these ADHD-specific severity claims lack quantitative evidence
+      comparing ADHD populations to other health-tech cohorts. The
+      assertion that ADHD novelty collapse is WORSE than general
+      health-tech engagement decline is plausible but unproven.
+  refs:
+    depends_on: [C040, C034, C053]
+    entities: [CC03, MC6]
+  comments: >
+    If this thesis is wrong, the build approach is straightforward:
+    use established health-tech product methodology. If correct,
+    the team needs to develop ADHD-specific validation methods
+    before trusting any product signal. This affects timeline,
+    resource allocation, and the confidence placed in early results.
+    Developed from STG_005 candidate "Standard product methodology
+    is degraded."
+
+C062:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 4.0
+  statement: >
+    Product architectures that minimise user-initiated effort and
+    eliminate habit-formation dependency — passive capture, ambient
+    monitoring, workflow-embedded delivery — can deliver meaningful
+    workplace functional improvement for ADHD adults. This is the
+    core untested architectural assumption: that capturing
+    information and delivering structure passively can substitute
+    for the active engagement that clinical evidence shows is
+    effective when human-delivered.
+  counter_thesis:
+    statement: >
+      Passive tools can capture and deliver information, but
+      meaningful functional improvement requires the user to change
+      behaviour, which requires active engagement. Meeting
+      transcription captures what was said but does not help the
+      user retain it or act on commitments. Email summaries identify
+      action items but do not overcome the activation barrier to
+      completing them. The gap between information delivery and
+      behavioural change is the gap between passive capture and
+      functional improvement. All clinical evidence for ADHD
+      workplace improvement involves active, structured, human-
+      delivered intervention. Passive tools may reduce symptom
+      burden through external tracking but cannot build the
+      executive function capacity that generates lasting improvement.
+    evidence: [C030, C031, C034, C053, Lauder_2024, WorkMAP_RCT]
+    strength: >
+      This is the strongest counter-thesis in the set. ALL clinical
+      evidence for workplace improvement involves active, structured
+      intervention delivered by humans. No evidence exists for
+      passive-delivery functional improvement — the entire passive
+      engagement model is an architectural hypothesis, not an
+      evidence-supported approach. The information-to-action gap
+      is real and well-documented across health-tech. However: the
+      counter rests on defining "functional improvement" as
+      capacity-building. If improvement is redefined as "fewer
+      missed commitments regardless of whether executive function
+      has changed," passive capture delivers it through external
+      compensation rather than internal development. Whether
+      compensated function counts as meaningful improvement is
+      a definitional question the evidence cannot resolve.
+  refs:
+    sources: [Lauder_2024, WorkMAP_RCT]
+    depends_on: [C028, C034, C048, C053]
+    entities: [M1, M2, M6]
+  comments: >
+    The most strategically critical thesis. If passive models
+    cannot deliver improvement, the low-MC-vulnerability engagement
+    models do not work, and the team faces either (a) the high-MC-
+    vulnerability design space or (b) a fundamentally different
+    approach. Paired with C060: if demand signal is misleading
+    AND passive models can work, the strategy is clear. If demand
+    signal is accurate OR passive models fail, the strategy must
+    change. Developed from STG_005 candidate "Passive engagement
+    can substitute for active engagement."
+
+C063:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 3.0
+  statement: >
+    A software product targeting individual ADHD adults is the most
+    effective and viable intervention point for workplace functional
+    impairment — as opposed to employer-directed accommodation,
+    managerial training, organisational policy change, or clinical
+    service delivery.
+  counter_thesis:
+    statement: >
+      Organisational-level intervention may be more effective than
+      individual-level tools. The strongest evidence for workplace
+      improvement (Work-MAP RCT) involved employer-facilitated
+      occupational therapy, not individual software use. Universal
+      workplace design changes (flexible scheduling, written
+      communication preferences, structured meetings) address the
+      environment rather than the individual, do not require the
+      individual to maintain a tool, and benefit all employees.
+      The disclosure barrier (MC4) that blocks individual ADHD tool
+      adoption does not apply to universal workplace changes.
+      Enterprise "neurodiverse workplace" initiatives may be the
+      more natural and scalable intervention point.
+    evidence: [WorkMAP_RCT, C031, C039]
+    strength: >
+      The Work-MAP RCT (Tier 1) delivered intervention through an
+      employer-facilitated pathway. Universal workplace design
+      changes sidestep MC4 entirely and have no retention risk.
+      The counter weakens where organisational change is slow,
+      politically constrained, and outside the control of the
+      affected individual. An individual tool deploys without
+      employer buy-in — a significant advantage for a population
+      where 20-40% may not disclose. Also, organisational
+      approaches do not address the cross-domain nature of ADHD
+      impairment (C039) — workplace policy changes do not help
+      at home.
+  refs:
+    sources: [WorkMAP_RCT]
+    depends_on: [C031, C039, C041]
+    entities: [MC4]
+  comments: >
+    Not in original STG_005 candidates — identified as a gap
+    during thesis development. Gate 2 (Individual Addressability)
+    shows individual-level intervention is POSSIBLE, but "possible"
+    and "optimal" are different claims. If this thesis is wrong,
+    the product model shifts from individual tool to employer/
+    enterprise platform or clinical delivery vehicle. Affects
+    go-to-market, pricing, and fundamental product architecture.
+
+C064:
+  type: claim
+  group: thesis
+  draft_review: true
+  confidence: 4.0
+  statement: >
+    A sustainable business can be built around ADHD workplace tools
+    despite the population's structural retention challenges. The
+    unit economics question: can you charge enough, to enough people,
+    with the retention profile this population produces, to sustain
+    the R&D investment that mechanism-aware, meta-challenge-resistant
+    product design requires? The addressable market ($2-2.4B ADHD
+    apps, 11-16% CAGR) is large enough IF retention economics
+    differ from the pattern that has killed previous attempts. This
+    thesis depends on C062 (passive engagement model works) and
+    C055 (architectural differentiation is real) — if those hold,
+    the retention profile changes and the business model becomes
+    viable.
+  counter_thesis:
+    statement: >
+      ADHD tool unit economics are structurally broken and no
+      architectural innovation changes this. B2C acquisition costs
+      are high (ADHD users are difficult to reach without clinical
+      channels or ADHD-community marketing, both of which are
+      expensive or ethically constrained). Willingness to pay is
+      low (the population skews toward free tools — P2D shows most
+      ADHD apps are freemium with low conversion). Churn is high
+      and driven by neurology, not product quality — novelty
+      collapse (MC6) produces 4-12 week retention cliffs regardless
+      of the engagement model. Enterprise distribution is blocked
+      by MC4 (disclosure barrier). The existing ADHD app landscape
+      (Tiimo, Llama Life, Focusmate) demonstrates the ceiling:
+      small, niche, lifestyle-business scale. No amount of
+      architectural sophistication changes the fundamental unit
+      economics of serving a population whose defining
+      characteristic makes sustained subscription revenue difficult.
+    evidence: [C034, C049, C053, P2A_Community_Reports]
+    strength: >
+      The "structural unit economics" argument is the strongest
+      counter-thesis element. Novelty collapse (MC6) producing
+      4-12 week retention cliffs (C034) directly undermines
+      subscription revenue models. The disclosure barrier (MC4)
+      constraining enterprise distribution is well-evidenced.
+      Existing market evidence (P2D landscape — 54 apps, none
+      well-funded) is consistent with a genuinely low ceiling
+      rather than market mispricing. Counter weakens IF passive
+      engagement models (C062) produce fundamentally different
+      retention curves — a tool that works without user-initiated
+      engagement does not face novelty collapse in the same way
+      because the user never formed the habit that collapses. Also
+      weakens if the value delivery is high enough to justify
+      premium pricing ($20-50/month) from a smaller, highly
+      retained segment rather than mass-market freemium. But both
+      of these mitigants are hypotheses, not evidence. This thesis
+      has the highest dependency on other theses being correct and
+      the least independent evidence.
+  refs:
+    depends_on: [C034, C049, C053, C055, C062]
+    entities: [MC4, MC6]
+  comments: >
+    Not in original STG_005 candidates — identified during steel-
+    man review as a critical coverage gap. Market data (market size,
+    CAGR, competitive landscape) is from S10 synthesis and P2D
+    landscape analysis, not encoded as formal claims. This thesis
+    sits at the intersection of research evidence and business
+    analysis. If this thesis is wrong, the research findings are
+    still valid but the commercial path is not individual B2C/B2B
+    SaaS — it may be clinical delivery, employer procurement, or
+    research licensing. Heavy dependency chain: C064 depends on
+    C062 (passive works) which depends on C055 (architecture
+    matters) which depends on C054 (problem is real). If any link
+    breaks, the unit economics thesis is undermined.
+
+
+# ═══════════════════════════════════════════════════════════════
+# PROBLEMS
+# Observable workplace failures experienced by adults with ADHD.
+# Scored on Frequency (Q1), ADHD Differentiation (Q2), and
+# Connectedness (Q3).
+# ═══════════════════════════════════════════════════════════════
+
+FP03:
+  type: problem
+  name: Time Estimation and Time Blindness
+  plain_language: >
+    Cannot perceive how much time has passed or accurately
+    estimate how long things will take. Loses hours without
+    noticing. Plans that assume a working sense of time fail
+    consistently.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 5
+      connectedness:
+        score: 5
+      total: 14
+      evidence_tier_avg: 1.3
+  refs:
+    mechanisms: [MECH01]
+
+    claims: [C008, C009, C010]
+  derived_from: Our_S3
+
+FP04:
+  type: problem
+  name: Deadline Misses
+  plain_language: >
+    Consistently fails to deliver work by agreed deadlines.
+    Not from lack of effort but from misjudged time, focus
+    lapses, and accumulated delays from upstream problems.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 3
+      connectedness:
+        score: 3
+      total: 10
+      evidence_tier_avg: 1.0
+  refs:
+    mechanisms: [MECH01, MECH05]
+    claims: [C002, C003, C036]
+  cluster_notes: >
+    Convergence point receiving causal pressure from time blindness
+    (CL_A — insufficient time allocated) and focus failure (CL_C —
+    insufficient output produced).
+  derived_from: Our_S3
+
+FP12:
+  type: problem
+  name: Chronic Lateness
+  plain_language: >
+    Persistently late to work, meetings, and commitments
+    despite consequences, warnings, and genuine effort. Driven
+    by inability to perceive preparation time accurately.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 4
+      connectedness:
+        score: 2
+      total: 10
+      evidence_tier_avg: 1.0
+  refs:
+    mechanisms: [MECH01]
+
+    claims: [C008]
+  derived_from: Our_S3
+
+FP01:
+  type: problem
+  name: Task Initiation Failure
+  plain_language: >
+    Knows exactly what to do but cannot start. An "invisible
+    barrier" that effort alone cannot overcome. Qualitatively
+    different from procrastination — not avoidance of unpleasant
+    work, but a neurological gate that blocks action regardless
+    of intent.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 5
+      differentiation:
+        score: 5
+      connectedness:
+        score: 4
+      total: 14
+      evidence_tier_avg: 1.7
+  refs:
+    mechanisms: [MECH02, MECH06]
+    claims: [C011, C012]
+  derived_from: Our_S3
+
+FP11:
+  type: problem
+  name: Documentation and Administrative Paralysis
+  plain_language: >
+    Complete inability to start documentation tasks — timesheets,
+    reports, meeting notes, evaluations. Low-stimulation plus
+    high-effort creates the maximum initiation barrier. "Nothing
+    makes it NOT paperwork."
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 4
+      connectedness:
+        score: 2
+      total: 10
+      evidence_tier_avg: 3.0
+  refs:
+    mechanisms: [MECH02, MECH06]
+
+    claims: [C011]
+  derived_from: Our_S3
+
+FP02:
+  type: problem
+  name: Inconsistent Focus
+  plain_language: >
+    Unpredictable oscillation between near-zero productivity
+    and hyperfocus. Not uniformly poor attention — the
+    variability itself is the problem. What works Monday may
+    fail Tuesday. Standard focus tools assume a consistent
+    baseline that does not exist.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 5
+      differentiation:
+        score: 4
+      connectedness:
+        score: 4
+      total: 13
+      evidence_tier_avg: 1.0
+  refs:
+    mechanisms: [MECH05, MECH02]
+
+    claims: [C001, C002, C006, C007]
+  derived_from: Our_S3
+
+FP06:
+  type: problem
+  name: Attention-to-Detail Errors
+  plain_language: >
+    Persistent errors of oversight that survive repeated
+    self-checking. Forgetting files, leaving debug code,
+    sending incomplete work. The errors are identical to
+    neurotypical mistakes but far more frequent and resistant
+    to quality processes.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 3
+      connectedness:
+        score: 3
+      total: 10
+      evidence_tier_avg: 1.0
+  refs:
+    mechanisms: [MECH05, MECH04]
+
+    claims: [C006]
+  derived_from: Our_S3
+
+FP05:
+  type: problem
+  name: Prioritisation Failure
+  plain_language: >
+    Cannot use importance as a prioritisation criterion.
+    Responds to interest, novelty, and urgency instead.
+    "Procrastivity" — doing interesting low-priority tasks
+    while important tasks stagnate.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 5
+      differentiation:
+        score: 4
+      connectedness:
+        score: 4
+      total: 13
+      evidence_tier_avg: 1.7
+  refs:
+    mechanisms: [MECH02, MECH05]
+    amplifies_clusters: [CL_A, CL_B, CL_C]
+    claims: [C012, C013]
+  amplification_mechanism: >
+    FP05 worsens all clusters: can't prioritise which deadlines
+    matter (A), prioritises easy over strategic work — procrastivity
+    (B), focuses on wrong tasks amplifying limited focus capacity (C).
+  derived_from: Our_S3
+
+FP08:
+  type: problem
+  name: Long-Term Project Neglect
+  plain_language: >
+    Strategic projects are abandoned or starved while daily
+    operational work gets done. Driven by delay discounting
+    (distant deadlines create zero urgency) and initiation
+    failure (low-stimulation strategic work is hardest to
+    start).
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 5
+      connectedness:
+        score: 3
+      total: 12
+      evidence_tier_avg: 1.7
+  refs:
+    mechanisms: [MECH02, MECH01, MECH03]
+    claims: [C013, C037]
+  cluster_notes: >
+    Convergence point receiving causal pressure from time blindness
+    (CL_A — delay discounting compresses time horizon) and initiation
+    failure (CL_B — activation energy highest for low-urgency work).
+  derived_from: Our_S3
+
+FP07:
+  type: problem
+  name: Meeting and Instruction Memory Failure
+  plain_language: >
+    Understands everything during a meeting but cannot recall
+    it afterward. Not an attention problem — an encoding problem.
+    Information is processed in real time but never reaches
+    long-term storage. Standard note-taking creates a dual-task
+    problem that worsens it.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 5
+      connectedness:
+        score: 2
+      total: 11
+      evidence_tier_avg: 1.7
+  refs:
+    mechanisms: [MECH04, MECH03]
+
+    claims: [C014, C015, C016]
+  cluster_notes: >
+    Standalone. Encoding deficit operates independently of time
+    perception, initiation, and focus. Occurs even when user is
+    fully engaged. Shares working memory root with FP09 but solving
+    one wouldn't solve the other — contexts and failure modes differ.
+  derived_from: Our_S3
+
+FP09:
+  type: problem
+  name: Email and Communication Management Failure
+  plain_language: >
+    Reads emails, forms intention to reply, then the intention
+    vanishes. Not inbox overwhelm — prospective memory failure.
+    The "read and forgot" pattern. Standard email tools address
+    volume and speed; none address forgotten reply intentions.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 4
+      connectedness:
+        score: 3
+      total: 11
+      evidence_tier_avg: 1.7
+  refs:
+    mechanisms: [MECH03, MECH06]
+
+    claims: [C017, C018, C019]
+  cluster_notes: >
+    Standalone. Involves a specific combination of initiation,
+    prospective memory, and avoidance in a contained domain.
+    Connects loosely to FP01 (initiation) and FP07 (memory) but
+    neither fully explains the email-specific avoidance cycle.
+  derived_from: Our_S3
+
+FP10:
+  type: problem
+  name: Context Switching Cost
+  plain_language: >
+    Recovery from interruptions takes 30+ minutes. Not just
+    losing focus — losing the entire mental context that was
+    built up during focused work. An environmental/workload
+    interaction more than a core EF failure.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 4
+      differentiation:
+        score: 3
+      connectedness:
+        score: 2
+      total: 9
+      evidence_tier_avg: 3.3
+  refs:
+    mechanisms: [MECH05]
+
+    claims: [C021]
+  cluster_notes: >
+    Standalone. Environmental/workload interaction more than core
+    EF failure. Influenced by meeting culture and notification
+    environment (partially outside individual control). Shares
+    context with FP02 (focus) but mechanistically different.
+  derived_from: Our_S3
+
+FP13:
+  type: problem
+  name: Waiting Mode
+  plain_language: >
+    An upcoming obligation (meeting, appointment, call) blocks
+    productive work on everything else, even hours beforehand.
+    Not avoidance of a single task — temporal paralysis across
+    ALL tasks. The person is hyper-aware of the upcoming event
+    and that awareness consumes all activation capacity. Unlike
+    Task Initiation Failure (FP01), the block is not task-
+    specific: nothing can start because something is coming
+    later.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 3
+      differentiation:
+        score: 4
+      connectedness:
+        score: 2
+      total: 9
+      evidence_tier_avg: 2.3
+  refs:
+    mechanisms: [MECH01, MECH02]
+
+    claims: []
+  cluster_notes: >
+    Standalone. Temporal paralysis driven by anticipated obligations.
+    Shares time perception mechanism (MECH01) with Cluster A but
+    the functional pattern is distinct — it blocks ALL work, not
+    just time-dependent work. Does not cascade into other problems.
+  derived_from: Morning_Extraction_Feb25
+
+FP18:
+  type: problem
+  name: Workspace Disorganisation
+  plain_language: >
+    Cannot maintain organisation systems after initial setup.
+    Desks, files, folders decay to disorder within days. The
+    problem is sustained maintenance, not the initial sort.
+  status: active
+  evaluations:
+    scoring:
+      frequency:
+        score: 3
+      differentiation:
+        score: 3
+      connectedness:
+        score: 2
+      total: 8
+      evidence_tier_avg: 2.0
+  refs:
+    mechanisms: [MECH05, MECH03]
+
+    claims: [C001]
+  cluster_notes: >
+    Standalone. Shares self-organisation EF deficit with Cluster B
+    but operates in a different domain (physical/digital environment,
+    not task execution). Lowest score in the set.
+  derived_from: Our_S3
+
+
+# ═══════════════════════════════════════════════════════════════
+# MECHANISMS
+# Cross-cutting cognitive/neurological processes that explain
+# WHY functional problems co-occur.
+# ═══════════════════════════════════════════════════════════════
+
+MECH01:
+  type: mechanism
+  name: Time Perception Distortion
+  plain_language: >
+    The inability to sense how much time has passed or how much
+    time something will take. Not poor planning — the internal
+    clock runs differently. An hour can feel like ten minutes.
+    A deadline three days away feels as distant as one three
+    months away.
+  variability: >
+    Moderate. Some individuals experience more stable time
+    distortion; others see meaningful variation by day or context.
+  does_not_explain: >
+    Task initiation failure — a person can be aware that time
+    is passing and still not start. Initiation is primarily a
+    reward/activation problem, not a time-perception problem.
+  refs:
+
+    underlies_challenges: [MC5]
+    evidence: [C008, C009, C010]
+
+MECH02:
+  type: mechanism
+  name: Reward and Activation Processing
+  plain_language: >
+    The brain's activation system runs on interest, novelty,
+    urgency, and challenge — not importance. Tasks that lack
+    these qualities cannot generate the activation energy
+    needed to start or sustain work. Distant deadlines create
+    near-zero urgency. Familiar tasks create near-zero novelty.
+    The result: the important-but-boring thing never gets done.
+  variability: >
+    Highly variable. Medication, sleep, novelty of current
+    context, and mood all modulate activation thresholds.
+    What a person can start on Monday may be impossible on
+    Tuesday.
+  does_not_explain: >
+    Meeting memory failure — a person can be fully activated
+    and engaged in a meeting but still fail to encode or
+    remember commitments. Encoding is a separate mechanism.
+  refs:
+
+    underlies_challenges: [MC1, MC5]
+    evidence: [C011, C012, C013]
+
+MECH03:
+  type: mechanism
+  name: Prospective Memory and Retrieval-Visibility Failure
+  plain_language: >
+    Two related failures unified by the same principle: out of
+    sight, out of mind.
+    (1) Intention loss: Forgetting to do things you intended to
+    do. You read the email, decided to reply after lunch. After
+    lunch, the intention is gone. You left the meeting knowing
+    you committed to send a document. By the time you reach your
+    desk, the commitment has vanished.
+    (2) Information retrieval loss: Stored information becomes
+    inaccessible once it leaves the visual field. Notes are
+    saved, emails are filed, tabs are bookmarked — but without
+    a visible cue, the information effectively ceases to exist.
+    The person may know they stored it but cannot find or
+    reconnect with it. Digital systems become graveyards of
+    unretrievable content.
+    Both facets share the same underlying deficit: cue-dependent
+    memory access. Without an external prompt, neither intentions
+    nor stored information can be retrieved.
+  variability: >
+    Relatively stable. Prospective memory failure is one of
+    the more consistent ADHD deficits — less variable across
+    days and contexts than activation or attention. Retrieval-
+    visibility failure is similarly stable: it worsens with
+    information volume but the underlying deficit is constant.
+  does_not_explain: >
+    Why users cannot start tasks they are looking directly at.
+    This mechanism is about absent cues — the intention or
+    information is not in front of you. When the task IS in
+    front of you and you still can't start, that is activation,
+    not memory.
+
+  refs:
+
+    underlies_challenges: [MC2]
+    evidence: [C016, C017, C019]
+
+MECH04:
+  type: mechanism
+  name: Encoding Deficit
+  plain_language: >
+    Information does not get stored during real-time processing,
+    even when the person is engaged and comprehending. You
+    understood everything in the meeting. You were paying
+    attention. But the information never made it into memory.
+    This is not a retrieval problem — the information was never
+    encoded in the first place.
+  variability: >
+    Relatively stable. Encoding deficit is a consistent
+    impairment, less affected by day-to-day variation than
+    attention or activation.
+  does_not_explain: >
+    Task initiation or prioritisation. Encoding deficit affects
+    information retention, not decision-making or activation.
+    A person can have perfect encoding and still not start work.
+  refs:
+
+    underlies_challenges: []
+    evidence: [C014, C015, C016]
+
+MECH05:
+  type: mechanism
+  name: Attention Allocation Dysfunction
+  plain_language: >
+    The inability to voluntarily direct and sustain focus where
+    you choose. This produces BOTH hypofocus (attention drifts
+    without awareness) AND hyperfocus (attention locks onto
+    something stimulating and cannot be redirected). The same
+    mechanism — dysregulated allocation — creates opposite
+    presentations depending on the stimulus.
+  variability: >
+    Highly variable. Medication, environment, interest level,
+    and fatigue all substantially modulate attention allocation.
+  does_not_explain: >
+    Email or meeting memory failure. A person can be fully
+    focused during a meeting (attention allocated correctly)
+    and still fail to encode or remember commitments. Attention
+    and encoding are separable deficits.
+
+  refs:
+
+    underlies_challenges: [MC1, MC5]
+    evidence: [C006, C007]
+
+MECH06:
+  type: mechanism
+  name: Emotional Dysregulation
+  plain_language: >
+    Heightened sensitivity to criticism, rejection, failure,
+    and frustration. Shame responses that are faster and more
+    intense than neurotypical. Fear of doing something wrong
+    can prevent starting. Missing a day creates a shame spiral
+    that prevents returning. Negative feedback hits harder and
+    lasts longer.
+  variability: >
+    Highly variable. Stress, sleep deprivation, social context,
+    and recent experiences of rejection or criticism all
+    substantially modulate emotional reactivity.
+  does_not_explain: >
+    Time perception or encoding. Emotional dysregulation
+    amplifies the consequences of other deficits (missing a
+    deadline feels catastrophic, which drives avoidance) but
+    does not cause the underlying time or memory impairment.
+
+  refs:
+
+    underlies_challenges: [MC3, MC4]
+    evidence: [C020, C021]
+
+
+# ═══════════════════════════════════════════════════════════════
+# CLUSTERS
+# Observed co-occurrence groupings of functional problems.
+# Clusters describe WHAT goes together; mechanisms describe WHY.
+# ═══════════════════════════════════════════════════════════════
+
+CL_A:
+  type: cluster
+  name: "Cluster A — Time-Perception Cascade"
+  causal_direction: >
+    Single hub radiating outward. FP03 causes FP04, FP12,
+    and partially FP08. No bidirectional causation within
+    the cluster.
+  refs:
+    hub: FP03
+    members: [FP03, FP04, FP12, FP08]
+    primary_mechanism: MECH01
+    claims: [C008, C009, C010]
+  derived_from: Our_S4
+
+CL_B:
+  type: cluster
+  name: "Cluster B — Initiation-Execution Bottleneck"
+  causal_direction: >
+    Single hub radiating outward. FP01 causes FP08 and FP11
+    through the same mechanism (activation energy exceeds
+    capacity) applied to task types with decreasing stimulation.
+  refs:
+    hub: FP01
+    members: [FP01, FP08, FP11]
+    primary_mechanism: MECH02
+    claims: [C011, C012]
+  derived_from: Our_S4
+
+CL_C:
+  type: cluster
+  name: "Cluster C — Attention-Quality Chain"
+  causal_direction: >
+    Single hub radiating outward. FP02 causes FP06 directly
+    and FP04 through accumulated productivity loss. FP04 is
+    a convergence point receiving from both Cluster A and C.
+  refs:
+    hub: FP02
+    members: [FP02, FP06, FP04]
+    primary_mechanism: MECH05
+    claims: [C001, C002, C006]
+  derived_from: Our_S4
+
+
+# ═══════════════════════════════════════════════════════════════
+# META-CHALLENGES
+# Cross-cutting structural constraints that apply to ANY ADHD
+# workplace product regardless of problem cluster, engagement
+# model, or implementation.
+# ═══════════════════════════════════════════════════════════════
+
+MC1:
+  type: meta_challenge
+  name: Novelty Decay and Intervention Habituation
+  plain_language: >
+    ADHD brains habituate to interventions as novelty fades.
+    The tool that works brilliantly in week one may be invisible
+    by week four — not because it stopped being useful, but
+    because the brain stopped registering it as stimulating.
+    This is neurological, not a UX failure.
+  severity: Critical
+  severity_rationale: >
+    Medication — the gold-standard intervention — has 56% adherence
+    and 50-70% first-year discontinuation. Digital interventions
+    perform worse (77% non-completion). If the strongest intervention
+    cannot maintain engagement, any digital tool faces this at scale.
+  severity_evidence: [C024, C025, C022]
+  evidence_tier: Tier 1-2
+  key_evidence: >
+    Medication adherence averages 56% (n=4,011); 50-70%
+    discontinue within 1 year (n=1.2M); 77% do not complete
+    self-guided digital interventions; app graveyard is
+    universal across all tool categories.
+  refs:
+    clusters_affected: [CL_A, CL_B, CL_C]
+    claims: [C022, C024, C025]
+    amplifies: [MC2, MC3, MC5]
+
+  derived_from: Our_Meta_Challenges
+
+MC2:
+  type: meta_challenge
+  name: Circular Dependency
+  plain_language: >
+    Every ADHD tool requires the user to engage with it using
+    the very cognitive functions the tool compensates for.
+    You need to remember to use the tool that helps you
+    remember. You need to initiate use of the tool that helps
+    you initiate. This is structural and irreducible — it can
+    only be asymptotically reduced.
+  severity: Critical
+  severity_rationale: >
+    Prospective memory failure (52% vs 21% controls) means
+    forgetting to use the tool is the neurological default, not
+    a design failure. SMS reminders habituated after one module,
+    confirming external prompts also decay.
+  severity_evidence: [C019, C025]
+  evidence_tier: Tier 1-2
+  key_evidence: >
+    Prospective memory: 52% of ADHD participants forgot a
+    naturalistic task vs 21% controls. Task initiation: 40.7%
+    report problems often/very often. SMS reminders increased
+    login at module 2 only — the reminder itself habituates.
+    "Those apps will NEVER WORK because you have to remember
+    to look at them, which you won't."
+  refs:
+    clusters_affected: [CL_A, CL_B, CL_C]
+    claims: [C019, C025]
+    amplifies: [MC3]
+
+  derived_from: Our_Meta_Challenges
+
+MC3:
+  type: meta_challenge
+  name: Shame-Avoidance Spiral
+  plain_language: >
+    When the user falls behind, the tool generates visible
+    evidence of failure — overdue counts, broken streaks,
+    unprocessed queues. This triggers shame that makes
+    re-engagement less likely, not more. The tool designed
+    to help becomes a source of pain. Distinct from novelty
+    decay: this operates even when the user wants to return.
+  severity: High
+  severity_rationale: >
+    Visible failure accumulation (overdue counts, broken streaks)
+    triggers avoidance in a population with heightened rejection
+    sensitivity. Non-adapted CBT worsened self-esteem, confirming
+    the mechanism operates clinically.
+  severity_evidence: [C020, C021, C022]
+  evidence_tier: Tier 2-3
+  key_evidence: >
+    "73 overdue tasks glaring at me — I'd rather uninstall
+    the app than confront the reality." Pre-formatted planners
+    create shame from blank pages. Non-adapted CBT worsened
+    self-esteem, increased sense of failure. Users who praised
+    sustained tools (plain notebooks, Amazing Marvin) cited
+    "no judgment for missed days."
+  refs:
+    clusters_affected: [CL_A, CL_B, CL_C]
+    claims: [C020, C021, C022]
+    amplifies: []
+
+  derived_from: Our_Meta_Challenges
+
+MC4:
+  type: meta_challenge
+  name: Disclosure and Workplace Visibility Constraint
+  plain_language: >
+    Using an ADHD-specific tool in a workplace creates
+    disclosure risk — an "ADHD Planner" visible during
+    screen-share, a bot with a neurodivergent brand. Many
+    ADHD adults have not disclosed at work and fear
+    discrimination. The tool must serve ADHD-specific needs
+    while being invisible or neutral in workplace contexts.
+  severity: High
+  severity_rationale: >
+    Workplace disclosure risk is a constraint independent of
+    tool effectiveness. Commercially validated by the general-
+    branding pattern (Motion, Sunsama, Granola succeed partly
+    by avoiding neurodivergent signalling).
+  severity_evidence: [C026]
+  evidence_tier: Tier 2-3
+  key_evidence: >
+    Practitioners report consistent disclosure dilemma across
+    clients: fear of discrimination, uncertainty, managers
+    who don't know how to respond. Most successful ADHD-
+    adjacent tools (Motion, Sunsama, Reclaim) brand as
+    general productivity. Granola's bot-free approach is
+    commercially validated partly by removing the social signal.
+  refs:
+    clusters_affected: [CL_A, CL_B, CL_C]
+    claims: [C026]
+    amplifies: [MC3]
+
+  derived_from: Our_Meta_Challenges
+
+MC5:
+  type: meta_challenge
+  name: Notification Desensitisation
+  plain_language: >
+    ADHD brains desensitise to repeated notifications faster
+    than neurotypical brains. Alarms, push notifications, and
+    email reminders lose effectiveness within weeks as the
+    brain filters them as non-novel. Even a perfectly designed
+    intervention fails if the notification that delivers it
+    is no longer perceived.
+  severity: Moderate-High
+  severity_rationale: >
+    SMS reminder habituation after a single module demonstrates
+    rapid notification decay specific to ADHD. Every notification-
+    dependent delivery mechanism faces this constraint.
+  severity_evidence: [C022, C021]
+  evidence_tier: Tier 2-3
+  key_evidence: >
+    SMS reminders for ADHD interventions increased login at
+    module 2 only — no effect on remaining modules. Pomodoro
+    failure is the canonical example. "I soon become
+    desensitised to them and stop paying attention." Alarm
+    fatigue documented across every time-management tool
+    category.
+  refs:
+    clusters_affected: [CL_A, CL_B]
+    claims: [C022, C021]
+    amplifies: [MC2]
+
+  derived_from: Our_Meta_Challenges
+
+MC6:
+  type: meta_challenge
+  name: System-Building as Substitute
+  severity_rationale: >
+    System-building provides novelty and dopamine that actual work
+    cannot, creating a self-reinforcing loop. Documented across
+    every major productivity platform (Notion, Obsidian, ClickUp,
+    OmniFocus, Trello, Asana, bullet journals).
+  severity_evidence: [C025]
+  plain_language: >
+    The act of configuring, customising, and building
+    productivity systems becomes the work itself, substituting
+    for the actual tasks the system was meant to support. The
+    system-building provides novelty and interest (satisfying
+    MECH02) while feeling productive, so the brain prefers it
+    to the real work. Distinct from Circular Dependency (MC2):
+    MC2 is the capacity paradox (need EF to use EF tool). MC6
+    is the motivation hijack (building the system delivers
+    the dopamine that actual work should). Distinct from
+    Novelty Decay (MC1): MC1 is about losing interest over
+    time. MC6 is about the initial engagement phase being
+    misdirected into meta-work.
+  severity: High
+  evidence_tier: Tier 3
+  key_evidence: >
+    P2B Core Pattern #1 "The Setup Hyperfocus Trap": users
+    spend more time tweaking templates than working. Notion:
+    "I've spent way more time playing with Notion than actually
+    being productive." Obsidian: "Do I use Obsidian retooling
+    and nitpicking as a form of task avoidance? Yes." ClickUp:
+    "distraction, procrastination, and what I call productivity
+    theater." OmniFocus: "I ended up spending more time managing
+    the tasks than doing them." P2B Core Pattern #5: "The tool
+    itself turns into another task I need to oversee." Documented
+    across Notion, Obsidian, ClickUp, Trello, OmniFocus, Asana,
+    and bullet journals.
+  refs:
+    clusters_affected: [CL_B, CL_C]
+    claims: [C025]
+    amplifies: [MC1, MC3]
+
+  derived_from: Morning_Extraction_Feb25
+
+
+# ═══════════════════════════════════════════════════════════════
+# CROSS-CUTTING CONCERNS
+# Population-level observations that modify or contextualise
+# the problem landscape but are not targetable problems.
+# ═══════════════════════════════════════════════════════════════
+
+CC01:
+  type: cross_cutting_concern
+  name: Neurodiversity Spectrum Variance
+  plain_language: >
+    ADHD is not one thing. Co-occurring conditions (autism,
+    dyslexia, dyscalculia, anxiety) change the functional profile
+    substantially. What works for ADHD-only may fail for
+    ADHD+autism. Any tool must accommodate a wide range of
+    profiles rather than targeting a single archetype.
+  refs:
+    claims: [C033, C038]
+  implications:
+    - No single intervention profile will fit the population
+    - Personalisation is a structural requirement, not a feature
+    - Testing with one ADHD subtype does not validate for others
+  derived_from: Our_KG
+
+CC02:
+  type: cross_cutting_concern
+  name: Multi-Domain Co-Occurrence
+  plain_language: >
+    ADHD functional problems do not confine themselves to work.
+    The same mechanisms that cause task initiation failure at work
+    cause it at home. Users do not separate "work ADHD" from
+    "life ADHD". Any work-focused tool exists in a person's whole
+    life context.
+  refs:
+    claims: [C001, C039]
+  implications:
+    - Work-only framing may miss relevant context
+    - Tools scoped purely to work may feel artificial to users
+    - Cross-domain data could improve prediction and support
+  derived_from: Our_KG
+
+CC03:
+  type: cross_cutting_concern
+  name: Missing Wish-List
+  plain_language: >
+    Users can articulate pain in vivid detail but struggle to
+    describe what a solution would look like. They know what hurts
+    but cannot envision what would help. Standard "what would you
+    want?" research questions yield either blank stares or requests
+    that restate the problem.
+  refs:
+    claims: [C040]
+  implications:
+    - Feature discovery cannot rely on direct user specification
+    - Behavioural observation outweighs stated preference
+    - Value must be inferred from what users DO, not what they SAY
+  derived_from: Our_KG
+
+CC04:
+  type: cross_cutting_concern
+  name: Medication Persistence Gap
+  plain_language: >
+    Medication helps but does not resolve functional workplace
+    problems. Users on medication still experience the full range
+    of functional failures, albeit sometimes at reduced intensity.
+    Medication is not an alternative to structural support.
+  refs:
+    claims: [C041]
+  implications:
+    - Tools cannot assume medication solves the problem
+    - The target population includes medicated individuals
+    - Complementary structural support has value even for
+      medicated users
+  derived_from: Our_KG
+
+
+# ═══════════════════════════════════════════════════════════════
+# ENGAGEMENT MODELS
+# Structurally distinct ways a product could engage ADHD users.
+# Describes the relationship between user and product: when
+# interaction occurs, who initiates, what effort the user
+# expends, and what the product does without user input.
+# ═══════════════════════════════════════════════════════════════
+
+M1:
+  type: engagement_model
+  name: Ambient Monitor and Intervene
+  plain_language: >
+    The product watches your work in the background. When it
+    detects you're stuck — stalling, switching tabs, overrunning
+    time — it intervenes. You don't ask for help; it notices
+    and acts. Intervention is graded: lightest touch first,
+    escalating only if the problem persists.
+  dimensions:
+    initiation: Strongly product-initiated
+    effort: Near-zero
+    timing: During problem
+    continuity: Embedded (desktop agent or browser extension)
+  retention_risk: >
+    Does not depend on habit formation. Risk is nudge fatigue —
+    if interventions become ignorable, the tool degrades into
+    another notification to dismiss.
+  habit_burden: Minimal
+  evaluations:
+    meta_challenge_vulnerability:
+      MC1:
+        level: Moderate
+        rationale: Interventions may habituate
+      MC2:
+        level: Low
+        rationale: Always-on, no initiation needed
+      MC3:
+        level: Low
+        rationale: No visible failure accumulation
+      MC4:
+        level: Moderate
+        rationale: Desktop agent visible in taskbar
+      MC5:
+        level: High
+        rationale: Depends on notifications landing
+  refs:
+    primary_problems: [FP01]
+    secondary_problems: [FP02, FP03]
+    claims: [C011, C027]
+  derived_from: Our_L2
+
+M2:
+  type: engagement_model
+  name: Passive Capture and Structured Delivery
+  plain_language: >
+    The product automatically captures information from your
+    meetings, emails, and chats — information you'd otherwise
+    forget. You change nothing about how you work. It processes
+    what it captures and delivers structured summaries and
+    extracted commitments at the moment you need them.
+  dimensions:
+    initiation: Strongly product-initiated
+    effort: Zero
+    timing: After problem (captures during, delivers later)
+    continuity: Embedded (meeting platform, email client)
+  retention_risk: >
+    Strongest retention of any model. Value compounds over time
+    as the knowledge graph grows. Does not depend on habit
+    formation. The only architecture where app graveyard may
+    be structurally mitigated.
+  habit_burden: None
+  evaluations:
+    meta_challenge_vulnerability:
+      MC1:
+        level: Low
+        rationale: Compounding value creates switching cost
+      MC2:
+        level: Low
+        rationale: Zero user initiation required
+      MC3:
+        level: Low
+        rationale: Continues working during absence
+      MC4:
+        level: Moderate
+        rationale: Meeting bot may be visible
+      MC5:
+        level: Low
+        rationale: Value delivery, not interruption
+  refs:
+    primary_problems: [FP07, FP09]
+    claims: [C014, C015, C017, C018, C028]
+  derived_from: Our_L2
+
+M3:
+  type: engagement_model
+  name: Modality Shift
+  plain_language: >
+    Changes the input channel from writing (high activation
+    barrier) to speaking (low barrier). You talk through your
+    work; the product transforms it into professional output.
+    Same cognitive work, different channel. Addresses the blank
+    page problem directly.
+  dimensions:
+    initiation: User-initiated (optionally product-prompted)
+    effort: Moderate
+    timing: During problem
+    continuity: Separate surface (mostly standalone)
+  retention_risk: >
+    Moderate. Per-use value — each use is independent, no
+    compounding. Risk is that editing AI output re-triggers the
+    same paralysis the tool was meant to avoid.
+  habit_burden: Moderate
+  evaluations:
+    meta_challenge_vulnerability:
+      MC1:
+        level: Moderate
+        rationale: Per-use tool, no habituation loop
+      MC2:
+        level: Moderate
+        rationale: User must remember it exists
+      MC3:
+        level: Low
+        rationale: No state to accumulate failure
+      MC4:
+        level: Low
+        rationale: Voice input is commonplace
+      MC5:
+        level: Low
+        rationale: Not notification-dependent
+  refs:
+    primary_problems: [FP11]
+    claims: []
+  derived_from: Our_L2
+
+M4:
+  type: engagement_model
+  name: Intelligent Reordering and Decision Reduction
+  plain_language: >
+    Sits on top of your existing task system and decides what
+    to show you based on what you're likely to actually do
+    right now — not just what's important. Reduces your
+    decision from "pick from 50 items" to "do this one thing."
+    Bridges the gap between neurologically accessible and
+    genuinely important.
+  dimensions:
+    initiation: Balanced — user opens, product decides what to show
+    effort: Low
+    timing: Before problem
+    continuity: Embedded (layer on existing task tool)
+  retention_risk: >
+    Moderate to good. Algorithm improves with use, creating
+    mild switching cost. Risk is out of sight, out of mind —
+    user must open or check the tool. Mitigated by pushing
+    top task via notification.
+  habit_burden: Low
+  evaluations:
+    meta_challenge_vulnerability:
+      MC1:
+        level: Moderate
+        rationale: Algorithm learning creates some stickiness
+      MC2:
+        level: Moderate
+        rationale: User must open the tool
+      MC3:
+        level: Moderate
+        rationale: Task list can accumulate
+      MC4:
+        level: Low
+        rationale: Appears as general productivity layer
+      MC5:
+        level: Moderate
+        rationale: Depends on push if used
+  refs:
+    primary_problems: [FP05]
+    secondary_problems: [FP01]
+    claims: [C012, C013]
+  derived_from: Our_L2
+
+M5:
+  type: engagement_model
+  name: Calibration Feedback Loop
+  plain_language: >
+    Collects data on how long things actually take versus your
+    estimates, then feeds back the discrepancy. Holds up a
+    mirror that the ADHD brain cannot hold for itself. Over
+    time, calibrates your internal model against reality.
+  dimensions:
+    initiation: Balanced — user estimates, product feeds back
+    effort: Moderate
+    timing: Before and during problem
+    continuity: Partially embedded (calendar integration + own surface)
+  retention_risk: >
+    Compounding value as calibration data accumulates. But
+    breaks entirely if the user stops estimating — the loop
+    depends on a micro-habit. Cold start problem is real.
+  habit_burden: Moderate
+  evaluations:
+    meta_challenge_vulnerability:
+      MC1:
+        level: Moderate
+        rationale: Value compounds but requires active use
+      MC2:
+        level: High
+        rationale: User must estimate to get value
+      MC3:
+        level: High
+        rationale: Calibration data shows failures
+      MC4:
+        level: Low
+        rationale: Looks like a productivity timer
+      MC5:
+        level: Moderate
+        rationale: Overrun alerts may habituate
+  refs:
+    primary_problems: [FP03]
+    claims: [C008, C009]
+  derived_from: Our_L2
+
+M6:
+  type: engagement_model
+  name: Periodic Injection into Existing Workflow
+  plain_language: >
+    Monitors your long-term projects for engagement decay.
+    When a project is being neglected, injects small concrete
+    tasks into your existing daily workflow. You don't go to
+    the product — it comes to you with a 15-minute action that
+    bridges present you and the neglected obligation.
+  dimensions:
+    initiation: Strongly product-initiated
+    effort: Low per interaction
+    timing: Before problem (preventive)
+    continuity: Embedded (injects into existing task flow)
+  retention_risk: >
+    Does not depend on habit formation. Risk is quality of
+    injected tasks — if generic, the tool becomes another
+    ignored reminder. Must be specific and genuinely useful.
+  habit_burden: Minimal
+  evaluations:
+    meta_challenge_vulnerability:
+      MC1:
+        level: Moderate
+        rationale: Injected tasks may habituate
+      MC2:
+        level: Low
+        rationale: Product pushes to user
+      MC3:
+        level: Low
+        rationale: Tasks appear fresh, not as backlog
+      MC4:
+        level: Low
+        rationale: Tasks appear in existing tool
+      MC5:
+        level: Moderate
+        rationale: Depends on task notifications
+  refs:
+    primary_problems: [FP08]
+    claims: [C013]
+  derived_from: Our_L2
+
+M7:
+  type: engagement_model
+  name: Structured Check-In and Guided Routine
+  plain_language: >
+    Walks you through a daily planning ritual: review
+    commitments, estimate durations, pick priorities, reflect
+    at end of day. The structure is external — the product
+    provides scaffolding that the ADHD brain cannot generate.
+    Mirrors the coaching model. The paradox: most recommended
+    by practitioners, most abandoned by users.
+  dimensions:
+    initiation: Product-prompted, user-executed
+    effort: Moderate
+    timing: Before problem (preventive planning)
+    continuity: Separate surface (dedicated check-in view)
+  retention_risk: >
+    Highest risk of any model. Critically dependent on habit
+    formation. If the user misses a few days, overdue items
+    accumulate and trigger the shame spiral. The app graveyard
+    is largely a Structured Check-In graveyard.
+  habit_burden: Highest
+  evaluations:
+    meta_challenge_vulnerability:
+      MC1:
+        level: Very High
+        rationale: Fixed routine habituates
+      MC2:
+        level: Very High
+        rationale: User must show up
+      MC3:
+        level: Very High
+        rationale: Missed days accumulate visibly
+      MC4:
+        level: Moderate
+        rationale: ADHD-branded planners are visible
+      MC5:
+        level: High
+        rationale: Depends on check-in reminders
+  refs:
+    primary_problems: [FP01, FP03, FP05]
+    claims: [C029, C030, C031]
+  derived_from: Our_L2
+
+M8:
+  type: engagement_model
+  name: On-Demand Cognitive Scaffolding
+  plain_language: >
+    Available when you're stuck. You bring a complex task; it
+    breaks it into micro-steps, drafts a starting point, or
+    generates a decision framework. The executive function
+    support your brain cannot provide at that moment, on demand.
+  dimensions:
+    initiation: User-initiated
+    effort: Low to moderate
+    timing: During problem
+    continuity: Either separate or embedded
+  retention_risk: >
+    Moderate. Episodic use — no degradation without use but
+    no compounding either. Risk is the user forgetting the
+    tool exists when stuck, which is precisely the out of
+    sight, out of mind problem.
+  habit_burden: Low
+  evaluations:
+    meta_challenge_vulnerability:
+      MC1:
+        level: Low
+        rationale: Per-use, no routine to decay
+      MC2:
+        level: High
+        rationale: User must self-identify stuck state
+      MC3:
+        level: Low
+        rationale: No state, no failure accumulation
+      MC4:
+        level: Low
+        rationale: Looks like any AI assistant
+      MC5:
+        level: Low
+        rationale: Not notification-dependent
+  refs:
+    primary_problems: [FP01, FP11]
+    claims: [C011]
+  derived_from: Our_L2
+
+
+# ═══════════════════════════════════════════════════════════════
+# STAGING
+# Items with incomplete evidence, deferred dependencies, or
+# orphaned content from migration. Each item describes what it
+# is, why it's here, and what would promote it to a full entity.
+# ═══════════════════════════════════════════════════════════════
+
+STG_001:
+  type: staging
+  origin: FP13 (note field, removed during migration)
+  content: >
+    Evidence in our formal corpus is thin — P2E interview
+    mentions (Andrei) and widely discussed in ADHD communities
+    but not surfaced in our FP-series Reddit research or clinical
+    sources. Scores are provisional. No existing claims in the
+    claims layer map to this problem specifically.
+  promotion_condition: >
+    Create a dedicated claim when clinical or structured community
+    evidence for FP13 (context switching cost) is identified.
+
+STG_002:
+  type: staging
+  origin: IMP09 (foundations reference, deferred)
+  content: >
+    Seven shared capabilities appear across 3+ engagement models
+    and appear needed regardless of product direction: calendar
+    integration, task tool integration, non-shaming tone
+    framework, variability engine, on-device processing, MCP
+    backbone, and knowledge graph. Whether to develop these
+    before direction is finalised is a sequencing decision
+    the team can assess.
+  original_refs:
+    derived_from: foundations.yaml
+    affects:
+      - Build sequencing
+      - Resource allocation
+      - What to build now decisions
+  promotion_condition: >
+    Promote to claim when foundations.yaml entities are imported
+    into the SoR and can be referenced as depends_on targets.
+
+STG_003:
+  type: staging
+  origin: MECH03 (retrieval_evidence field, removed during migration)
+  content: >
+    P2E: Trip describes hoard and purge cycles with knowledge
+    management. Notion and Obsidian vaults described as
+    information graveyards across multiple users.
+  promotion_condition: >
+    Integrate into a claim about retrieval failure patterns
+    when P2E evidence is formally encoded as a source.
+
+STG_004:
+  type: staging
+  origin: MECH06 (evidence_note field, removed during migration)
+  content: >
+    Emotional dysregulation appears in practitioner evidence
+    (P2C) and user reports (P2A, P2E) but is less established
+    in the peer-reviewed workplace-specific literature than
+    Time Perception or Encoding Deficit. Supported by the
+    evidence base but the workplace-specific mechanism pathway
+    is less documented.
+  promotion_condition: >
+    Promote to claim when workplace-specific emotional
+    dysregulation evidence is identified in clinical sources.
+
+# ─────────────────────────────────────────────────────────────
+# THESIS CANDIDATES (low confidence initial examples)
+# These are starting points for finding the shape of the thesis
+# entity type. Do not anchor on these — they need rigorous
+# development, may merge/split/be discarded entirely.
+# ─────────────────────────────────────────────────────────────
+
+STG_005:
+  type: staging
+  origin: thesis definition session (2025-02-25)
+  status: promoted
+  promoted_to: [C054, C055, C056, C057, C058, C059, C060, C061, C062, C063, C064]
+  content: >
+    Nine initial thesis candidates identified during schema design.
+    Low confidence — these exist to find the shape, not to assert
+    the final set. Each needs: rigorous statement, counter-thesis
+    with evidence, confidence assessment, and validation against
+    the thesis definition ("would a confidence change prompt
+    strategic reconsideration?").
+  candidates:
+    - label: "Problem space is real"
+      sketch: >
+        ADHD causes material, measurable workplace functional
+        impairment beyond what medication and behavioural therapy
+        resolve.
+    - label: "Neurological, not behavioural"
+      sketch: >
+        The functional problems are produced by neurological
+        mechanisms, not by insufficient effort, poor habits, or
+        character flaws. Interventions must work with the
+        neurology, not against it.
+    - label: "Medication is insufficient"
+      sketch: >
+        Pharmacological treatment leaves a significant residual
+        functional impairment gap that non-pharma intervention
+        can meaningfully address.
+    - label: "Existing tools fail structurally"
+      sketch: >
+        Current productivity tools fail for ADHD users due to
+        structural design assumptions incompatible with ADHD
+        cognition. Tools that persist succeed through low
+        meta-challenge exposure, not through deliberate
+        ADHD-informed design.
+    - label: "The gap is interdisciplinary"
+      sketch: >
+        Effective solutions require simultaneous competence in
+        neuroscience, product design, and technical capability.
+        The gap exists partly because these disciplines rarely
+        converge in a single team.
+    - label: "Ecosystem incentives are misaligned"
+      sketch: >
+        Research funding, VC investment, and enterprise procurement
+        structures systematically undervalue or deprioritise
+        non-pharma ADHD workplace interventions.
+    - label: "Demand signal is misleading"
+      sketch: >
+        User and practitioner demand points toward high-effort,
+        high-engagement solutions (the models with highest
+        meta-challenge exposure), directing builders toward
+        the wrong design space.
+    - label: "Standard product methodology is degraded"
+      sketch: >
+        Conventional product discovery and validation methods
+        produce unreliable signals for this population. CC03
+        blocks honest discovery, early engagement metrics are
+        MC6 in disguise.
+    - label: "Passive engagement can substitute for active engagement"
+      sketch: >
+        Product interaction models that minimise user-initiated
+        effort and habit formation can deliver meaningful
+        functional improvement — the core untested assumption
+        behind low-MC-exposure engagement models.
+  promotion_condition: >
+    Each candidate is promoted to a full thesis claim (with
+    group: thesis) when it has: a rigorous statement, a
+    counter_thesis with evidence and strength assessment,
+    a confidence value, and passes the definition test.
+
+STG_006:
+  type: staging
+  origin: thesis steel-man review (2025-02-25)
+  status: open
+  content: >
+    Open questions from thesis map development and steel-man
+    analysis. All require user decision before the thesis set
+    is finalised. These are flagged for review, not blocking
+    further work.
+  questions:
+    - id: Q1
+      subject: "C054 demotion"
+      description: >
+        C054 ("problem space is real and material") may be too
+        well-evidenced to qualify as a thesis under the agreed
+        definition ("contested assumption where a confidence change
+        would prompt strategic reconsideration"). Confidence is 1.5
+        (Tier 1 evidence from multiple sources). A confidence change
+        is nearly inconceivable given WFIRS data, Work-MAP RCT, and
+        P2E interviews. Should C054 be demoted to a standard claim
+        (removing group: thesis) or kept as the foundational thesis
+        that anchors the dependency chain? If demoted, all other
+        theses lose their grounding reference.
+    - id: Q2
+      subject: "C055+C057 merge validation"
+      description: >
+        C055 and C057 were merged because "mechanisms constrain
+        design" and "tools fail structurally" are the same strategic
+        risk from different angles. Confirm this merge is correct or
+        flag if they should be re-separated. The merged thesis is
+        longer and denser than the others.
+    - id: Q3
+      subject: "C058+C059 overlap"
+      description: >
+        Steel-man analysis flagged C058 (interdisciplinary barrier)
+        and C059 (market mispricing) as sharing significant DNA —
+        both partially explain why the market is unfunded. They
+        were kept separate because they imply different strategic
+        responses (C058: build a rare team = moat; C059: better
+        positioning/narrative = GTM). Should they merge or remain
+        separate axes of uncertainty?
+    - id: Q4
+      subject: "Technical feasibility thesis"
+      description: >
+        The steel-man analysis identified a missing coverage area:
+        no thesis addresses whether the required technical
+        capabilities (ambient capture, on-device processing,
+        knowledge graphs, cross-platform integration) are actually
+        achievable at the required quality and cost within the
+        relevant time horizon. The technology research (S9B-S9J)
+        was quarantined from the phenomena layer, so the SoR has
+        no technology claims to reference. Should a technical
+        feasibility thesis be added, or is this outside the SoR
+        scope?
+    - id: Q5
+      subject: "Dependency structure encoding"
+      description: >
+        The thesis set has a clear dependency chain: C054
+        (foundational) → C055 (mechanisms constrain design) →
+        C060 (demand misleads) → C062 (passive can substitute)
+        → C064 (unit economics work). C062 is the strategic hinge
+        — the highest-risk, lowest-evidence thesis that the
+        business case depends on. Currently dependencies are
+        captured in refs.depends_on but not structurally typed
+        (logical dependency vs evidence dependency vs thematic
+        relationship). Should the data model distinguish these,
+        or is the current flat depends_on sufficient?
+    - id: Q6
+      subject: "Thesis review cycle"
+      description: >
+        All 11 thesis entities carry draft_review: true. What is
+        the intended review process? Options: (a) user reviews
+        each thesis statement + counter and approves/edits,
+        (b) user reviews the set holistically and approves/rejects,
+        (c) user identifies which theses to test first and the
+        review becomes a prioritisation exercise. This affects
+        SR_005 (settled flags) and any future strategic review
+        cycle.
