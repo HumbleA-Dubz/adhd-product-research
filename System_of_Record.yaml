@@ -249,6 +249,7 @@ _framework:
         type:           { required: true,  values: ["problem"] }
         name:           { required: true,  format: "string" }
         plain_language: { required: true,  format: "prose — what the failure looks like in practice" }
+        functional_definition: { required: true, format: "prose — 3-4 sentence formal definition of the observable work task failure" }
         status:         { required: true,  values: ["active", "filtered_out", "below_threshold"], default: "active" }
         cluster_notes:  { required: false, format: "prose — analytical reasoning about cluster membership or absence thereof" }
         amplification_mechanism: { required: false, format: "prose — how this problem worsens other clusters (for cross-cluster amplifiers)" }
@@ -431,6 +432,12 @@ _framework:
           continuity:   { required: true, format: "prose — separate surface vs embedded" }
         retention_risk: { required: true, format: "prose — structural retention characteristics" }
         habit_burden:   { required: true, format: "prose — degree of habit formation required" }
+        cluster_compatibility:
+          description: "Per-cluster compatibility assessment for this engagement pattern"
+          format: >
+            Map of CL ID → { rating: S|P|X, rationale: prose }.
+            S = Strongly compatible, P = Partially compatible,
+            X = Incompatible.
         evaluations:
           meta_challenge_vulnerability:
             description: "Per-MC vulnerability assessment for this engagement pattern"
@@ -593,6 +600,87 @@ _framework:
           Negative review patterns, product shutdown post-mortems,
           founder interviews, user community complaints.
 
+    solution_layer:
+      scoring_convention: >
+        Higher scores indicate more favourable solution characteristics
+        (easier to build, easier to adopt).
+      prerequisite: >
+        Before scoring, write a brief description of the proposed
+        solution approach (2-3 sentences covering core mechanism and
+        value proposition).
+      Q1_complexity:
+        question: "How complex is the minimum feature set required to deliver first meaningful value?"
+        anchors:
+          5: "Minimal: single core feature, could prototype in days"
+          4: "Light: 2-3 features, 2-4 weeks engineering effort"
+          3: "Moderate: coherent feature set, 1-2 months engineering effort"
+          2: "Substantial: multiple interdependent features, 3-6 months effort"
+          1: "Complex: requires extensive feature development, 6+ months before meaningful value"
+        data_sources: >
+          Competitor feature sets, MVP case studies in adjacent spaces,
+          technical architecture patterns for similar problems.
+      Q2_behavioural_change:
+        question: "How much behavioural change or ongoing effort is required from the user?"
+        anchors:
+          5: "Passive: works in background, no habit formation needed"
+          4: "Minimal: occasional interaction, fits into existing workflows"
+          3: "Moderate: requires regular engagement but builds on existing behaviours"
+          2: "Significant: new habits required, ongoing discipline needed"
+          1: "Demanding: major workflow change, high ongoing effort, works against ADHD tendencies"
+        data_sources: >
+          Habit formation research for ADHD populations, retention/churn
+          data from similar products, user testimonials about what made
+          tools stick or fail.
+      Q3_setup_effort:
+        question: "How much user input or setup effort is needed before first value is realised?"
+        anchors:
+          5: "Instant: value on first use, no setup required"
+          4: "Quick: brief setup (<5 minutes), value within first session"
+          3: "Moderate: some configuration needed, value within first day of use"
+          2: "Investment: requires data entry or learning curve, value within first week"
+          1: "Heavy: extensive setup, training, or data migration before any value"
+        data_sources: >
+          Onboarding flow analysis of competitors, time-to-value metrics
+          from similar products, user complaints about setup friction.
+      Q4_integration_dependency:
+        question: "How dependent is the solution on integrations with external systems or specific usage contexts?"
+        anchors:
+          5: "Standalone: works independently, no external dependencies"
+          4: "Optional integrations: enhanced by connections but valuable alone"
+          3: "Standard integrations: requires common tools (e.g., calendar, email) with well-documented APIs"
+          2: "Specific integrations: depends on particular platforms or workplace systems"
+          1: "Deep integration: requires enterprise deployment, IT approval, or specific contexts to function"
+        data_sources: >
+          API documentation review, competitor integration lists,
+          enterprise vs. consumer product positioning.
+
+  # ─────────────────────────────────────────────────────────────
+  # COMPATIBILITY PRINCIPLES
+  # Judgment consistency rules applied when evaluating L1-L2
+  # compatibility (cluster × engagement model). From CS3.
+  # ─────────────────────────────────────────────────────────────
+  compatibility_principles:
+    - id: frequency_to_initiation
+      name: "Frequency-to-initiation matching"
+      principle: >
+        High-frequency problems favour low-effort, ambient models.
+        Low-frequency problems can tolerate higher-effort, on-demand models.
+    - id: awareness_to_timing
+      name: "Awareness-to-timing matching"
+      principle: >
+        Problems the user notices in real-time can use reactive models.
+        Problems only visible in retrospect require proactive or capture models.
+    - id: co_occurrence_to_breadth
+      name: "Co-occurrence-to-breadth matching"
+      principle: >
+        Tightly co-occurring problems need models that can address
+        multiple problems per interaction.
+    - id: context_to_surface
+      name: "Context-to-surface matching"
+      principle: >
+        Where the problem occurs determines which delivery surfaces
+        and interaction points are viable.
+
   # ─────────────────────────────────────────────────────────────
   # DERIVATION FORMULAS
   # Named formulas that produce derived values from entity data.
@@ -676,13 +764,13 @@ _framework:
 # CURRENT COUNTS
 # ─────────────────────────────────────────────────────────────
 # source:                 20
-# claim:                  64  (53 standard + 11 thesis group)
+# claim:                  67  (56 standard + 11 thesis group)
 # problem:                14
 # mechanism:              6
 # cluster:                3
 # meta_challenge:         6
 # engagement_model:       8
-# content_ticket:         7
+# content_ticket:         8
 # system_ticket:          17
 
 
@@ -2508,6 +2596,67 @@ C064:
     C062 (passive works) which depends on C055 (architecture
     matters) which depends on C054 (problem is real). If any link
     breaks, the unit economics thesis is undermined.
+
+C065:
+  type: claim
+  group: standard
+  confidence: 3.5
+  statement: >
+    Triple Decay (MC1 + MC2 + MC5): Novelty fades, user stops
+    initiating tool use, notifications try to re-engage, but
+    notifications themselves have habituated — producing complete
+    disengagement. This is the full "app graveyard" cascade.
+  evidence_tier: 3
+  derived_from: CS5
+  refs:
+    entities: [MC1, MC2, MC5]
+    claims: [C034, C049]
+  comments: >
+    Compound effect — named interaction pattern from CS5 Section 4.
+    Represents a causal cascade, not just co-occurrence. The
+    amplifies refs on MC1/MC2/MC5 encode the pairwise links but
+    do not name the three-way pattern.
+
+C066:
+  type: claim
+  group: standard
+  confidence: 3.5
+  statement: >
+    Lapse Trap (MC1 + MC3): Novelty fades, brief lapse occurs,
+    visible failure accumulates, shame prevents return — producing
+    permanent abandonment. This is why users "uninstall rather
+    than confront 73 overdue tasks."
+  evidence_tier: 3
+  derived_from: CS5
+  refs:
+    entities: [MC1, MC3]
+    claims: [C034]
+  comments: >
+    Compound effect — named interaction pattern from CS5 Section 4.
+    The shame-avoidance loop (MC3) is triggered specifically by the
+    visible evidence of lapse, which novelty collapse (MC1) creates.
+
+C067:
+  type: claim
+  group: standard
+  confidence: 3.5
+  statement: >
+    Stealth Requirement (MC2 + MC4): The tool must be always-on
+    and proactively reaching the user (to overcome circular
+    dependency) while also being invisible in the workplace (to
+    avoid disclosure). These requirements are in tension —
+    aggressive notifications are visible.
+  evidence_tier: 3
+  derived_from: CS5
+  refs:
+    entities: [MC2, MC4]
+    claims: [C049]
+  comments: >
+    Compound effect — named interaction pattern from CS5 Section 4.
+    Represents a structural tension between two meta-challenge
+    mitigations, not just additive severity. Any design addressing
+    MC2 (circular dependency) must also satisfy MC4 (disclosure
+    barrier) constraints.
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -5044,6 +5193,37 @@ CT_007:
     rationale, (b) identified as needing a new entity type per
     the promotion criteria in ST_008, or (c) explicitly scoped
     out with reasoning.
+
+CT_008:
+  type: content_ticket
+  origin: S6 Market Gap Analysis — data entry
+  status: open
+  added: 2026-02-26
+  subject: "Populate market_gap evaluations on all qualifying problems"
+  content: >
+    The SoR defines the market_gap evaluation framework (Q1-Q5 rubric,
+    derivation formula, conditional fields on problem entities) but
+    ZERO problems have market_gap evaluations populated. S6 contains
+    scores for 11 qualifying problems (those scoring >=10 on Problem
+    Layer). This is the largest schema-compliance gap remaining.
+
+    IMPORTANT: The S6 analysis may be heavily biased — the underlying
+    data and scoring judgments need critical review before entry, not
+    just transcription. Treat S6 as a draft requiring validation, not
+    a finished assessment. Review scoring rationale against source
+    evidence and flag any scores that appear to reflect assumptions
+    rather than evidence.
+
+    Scope: ~30-40 lines per problem x 11 problems = ~330-440 lines.
+    Product enumeration tables and strategic synthesis stay in S6 as
+    source material — only Q1-Q5 scores and rationale enter the SoR.
+  resolution: >
+    For each qualifying problem: (a) review S6 scores critically
+    against source evidence, (b) populate evaluations.market_gap
+    with validated Q1-Q5 scores and rationale, (c) flag any scores
+    where evidence is weak or reasoning appears biased. Consider
+    splitting S6 into source data (product tables → research/) and
+    scores (→ SoR) once complete.
 
 
 # ═══════════════════════════════════════════════════════════════
