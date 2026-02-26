@@ -1,5 +1,4 @@
-# What I'm Asking For
-
+# Where we're at, and why
 ## Context (30 seconds)
 
 You've seen the research outputs — problems, mechanisms, engagement models, meta-challenges. All useful individually, but not enough to tell us where to focus dev resources with any confidence.
