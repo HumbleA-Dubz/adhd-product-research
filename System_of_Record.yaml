@@ -1987,616 +1987,6 @@ C053:
   derived_from: Our_CS2
 
 
-# ─────────────────────────────────────────────────────────────
-# THESIS CLAIMS (group: thesis)
-# Contested assumptions where a change in confidence would
-# prompt strategic reconsideration. Draft set — developed from
-# CT_005 candidates plus one identified gap (C063).
-# All marked draft_review: true pending user review.
-# ─────────────────────────────────────────────────────────────
-
-C054:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 1.5
-  statement: >
-    ADHD produces persistent, measurable workplace functional
-    impairment across multiple work domains, affecting the majority
-    of diagnosed adults at rates substantially exceeding neurotypical
-    populations. This impairment is not an artefact of self-report
-    bias, poor motivation, or insufficient effort. The problem space
-    is real and material enough to warrant intervention.
-  counter_thesis:
-    statement: >
-      Workplace functional impairment is real but systematically
-      overstated by self-report instruments. WFIRS data shows 69%
-      of ADHD adults feel they are "working below potential," but
-      formal performance consequences (termination, disciplinary
-      action) affect only 20-23%. This 3-4x amplification factor
-      suggests subjective distress substantially exceeds measurable
-      dysfunction. The commercially addressable population may be
-      the smaller group with observable performance impact, not the
-      larger group experiencing subjective impairment.
-    evidence: [Fuermaier_2021, P2A_Community_Reports, C038]
-    strength: >
-      Has specific force on market sizing and population definition.
-      The discrepancy between self-perceived impairment and
-      externally observable impairment is documented in both
-      clinical (WFIRS) and community (P2I) data. The comorbidity
-      interaction (C038 — 7/12 interview participants had co-
-      occurring conditions) means some impairment attributed to
-      ADHD may be driven by co-occurring conditions, narrowing
-      the ADHD-specific addressable problem. Does NOT undermine
-      that functional problems exist — challenges the scale and
-      the sharpness of the boundary around ADHD-specific impairment.
-  refs:
-    sources: [Fuermaier_2021, WorkMAP_RCT, Norwegian_Employment_Study]
-    depends_on: [C001, C002, C003, C039]
-  comments: >
-    Highest-confidence thesis. Tier 1 evidence from multiple
-    independent sources. Counter-thesis is about magnitude and
-    boundary, not existence. If this thesis is wrong, the entire
-    SoR is investigating a non-problem. Developed from CT_005
-    candidate "Problem space is real."
-
-C055:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 2.5
-  statement: >
-    ADHD neurology requires architecturally different product design,
-    not better execution of existing patterns. Neurological mechanisms
-    — dopamine reward signalling, working memory limits, attention
-    dysregulation, time perception distortion, prospective memory
-    failure — constrain which interventions can work. Current
-    productivity tools fail because their design assumptions (user-
-    initiated engagement, habit-dependent value, visible failure
-    accumulation, consistent daily use) are structurally incompatible
-    with these mechanisms. The failure is architectural, not a
-    quality deficiency. The tool-requires-capacity paradox — tools
-    demanding the executive function they aim to support — is the
-    signature of structural incompatibility, not poor UX.
-  counter_thesis:
-    statement: >
-      The neurological constraints are real but their design
-      implications are overstated. CBT produces larger workplace
-      effect sizes (d=0.56) than medication (d=0.19) in a 2024
-      meta-analysis, proving behavioural approaches work despite
-      neurological substrates. Many tool failures attributed to
-      ADHD-specific incompatibility are universal UX failures (poor
-      onboarding, notification fatigue, feature overwhelm) affecting
-      all users. Some ADHD users succeed with standard tools (P2E
-      interview evidence). ADHD heterogeneity (C052) means the
-      structural-incompatibility framing may apply to a subset, not
-      the population. Better general-purpose tools following
-      universal accessibility principles would address ADHD users
-      as a side effect of good design, not through ADHD-specific
-      architecture.
-    evidence: [Lauder_2024, C030, C031, P2A_Community_Reports, C029, C033, C052]
-    strength: >
-      Strongest where tool failures overlap with neurotypical
-      experience — notification fatigue, setup complexity, and
-      feature overwhelm affect everyone. The CBT evidence (Tier 1)
-      directly demonstrates structured behavioural intervention
-      works for this population. P2E interview data shows ADHD
-      users succeeding with standard tools (particularly milder
-      presentations or effective medication). Counter weakens where
-      failures are ADHD-specific at severity levels absent in
-      neurotypical populations: tool-requires-capacity paradox
-      (needing executive function to use executive function tools),
-      prospective memory failure to use the tool at all, and shame
-      spirals from visible failure accumulation that trigger
-      complete abandonment.
-  refs:
-    sources: [Lauder_2024, Fuermaier_2021, P2A_Community_Reports, ADHD_Coaching_Survey]
-    depends_on: [C004, C005, C006, C007, C008, C009, C010, C029, C030, C032]
-    entities: [MECH01, MECH02, MECH03, MECH04, MECH05, MECH06, MC1, MC2, MC3, MC4, MC5, MC6]
-  comments: >
-    MERGED from original C055 ("Neurological, not behavioural") and
-    C057 ("Existing tools fail structurally"). These were not
-    independent axes of uncertainty — if the mechanisms do not
-    constrain design (C055 false), then the tools do not fail
-    structurally (C057 false). If tools fail for quality reasons
-    (C057 false), then the mechanisms are not the binding constraint
-    (C055 weakened). Merged to avoid double-counting the same
-    strategic risk. If the counter is correct, the strategy shifts
-    from "different kind of tool" to "better version of existing
-    tools with ADHD marketing." CT_005 candidates: "Neurological,
-    not behavioural" + "Existing tools fail structurally."
-
-C056:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 2.0
-  statement: >
-    Software can deliver the effective components of external
-    cognitive scaffolding — structure, memory augmentation, activation
-    support, accountability — that clinical evidence shows works when
-    delivered by humans. The medication gap is well-established
-    (Tier 1, see C041) and non-pharmacological external structure
-    helps (Tier 1, see C031). The contested question is whether
-    software can replicate the elements that make human-delivered
-    intervention effective, or whether human accountability,
-    adaptation, and emotional attunement are the active ingredients
-    that software cannot provide.
-  counter_thesis:
-    statement: >
-      Software cannot replicate the active ingredients of effective
-      external structure. Work-MAP RCT improvement (15-19%) came from
-      clinician-delivered intervention providing real-time adaptation,
-      relational accountability, and emotional regulation support.
-      The practitioner IS the bootstrapping mechanism, the shame
-      regulator, and the novelty source (C047). Software strips away
-      precisely these human elements. No evidence exists for software-
-      only delivery of external structure producing comparable workplace
-      outcomes. The gap between "external structure helps" and
-      "software-delivered external structure helps" is the gap between
-      evidence and hypothesis.
-    evidence: [WorkMAP_RCT, C031, C047, ADHD_Coaching_Survey, Lauder_2024]
-    strength: >
-      The strongest element: all positive evidence for non-pharma
-      workplace improvement is for HUMAN-delivered intervention.
-      Zero evidence for software-delivered structural support at
-      comparable efficacy. The practitioner accountability function
-      (C047) identifies specific human capabilities — relational
-      accountability, emotional attunement, real-time adaptation —
-      that current software cannot replicate. Counter weakens if AI
-      advances close the gap on these capabilities, particularly
-      relational modelling and adaptive scaffolding. Also weakens
-      where the software provides DIFFERENT effective components
-      (perfect memory, passive capture, tireless consistency) rather
-      than replicating the human ones.
-  refs:
-    sources: [WorkMAP_RCT, Lauder_2024]
-    depends_on: [C041]
-    entities: []
-  comments: >
-    Closely related to C054 (problem exists) but addresses a
-    different strategic question: not whether the impairment is
-    real but whether software is the right delivery mechanism for
-    addressing it. If this thesis is wrong, the product needs
-    human-in-loop delivery (coaching platform, not standalone
-    tool). Developed from CT_005 candidate "Medication is
-    insufficient."
-
-C057:
-  type: claim
-  group: thesis
-  draft_review: true
-  status: merged_into_C055
-  confidence: null
-  statement: >
-    [MERGED INTO C055] Original thesis "Existing tools fail
-    structurally" was not independent of C055 "Neurological
-    mechanisms constrain design." Both represented the same
-    strategic risk (is ADHD-specific architecture necessary?)
-    from different angles. Maintaining both would double-count
-    the same uncertainty. See C055 for the merged thesis.
-  refs:
-    depends_on: [C055]
-  comments: >
-    Merged during steel-man review. The dependency: if mechanisms
-    do not constrain design (C055 false), then tools do not fail
-    structurally (C057 false). Not independently testable.
-    Original CT_005 candidate: "Existing tools fail structurally."
-
-C058:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 4.0
-  statement: >
-    Effective ADHD workplace tools require simultaneous competence
-    in clinical neuroscience (mechanism-aware design), product
-    design (meta-challenge-aware architecture, accommodation without
-    stigma), and technical implementation (ambient capture, knowledge
-    graphs, on-device processing). This three-way competence
-    requirement creates a structural barrier to entry that partially
-    explains why no well-funded ADHD-specific productivity product
-    exists despite a multi-billion-dollar addressable market.
-  counter_thesis:
-    statement: >
-      The interdisciplinary barrier is not unique to ADHD — digital
-      health products routinely require clinical, design, and
-      technical competence. Diabetes management, mental health
-      platforms, chronic pain, and addiction recovery have all
-      produced successful products despite similar requirements.
-      The absence of funded ADHD workplace tools more likely reflects
-      correct market assessment (small, fragmented, difficult
-      monetisation) than an unusually high competence barrier. AI/LLM
-      advances further reduce the interdisciplinary requirement —
-      general-purpose AI can approximate clinical accommodation
-      insight without purpose-built neuroscience expertise.
-    evidence: [P2A_Community_Reports, C034, C049, C053]
-    strength: >
-      The digital-health comparison has real force but is weaker
-      than it appears. Noom, BetterHelp, and Headspace succeeded
-      with interdisciplinary teams — but none face the ADHD meta-
-      challenge framework. The critical difference: other health-tech
-      products can assume sustained user engagement. ADHD tools
-      cannot. Noom's habit-formation model would collapse under MC2
-      (novelty-dependent engagement). BetterHelp's scheduling model
-      assumes prospective memory. Headspace's streak-based retention
-      triggers MC1 (tool-requires-capacity paradox) — maintaining
-      a meditation habit requires the executive function meditation
-      aims to develop. The interdisciplinary barrier is not just
-      "hard health-tech" but "health-tech where the target condition
-      undermines the engagement model every other health-tech product
-      relies on." The AI-reduces-barrier argument has emerging force
-      for the clinical knowledge dimension but does not address the
-      design dimension — knowing what accommodations work is not the
-      hard part; building a product that ADHD users can sustain
-      using is the hard part. Counter is strongest where the market-
-      size explanation (investors correctly assess a small market)
-      is sufficient without invoking competence barriers at all —
-      the competence barrier may be real but irrelevant if the
-      market ceiling is genuinely low.
-  refs:
-    depends_on: [C032, C042]
-    entities: [MC1, MC2, MC3, MC4, MC5, MC6]
-  comments: >
-    Lowest-confidence thesis in the strategic set. Largely
-    inferred — no source directly studies why ADHD workplace
-    products are underfunded. The thesis matters because if the
-    barrier IS interdisciplinary competence, that is a moat. If
-    it is market size, there is no moat. Developed from CT_005
-    candidate "The gap is interdisciplinary."
-
-C059:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 4.0
-  statement: >
-    Investment markets systematically undervalue non-pharmacological
-    ADHD workplace intervention. The absence of well-funded products
-    in a multi-billion-dollar addressable market growing at 11-16%
-    CAGR reflects market mispricing driven by: investors
-    extrapolating from the failure rate of structurally flawed tools,
-    difficulty demonstrating clinical efficacy for non-pharma
-    approaches, and enterprise procurement structures that route
-    ADHD accommodation through HR/disability frameworks rather than
-    software procurement.
-  counter_thesis:
-    statement: >
-      The market is correctly valued. Professional investors evaluate
-      ADHD productivity tools and pass for articulable reasons:
-      the addressable segment is too small for VC-scale returns,
-      B2C ADHD tools have poor unit economics (high acquisition
-      cost, high churn, low willingness to pay), enterprise sales
-      face the disclosure barrier (employees will not use employer-
-      provided ADHD tools), and the app graveyard problem means
-      standard SaaS retention metrics are structurally unachievable.
-      The B2C ADHD app market exists at small scale (Tiimo, Llama
-      Life, Focusmate) — the ceiling may genuinely be low.
-    evidence: [P2A_Community_Reports, C034, C049, C053]
-    strength: >
-      The "investors are rational" argument has significant force.
-      The disclosure constraint (MC4) directly undermines enterprise
-      distribution channels. The retention data gap (C053) means
-      positive retention claims for alternative engagement models
-      are untested hypotheses, not evidence. The counter weakens
-      if structurally different engagement models (passive capture,
-      ambient monitoring) produce fundamentally different retention
-      curves than the habit-dependent models that have failed — but
-      this is precisely the untested assumption that C062 addresses.
-      Circular dependency: this thesis depends partly on C062 being
-      correct.
-  refs:
-    depends_on: [C034, C049, C053]
-    entities: [MC4]
-  comments: >
-    Market data referenced here (market size, CAGR, competitive
-    landscape) is from S10 synthesis and P2D landscape analysis,
-    not encoded as formal claims in this system. The market
-    assessment layer is outside the SoR scope — this thesis sits
-    at the boundary between research evidence and market analysis.
-    Developed from CT_005 candidate "Ecosystem incentives are
-    misaligned" (reframed from incentive mechanism to market
-    mispricing).
-
-C060:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 2.5
-  statement: >
-    User demand and practitioner recommendation converge on high-
-    structure, high-engagement intervention models — daily check-ins,
-    planning rituals, habit trackers — which are precisely the models
-    with the highest meta-challenge vulnerability profiles. Following
-    demand leads toward the design space with the highest structural
-    failure probability. Users cannot specify what would actually
-    work (C040); they describe variants of what they already know.
-  counter_thesis:
-    statement: >
-      Demand signal is accurate. Users and practitioners know what
-      helps. Structured intervention produces the largest workplace
-      effect sizes (CBT d=0.56 vs medication d=0.19). The high
-      meta-challenge vulnerability of Structured Check-In (M7)
-      reflects software delivery failure, not a flaw in the
-      intervention model itself. Rather than abandoning what users
-      say they want, the correct response is to solve the software-
-      delivery problem — perhaps through AI providing human-like
-      accountability, adaptation, and relational continuity.
-      Ignoring demand to build low-engagement tools risks solving
-      the wrong problem.
-    evidence: [C029, C030, C031, C047, ADHD_Coaching_Survey, Lauder_2024]
-    strength: >
-      Strong from clinical evidence. Lauder 2024 meta-analysis
-      (Tier 1) shows structured psychosocial intervention produces
-      the largest workplace effect sizes — practitioners recommend
-      it because it works with a human. The counter's weakness:
-      no evidence exists for software replicating the human
-      accountability function that makes structured intervention
-      effective. The AI-accountability hypothesis is plausible but
-      entirely untested. If AI cannot replicate the active
-      ingredient, following demand repeats the structural failure
-      that fills the app graveyard.
-  refs:
-    sources: [Lauder_2024, ADHD_Coaching_Survey]
-    depends_on: [C029, C040, C047]
-    entities: [M7]
-  comments: >
-    This thesis and C062 are a pair: C060 says demand points the
-    wrong way, C062 says the alternative direction (passive models)
-    can work. If C060 is wrong (demand IS accurate), then C062
-    becomes less important because the right strategy is to solve
-    the software-delivery-of-structured-intervention problem.
-    Developed from CT_005 candidate "Demand signal is misleading."
-
-C061:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 3.0
-  statement: >
-    Conventional product discovery and validation methods produce
-    systematically unreliable signals when applied to ADHD workplace
-    tools. Users cannot specify desired features (C040). Early
-    engagement metrics are inflated by novelty (MC6). Standard
-    retention metrics cannot distinguish genuine value from novelty
-    engagement. A/B testing with typical time horizons cannot detect
-    meta-challenge effects that manifest over weeks to months.
-  counter_thesis:
-    statement: >
-      Product methodology challenges are not unique to ADHD. All
-      health and behavioural-change products face the same issues:
-      users cannot specify needs, novelty inflates early metrics,
-      and long-term outcomes require extended measurement windows.
-      Digital health, addiction recovery, mental health, and chronic
-      disease management have developed validated methodological
-      frameworks addressing these challenges: longitudinal cohort
-      studies, clinical-grade outcome measures, 90-day retention
-      windows, and clinical trial-style evaluation. The methodology
-      is not degraded — it is harder, and established health-tech
-      practices handle the increased difficulty.
-    evidence: [P2A_Community_Reports, C040, C034, C053]
-    strength: >
-      The health-tech parallel is reasonable but collapses under
-      ADHD-specific constraints. Standard health-tech methodology
-      assumes sustained study participation — ADHD undermines this
-      at the protocol level. A 90-day retention window requires 90
-      days of consistent tool use by a population whose signature
-      characteristic is inconsistent engagement. Longitudinal cohort
-      studies require participants to remember to log data, attend
-      check-ins, and complete surveys — prospective memory failure
-      creates systematic attrition bias that corrupts the very
-      measurements meant to assess the tool. The novelty-engagement
-      inflation (MC6) is not generic "early enthusiasm" — it is a
-      neurologically-driven dopamine response that produces weeks
-      of genuinely high engagement followed by precipitous collapse,
-      mimicking product-market fit when none exists. A/B tests with
-      standard time horizons cannot distinguish this from real
-      retention because the collapse window (4-12 weeks per C034)
-      exceeds typical test durations. The "missing wish-list"
-      problem (C040) is also more severe than generic user-
-      need elicitation difficulty — ADHD users structurally cannot
-      describe what they need because they cannot observe their own
-      failure patterns in real time. Counter retains force where
-      these ADHD-specific severity claims lack quantitative evidence
-      comparing ADHD populations to other health-tech cohorts. The
-      assertion that ADHD novelty collapse is WORSE than general
-      health-tech engagement decline is plausible but unproven.
-  refs:
-    depends_on: [C040, C034, C053]
-    entities: [MC6]
-  comments: >
-    If this thesis is wrong, the build approach is straightforward:
-    use established health-tech product methodology. If correct,
-    the team needs to develop ADHD-specific validation methods
-    before trusting any product signal. This affects timeline,
-    resource allocation, and the confidence placed in early results.
-    Developed from CT_005 candidate "Standard product methodology
-    is degraded."
-
-C062:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 4.0
-  statement: >
-    Product architectures that minimise user-initiated effort and
-    eliminate habit-formation dependency — passive capture, ambient
-    monitoring, workflow-embedded delivery — can deliver meaningful
-    workplace functional improvement for ADHD adults. This is the
-    core untested architectural assumption: that capturing
-    information and delivering structure passively can substitute
-    for the active engagement that clinical evidence shows is
-    effective when human-delivered.
-  counter_thesis:
-    statement: >
-      Passive tools can capture and deliver information, but
-      meaningful functional improvement requires the user to change
-      behaviour, which requires active engagement. Meeting
-      transcription captures what was said but does not help the
-      user retain it or act on commitments. Email summaries identify
-      action items but do not overcome the activation barrier to
-      completing them. The gap between information delivery and
-      behavioural change is the gap between passive capture and
-      functional improvement. All clinical evidence for ADHD
-      workplace improvement involves active, structured, human-
-      delivered intervention. Passive tools may reduce symptom
-      burden through external tracking but cannot build the
-      executive function capacity that generates lasting improvement.
-    evidence: [C030, C031, C034, C053, Lauder_2024, WorkMAP_RCT]
-    strength: >
-      This is the strongest counter-thesis in the set. ALL clinical
-      evidence for workplace improvement involves active, structured
-      intervention delivered by humans. No evidence exists for
-      passive-delivery functional improvement — the entire passive
-      engagement model is an architectural hypothesis, not an
-      evidence-supported approach. The information-to-action gap
-      is real and well-documented across health-tech. However: the
-      counter rests on defining "functional improvement" as
-      capacity-building. If improvement is redefined as "fewer
-      missed commitments regardless of whether executive function
-      has changed," passive capture delivers it through external
-      compensation rather than internal development. Whether
-      compensated function counts as meaningful improvement is
-      a definitional question the evidence cannot resolve.
-  refs:
-    sources: [Lauder_2024, WorkMAP_RCT]
-    depends_on: [C028, C034, C048, C053]
-    entities: [M1, M2, M6]
-  comments: >
-    The most strategically critical thesis. If passive models
-    cannot deliver improvement, the low-MC-vulnerability engagement
-    models do not work, and the team faces either (a) the high-MC-
-    vulnerability design space or (b) a fundamentally different
-    approach. Paired with C060: if demand signal is misleading
-    AND passive models can work, the strategy is clear. If demand
-    signal is accurate OR passive models fail, the strategy must
-    change. Developed from CT_005 candidate "Passive engagement
-    can substitute for active engagement."
-
-C063:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 3.0
-  statement: >
-    A software product targeting individual ADHD adults is the most
-    effective and viable intervention point for workplace functional
-    impairment — as opposed to employer-directed accommodation,
-    managerial training, organisational policy change, or clinical
-    service delivery.
-  counter_thesis:
-    statement: >
-      Organisational-level intervention may be more effective than
-      individual-level tools. The strongest evidence for workplace
-      improvement (Work-MAP RCT) involved employer-facilitated
-      occupational therapy, not individual software use. Universal
-      workplace design changes (flexible scheduling, written
-      communication preferences, structured meetings) address the
-      environment rather than the individual, do not require the
-      individual to maintain a tool, and benefit all employees.
-      The disclosure barrier (MC4) that blocks individual ADHD tool
-      adoption does not apply to universal workplace changes.
-      Enterprise "neurodiverse workplace" initiatives may be the
-      more natural and scalable intervention point.
-    evidence: [WorkMAP_RCT, C031, C039]
-    strength: >
-      The Work-MAP RCT (Tier 1) delivered intervention through an
-      employer-facilitated pathway. Universal workplace design
-      changes sidestep MC4 entirely and have no retention risk.
-      The counter weakens where organisational change is slow,
-      politically constrained, and outside the control of the
-      affected individual. An individual tool deploys without
-      employer buy-in — a significant advantage for a population
-      where 20-40% may not disclose. Also, organisational
-      approaches do not address the cross-domain nature of ADHD
-      impairment (C039) — workplace policy changes do not help
-      at home.
-  refs:
-    sources: [WorkMAP_RCT]
-    depends_on: [C031, C039, C041]
-    entities: [MC4]
-  comments: >
-    Not in original CT_005 candidates — identified as a gap
-    during thesis development. Gate 2 (Individual Addressability)
-    shows individual-level intervention is POSSIBLE, but "possible"
-    and "optimal" are different claims. If this thesis is wrong,
-    the product model shifts from individual tool to employer/
-    enterprise platform or clinical delivery vehicle. Affects
-    go-to-market, pricing, and fundamental product architecture.
-
-C064:
-  type: claim
-  group: thesis
-  draft_review: true
-  confidence: 4.0
-  statement: >
-    A sustainable business can be built around ADHD workplace tools
-    despite the population's structural retention challenges. The
-    unit economics question: can you charge enough, to enough people,
-    with the retention profile this population produces, to sustain
-    the R&D investment that mechanism-aware, meta-challenge-resistant
-    product design requires? The addressable market ($2-2.4B ADHD
-    apps, 11-16% CAGR) is large enough IF retention economics
-    differ from the pattern that has killed previous attempts. This
-    thesis depends on C062 (passive engagement model works) and
-    C055 (architectural differentiation is real) — if those hold,
-    the retention profile changes and the business model becomes
-    viable.
-  counter_thesis:
-    statement: >
-      ADHD tool unit economics are structurally broken and no
-      architectural innovation changes this. B2C acquisition costs
-      are high (ADHD users are difficult to reach without clinical
-      channels or ADHD-community marketing, both of which are
-      expensive or ethically constrained). Willingness to pay is
-      low (the population skews toward free tools — P2D shows most
-      ADHD apps are freemium with low conversion). Churn is high
-      and driven by neurology, not product quality — novelty
-      collapse (MC6) produces 4-12 week retention cliffs regardless
-      of the engagement model. Enterprise distribution is blocked
-      by MC4 (disclosure barrier). The existing ADHD app landscape
-      (Tiimo, Llama Life, Focusmate) demonstrates the ceiling:
-      small, niche, lifestyle-business scale. No amount of
-      architectural sophistication changes the fundamental unit
-      economics of serving a population whose defining
-      characteristic makes sustained subscription revenue difficult.
-    evidence: [C034, C049, C053, P2A_Community_Reports]
-    strength: >
-      The "structural unit economics" argument is the strongest
-      counter-thesis element. Novelty collapse (MC6) producing
-      4-12 week retention cliffs (C034) directly undermines
-      subscription revenue models. The disclosure barrier (MC4)
-      constraining enterprise distribution is well-evidenced.
-      Existing market evidence (P2D landscape — 54 apps, none
-      well-funded) is consistent with a genuinely low ceiling
-      rather than market mispricing. Counter weakens IF passive
-      engagement models (C062) produce fundamentally different
-      retention curves — a tool that works without user-initiated
-      engagement does not face novelty collapse in the same way
-      because the user never formed the habit that collapses. Also
-      weakens if the value delivery is high enough to justify
-      premium pricing ($20-50/month) from a smaller, highly
-      retained segment rather than mass-market freemium. But both
-      of these mitigants are hypotheses, not evidence. This thesis
-      has the highest dependency on other theses being correct and
-      the least independent evidence.
-  refs:
-    depends_on: [C034, C049, C053, C055, C062]
-    entities: [MC4, MC6]
-  comments: >
-    Not in original CT_005 candidates — identified during steel-
-    man review as a critical coverage gap. Market data (market size,
-    CAGR, competitive landscape) is from S10 synthesis and P2D
-    landscape analysis, not encoded as formal claims. This thesis
-    sits at the intersection of research evidence and business
-    analysis. If this thesis is wrong, the research findings are
-    still valid but the commercial path is not individual B2C/B2B
-    SaaS — it may be clinical delivery, employer procurement, or
-    research licensing. Heavy dependency chain: C064 depends on
-    C062 (passive works) which depends on C055 (architecture
-    matters) which depends on C054 (problem is real). If any link
-    breaks, the unit economics thesis is undermined.
-
 C065:
   type: claim
   group: standard
@@ -5129,13 +4519,618 @@ CT_004:
 CT_005:
   type: content_ticket
   origin: thesis definition session (2025-02-25)
-  status: closed
-  closed_reason: promoted
-  promoted_to: [C054, C055, C056, C057, C058, C059, C060, C061, C062, C063, C064]
+  status: open
   content: >
     Nine initial thesis candidates identified during schema design.
-    All promoted to full thesis claims with counter-theses,
-    evidence, and confidence assessments.
+    Previously promoted to standalone claims C054-C064; reverted to
+    unvalidated candidates. These represent contested strategic
+    assumptions that need proper validation methodology before
+    promotion to claim entities. Preserved below with their
+    counter-theses, preliminary confidence ratings, and evidence
+    references intact.
+  candidates_yaml: |
+    C054:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 1.5
+      statement: >
+        ADHD produces persistent, measurable workplace functional
+        impairment across multiple work domains, affecting the majority
+        of diagnosed adults at rates substantially exceeding neurotypical
+        populations. This impairment is not an artefact of self-report
+        bias, poor motivation, or insufficient effort. The problem space
+        is real and material enough to warrant intervention.
+      counter_thesis:
+        statement: >
+          Workplace functional impairment is real but systematically
+          overstated by self-report instruments. WFIRS data shows 69%
+          of ADHD adults feel they are "working below potential," but
+          formal performance consequences (termination, disciplinary
+          action) affect only 20-23%. This 3-4x amplification factor
+          suggests subjective distress substantially exceeds measurable
+          dysfunction. The commercially addressable population may be
+          the smaller group with observable performance impact, not the
+          larger group experiencing subjective impairment.
+        evidence: [Fuermaier_2021, P2A_Community_Reports, C038]
+        strength: >
+          Has specific force on market sizing and population definition.
+          The discrepancy between self-perceived impairment and
+          externally observable impairment is documented in both
+          clinical (WFIRS) and community (P2I) data. The comorbidity
+          interaction (C038 — 7/12 interview participants had co-
+          occurring conditions) means some impairment attributed to
+          ADHD may be driven by co-occurring conditions, narrowing
+          the ADHD-specific addressable problem. Does NOT undermine
+          that functional problems exist — challenges the scale and
+          the sharpness of the boundary around ADHD-specific impairment.
+      refs:
+        sources: [Fuermaier_2021, WorkMAP_RCT, Norwegian_Employment_Study]
+        depends_on: [C001, C002, C003, C039]
+      comments: >
+        Highest-confidence thesis. Tier 1 evidence from multiple
+        independent sources. Counter-thesis is about magnitude and
+        boundary, not existence. If this thesis is wrong, the entire
+        SoR is investigating a non-problem. Developed from CT_005
+        candidate "Problem space is real."
+
+    C055:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 2.5
+      statement: >
+        ADHD neurology requires architecturally different product design,
+        not better execution of existing patterns. Neurological mechanisms
+        — dopamine reward signalling, working memory limits, attention
+        dysregulation, time perception distortion, prospective memory
+        failure — constrain which interventions can work. Current
+        productivity tools fail because their design assumptions (user-
+        initiated engagement, habit-dependent value, visible failure
+        accumulation, consistent daily use) are structurally incompatible
+        with these mechanisms. The failure is architectural, not a
+        quality deficiency. The tool-requires-capacity paradox — tools
+        demanding the executive function they aim to support — is the
+        signature of structural incompatibility, not poor UX.
+      counter_thesis:
+        statement: >
+          The neurological constraints are real but their design
+          implications are overstated. CBT produces larger workplace
+          effect sizes (d=0.56) than medication (d=0.19) in a 2024
+          meta-analysis, proving behavioural approaches work despite
+          neurological substrates. Many tool failures attributed to
+          ADHD-specific incompatibility are universal UX failures (poor
+          onboarding, notification fatigue, feature overwhelm) affecting
+          all users. Some ADHD users succeed with standard tools (P2E
+          interview evidence). ADHD heterogeneity (C052) means the
+          structural-incompatibility framing may apply to a subset, not
+          the population. Better general-purpose tools following
+          universal accessibility principles would address ADHD users
+          as a side effect of good design, not through ADHD-specific
+          architecture.
+        evidence: [Lauder_2024, C030, C031, P2A_Community_Reports, C029, C033, C052]
+        strength: >
+          Strongest where tool failures overlap with neurotypical
+          experience — notification fatigue, setup complexity, and
+          feature overwhelm affect everyone. The CBT evidence (Tier 1)
+          directly demonstrates structured behavioural intervention
+          works for this population. P2E interview data shows ADHD
+          users succeeding with standard tools (particularly milder
+          presentations or effective medication). Counter weakens where
+          failures are ADHD-specific at severity levels absent in
+          neurotypical populations: tool-requires-capacity paradox
+          (needing executive function to use executive function tools),
+          prospective memory failure to use the tool at all, and shame
+          spirals from visible failure accumulation that trigger
+          complete abandonment.
+      refs:
+        sources: [Lauder_2024, Fuermaier_2021, P2A_Community_Reports, ADHD_Coaching_Survey]
+        depends_on: [C004, C005, C006, C007, C008, C009, C010, C029, C030, C032]
+        entities: [MECH01, MECH02, MECH03, MECH04, MECH05, MECH06, MC1, MC2, MC3, MC4, MC5, MC6]
+      comments: >
+        MERGED from original C055 ("Neurological, not behavioural") and
+        C057 ("Existing tools fail structurally"). These were not
+        independent axes of uncertainty — if the mechanisms do not
+        constrain design (C055 false), then the tools do not fail
+        structurally (C057 false). If tools fail for quality reasons
+        (C057 false), then the mechanisms are not the binding constraint
+        (C055 weakened). Merged to avoid double-counting the same
+        strategic risk. If the counter is correct, the strategy shifts
+        from "different kind of tool" to "better version of existing
+        tools with ADHD marketing." CT_005 candidates: "Neurological,
+        not behavioural" + "Existing tools fail structurally."
+
+    C056:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 2.0
+      statement: >
+        Software can deliver the effective components of external
+        cognitive scaffolding — structure, memory augmentation, activation
+        support, accountability — that clinical evidence shows works when
+        delivered by humans. The medication gap is well-established
+        (Tier 1, see C041) and non-pharmacological external structure
+        helps (Tier 1, see C031). The contested question is whether
+        software can replicate the elements that make human-delivered
+        intervention effective, or whether human accountability,
+        adaptation, and emotional attunement are the active ingredients
+        that software cannot provide.
+      counter_thesis:
+        statement: >
+          Software cannot replicate the active ingredients of effective
+          external structure. Work-MAP RCT improvement (15-19%) came from
+          clinician-delivered intervention providing real-time adaptation,
+          relational accountability, and emotional regulation support.
+          The practitioner IS the bootstrapping mechanism, the shame
+          regulator, and the novelty source (C047). Software strips away
+          precisely these human elements. No evidence exists for software-
+          only delivery of external structure producing comparable workplace
+          outcomes. The gap between "external structure helps" and
+          "software-delivered external structure helps" is the gap between
+          evidence and hypothesis.
+        evidence: [WorkMAP_RCT, C031, C047, ADHD_Coaching_Survey, Lauder_2024]
+        strength: >
+          The strongest element: all positive evidence for non-pharma
+          workplace improvement is for HUMAN-delivered intervention.
+          Zero evidence for software-delivered structural support at
+          comparable efficacy. The practitioner accountability function
+          (C047) identifies specific human capabilities — relational
+          accountability, emotional attunement, real-time adaptation —
+          that current software cannot replicate. Counter weakens if AI
+          advances close the gap on these capabilities, particularly
+          relational modelling and adaptive scaffolding. Also weakens
+          where the software provides DIFFERENT effective components
+          (perfect memory, passive capture, tireless consistency) rather
+          than replicating the human ones.
+      refs:
+        sources: [WorkMAP_RCT, Lauder_2024]
+        depends_on: [C041]
+        entities: []
+      comments: >
+        Closely related to C054 (problem exists) but addresses a
+        different strategic question: not whether the impairment is
+        real but whether software is the right delivery mechanism for
+        addressing it. If this thesis is wrong, the product needs
+        human-in-loop delivery (coaching platform, not standalone
+        tool). Developed from CT_005 candidate "Medication is
+        insufficient."
+
+    C057:
+      type: claim
+      group: thesis
+      draft_review: true
+      status: merged_into_C055
+      confidence: null
+      statement: >
+        [MERGED INTO C055] Original thesis "Existing tools fail
+        structurally" was not independent of C055 "Neurological
+        mechanisms constrain design." Both represented the same
+        strategic risk (is ADHD-specific architecture necessary?)
+        from different angles. Maintaining both would double-count
+        the same uncertainty. See C055 for the merged thesis.
+      refs:
+        depends_on: [C055]
+      comments: >
+        Merged during steel-man review. The dependency: if mechanisms
+        do not constrain design (C055 false), then tools do not fail
+        structurally (C057 false). Not independently testable.
+        Original CT_005 candidate: "Existing tools fail structurally."
+
+    C058:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 4.0
+      statement: >
+        Effective ADHD workplace tools require simultaneous competence
+        in clinical neuroscience (mechanism-aware design), product
+        design (meta-challenge-aware architecture, accommodation without
+        stigma), and technical implementation (ambient capture, knowledge
+        graphs, on-device processing). This three-way competence
+        requirement creates a structural barrier to entry that partially
+        explains why no well-funded ADHD-specific productivity product
+        exists despite a multi-billion-dollar addressable market.
+      counter_thesis:
+        statement: >
+          The interdisciplinary barrier is not unique to ADHD — digital
+          health products routinely require clinical, design, and
+          technical competence. Diabetes management, mental health
+          platforms, chronic pain, and addiction recovery have all
+          produced successful products despite similar requirements.
+          The absence of funded ADHD workplace tools more likely reflects
+          correct market assessment (small, fragmented, difficult
+          monetisation) than an unusually high competence barrier. AI/LLM
+          advances further reduce the interdisciplinary requirement —
+          general-purpose AI can approximate clinical accommodation
+          insight without purpose-built neuroscience expertise.
+        evidence: [P2A_Community_Reports, C034, C049, C053]
+        strength: >
+          The digital-health comparison has real force but is weaker
+          than it appears. Noom, BetterHelp, and Headspace succeeded
+          with interdisciplinary teams — but none face the ADHD meta-
+          challenge framework. The critical difference: other health-tech
+          products can assume sustained user engagement. ADHD tools
+          cannot. Noom's habit-formation model would collapse under MC2
+          (novelty-dependent engagement). BetterHelp's scheduling model
+          assumes prospective memory. Headspace's streak-based retention
+          triggers MC1 (tool-requires-capacity paradox) — maintaining
+          a meditation habit requires the executive function meditation
+          aims to develop. The interdisciplinary barrier is not just
+          "hard health-tech" but "health-tech where the target condition
+          undermines the engagement model every other health-tech product
+          relies on." The AI-reduces-barrier argument has emerging force
+          for the clinical knowledge dimension but does not address the
+          design dimension — knowing what accommodations work is not the
+          hard part; building a product that ADHD users can sustain
+          using is the hard part. Counter is strongest where the market-
+          size explanation (investors correctly assess a small market)
+          is sufficient without invoking competence barriers at all —
+          the competence barrier may be real but irrelevant if the
+          market ceiling is genuinely low.
+      refs:
+        depends_on: [C032, C042]
+        entities: [MC1, MC2, MC3, MC4, MC5, MC6]
+      comments: >
+        Lowest-confidence thesis in the strategic set. Largely
+        inferred — no source directly studies why ADHD workplace
+        products are underfunded. The thesis matters because if the
+        barrier IS interdisciplinary competence, that is a moat. If
+        it is market size, there is no moat. Developed from CT_005
+        candidate "The gap is interdisciplinary."
+
+    C059:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 4.0
+      statement: >
+        Investment markets systematically undervalue non-pharmacological
+        ADHD workplace intervention. The absence of well-funded products
+        in a multi-billion-dollar addressable market growing at 11-16%
+        CAGR reflects market mispricing driven by: investors
+        extrapolating from the failure rate of structurally flawed tools,
+        difficulty demonstrating clinical efficacy for non-pharma
+        approaches, and enterprise procurement structures that route
+        ADHD accommodation through HR/disability frameworks rather than
+        software procurement.
+      counter_thesis:
+        statement: >
+          The market is correctly valued. Professional investors evaluate
+          ADHD productivity tools and pass for articulable reasons:
+          the addressable segment is too small for VC-scale returns,
+          B2C ADHD tools have poor unit economics (high acquisition
+          cost, high churn, low willingness to pay), enterprise sales
+          face the disclosure barrier (employees will not use employer-
+          provided ADHD tools), and the app graveyard problem means
+          standard SaaS retention metrics are structurally unachievable.
+          The B2C ADHD app market exists at small scale (Tiimo, Llama
+          Life, Focusmate) — the ceiling may genuinely be low.
+        evidence: [P2A_Community_Reports, C034, C049, C053]
+        strength: >
+          The "investors are rational" argument has significant force.
+          The disclosure constraint (MC4) directly undermines enterprise
+          distribution channels. The retention data gap (C053) means
+          positive retention claims for alternative engagement models
+          are untested hypotheses, not evidence. The counter weakens
+          if structurally different engagement models (passive capture,
+          ambient monitoring) produce fundamentally different retention
+          curves than the habit-dependent models that have failed — but
+          this is precisely the untested assumption that C062 addresses.
+          Circular dependency: this thesis depends partly on C062 being
+          correct.
+      refs:
+        depends_on: [C034, C049, C053]
+        entities: [MC4]
+      comments: >
+        Market data referenced here (market size, CAGR, competitive
+        landscape) is from S10 synthesis and P2D landscape analysis,
+        not encoded as formal claims in this system. The market
+        assessment layer is outside the SoR scope — this thesis sits
+        at the boundary between research evidence and market analysis.
+        Developed from CT_005 candidate "Ecosystem incentives are
+        misaligned" (reframed from incentive mechanism to market
+        mispricing).
+
+    C060:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 2.5
+      statement: >
+        User demand and practitioner recommendation converge on high-
+        structure, high-engagement intervention models — daily check-ins,
+        planning rituals, habit trackers — which are precisely the models
+        with the highest meta-challenge vulnerability profiles. Following
+        demand leads toward the design space with the highest structural
+        failure probability. Users cannot specify what would actually
+        work (C040); they describe variants of what they already know.
+      counter_thesis:
+        statement: >
+          Demand signal is accurate. Users and practitioners know what
+          helps. Structured intervention produces the largest workplace
+          effect sizes (CBT d=0.56 vs medication d=0.19). The high
+          meta-challenge vulnerability of Structured Check-In (M7)
+          reflects software delivery failure, not a flaw in the
+          intervention model itself. Rather than abandoning what users
+          say they want, the correct response is to solve the software-
+          delivery problem — perhaps through AI providing human-like
+          accountability, adaptation, and relational continuity.
+          Ignoring demand to build low-engagement tools risks solving
+          the wrong problem.
+        evidence: [C029, C030, C031, C047, ADHD_Coaching_Survey, Lauder_2024]
+        strength: >
+          Strong from clinical evidence. Lauder 2024 meta-analysis
+          (Tier 1) shows structured psychosocial intervention produces
+          the largest workplace effect sizes — practitioners recommend
+          it because it works with a human. The counter's weakness:
+          no evidence exists for software replicating the human
+          accountability function that makes structured intervention
+          effective. The AI-accountability hypothesis is plausible but
+          entirely untested. If AI cannot replicate the active
+          ingredient, following demand repeats the structural failure
+          that fills the app graveyard.
+      refs:
+        sources: [Lauder_2024, ADHD_Coaching_Survey]
+        depends_on: [C029, C040, C047]
+        entities: [M7]
+      comments: >
+        This thesis and C062 are a pair: C060 says demand points the
+        wrong way, C062 says the alternative direction (passive models)
+        can work. If C060 is wrong (demand IS accurate), then C062
+        becomes less important because the right strategy is to solve
+        the software-delivery-of-structured-intervention problem.
+        Developed from CT_005 candidate "Demand signal is misleading."
+
+    C061:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 3.0
+      statement: >
+        Conventional product discovery and validation methods produce
+        systematically unreliable signals when applied to ADHD workplace
+        tools. Users cannot specify desired features (C040). Early
+        engagement metrics are inflated by novelty (MC6). Standard
+        retention metrics cannot distinguish genuine value from novelty
+        engagement. A/B testing with typical time horizons cannot detect
+        meta-challenge effects that manifest over weeks to months.
+      counter_thesis:
+        statement: >
+          Product methodology challenges are not unique to ADHD. All
+          health and behavioural-change products face the same issues:
+          users cannot specify needs, novelty inflates early metrics,
+          and long-term outcomes require extended measurement windows.
+          Digital health, addiction recovery, mental health, and chronic
+          disease management have developed validated methodological
+          frameworks addressing these challenges: longitudinal cohort
+          studies, clinical-grade outcome measures, 90-day retention
+          windows, and clinical trial-style evaluation. The methodology
+          is not degraded — it is harder, and established health-tech
+          practices handle the increased difficulty.
+        evidence: [P2A_Community_Reports, C040, C034, C053]
+        strength: >
+          The health-tech parallel is reasonable but collapses under
+          ADHD-specific constraints. Standard health-tech methodology
+          assumes sustained study participation — ADHD undermines this
+          at the protocol level. A 90-day retention window requires 90
+          days of consistent tool use by a population whose signature
+          characteristic is inconsistent engagement. Longitudinal cohort
+          studies require participants to remember to log data, attend
+          check-ins, and complete surveys — prospective memory failure
+          creates systematic attrition bias that corrupts the very
+          measurements meant to assess the tool. The novelty-engagement
+          inflation (MC6) is not generic "early enthusiasm" — it is a
+          neurologically-driven dopamine response that produces weeks
+          of genuinely high engagement followed by precipitous collapse,
+          mimicking product-market fit when none exists. A/B tests with
+          standard time horizons cannot distinguish this from real
+          retention because the collapse window (4-12 weeks per C034)
+          exceeds typical test durations. The "missing wish-list"
+          problem (C040) is also more severe than generic user-
+          need elicitation difficulty — ADHD users structurally cannot
+          describe what they need because they cannot observe their own
+          failure patterns in real time. Counter retains force where
+          these ADHD-specific severity claims lack quantitative evidence
+          comparing ADHD populations to other health-tech cohorts. The
+          assertion that ADHD novelty collapse is WORSE than general
+          health-tech engagement decline is plausible but unproven.
+      refs:
+        depends_on: [C040, C034, C053]
+        entities: [MC6]
+      comments: >
+        If this thesis is wrong, the build approach is straightforward:
+        use established health-tech product methodology. If correct,
+        the team needs to develop ADHD-specific validation methods
+        before trusting any product signal. This affects timeline,
+        resource allocation, and the confidence placed in early results.
+        Developed from CT_005 candidate "Standard product methodology
+        is degraded."
+
+    C062:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 4.0
+      statement: >
+        Product architectures that minimise user-initiated effort and
+        eliminate habit-formation dependency — passive capture, ambient
+        monitoring, workflow-embedded delivery — can deliver meaningful
+        workplace functional improvement for ADHD adults. This is the
+        core untested architectural assumption: that capturing
+        information and delivering structure passively can substitute
+        for the active engagement that clinical evidence shows is
+        effective when human-delivered.
+      counter_thesis:
+        statement: >
+          Passive tools can capture and deliver information, but
+          meaningful functional improvement requires the user to change
+          behaviour, which requires active engagement. Meeting
+          transcription captures what was said but does not help the
+          user retain it or act on commitments. Email summaries identify
+          action items but do not overcome the activation barrier to
+          completing them. The gap between information delivery and
+          behavioural change is the gap between passive capture and
+          functional improvement. All clinical evidence for ADHD
+          workplace improvement involves active, structured, human-
+          delivered intervention. Passive tools may reduce symptom
+          burden through external tracking but cannot build the
+          executive function capacity that generates lasting improvement.
+        evidence: [C030, C031, C034, C053, Lauder_2024, WorkMAP_RCT]
+        strength: >
+          This is the strongest counter-thesis in the set. ALL clinical
+          evidence for workplace improvement involves active, structured
+          intervention delivered by humans. No evidence exists for
+          passive-delivery functional improvement — the entire passive
+          engagement model is an architectural hypothesis, not an
+          evidence-supported approach. The information-to-action gap
+          is real and well-documented across health-tech. However: the
+          counter rests on defining "functional improvement" as
+          capacity-building. If improvement is redefined as "fewer
+          missed commitments regardless of whether executive function
+          has changed," passive capture delivers it through external
+          compensation rather than internal development. Whether
+          compensated function counts as meaningful improvement is
+          a definitional question the evidence cannot resolve.
+      refs:
+        sources: [Lauder_2024, WorkMAP_RCT]
+        depends_on: [C028, C034, C048, C053]
+        entities: [M1, M2, M6]
+      comments: >
+        The most strategically critical thesis. If passive models
+        cannot deliver improvement, the low-MC-vulnerability engagement
+        models do not work, and the team faces either (a) the high-MC-
+        vulnerability design space or (b) a fundamentally different
+        approach. Paired with C060: if demand signal is misleading
+        AND passive models can work, the strategy is clear. If demand
+        signal is accurate OR passive models fail, the strategy must
+        change. Developed from CT_005 candidate "Passive engagement
+        can substitute for active engagement."
+
+    C063:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 3.0
+      statement: >
+        A software product targeting individual ADHD adults is the most
+        effective and viable intervention point for workplace functional
+        impairment — as opposed to employer-directed accommodation,
+        managerial training, organisational policy change, or clinical
+        service delivery.
+      counter_thesis:
+        statement: >
+          Organisational-level intervention may be more effective than
+          individual-level tools. The strongest evidence for workplace
+          improvement (Work-MAP RCT) involved employer-facilitated
+          occupational therapy, not individual software use. Universal
+          workplace design changes (flexible scheduling, written
+          communication preferences, structured meetings) address the
+          environment rather than the individual, do not require the
+          individual to maintain a tool, and benefit all employees.
+          The disclosure barrier (MC4) that blocks individual ADHD tool
+          adoption does not apply to universal workplace changes.
+          Enterprise "neurodiverse workplace" initiatives may be the
+          more natural and scalable intervention point.
+        evidence: [WorkMAP_RCT, C031, C039]
+        strength: >
+          The Work-MAP RCT (Tier 1) delivered intervention through an
+          employer-facilitated pathway. Universal workplace design
+          changes sidestep MC4 entirely and have no retention risk.
+          The counter weakens where organisational change is slow,
+          politically constrained, and outside the control of the
+          affected individual. An individual tool deploys without
+          employer buy-in — a significant advantage for a population
+          where 20-40% may not disclose. Also, organisational
+          approaches do not address the cross-domain nature of ADHD
+          impairment (C039) — workplace policy changes do not help
+          at home.
+      refs:
+        sources: [WorkMAP_RCT]
+        depends_on: [C031, C039, C041]
+        entities: [MC4]
+      comments: >
+        Not in original CT_005 candidates — identified as a gap
+        during thesis development. Gate 2 (Individual Addressability)
+        shows individual-level intervention is POSSIBLE, but "possible"
+        and "optimal" are different claims. If this thesis is wrong,
+        the product model shifts from individual tool to employer/
+        enterprise platform or clinical delivery vehicle. Affects
+        go-to-market, pricing, and fundamental product architecture.
+
+    C064:
+      type: claim
+      group: thesis
+      draft_review: true
+      confidence: 4.0
+      statement: >
+        A sustainable business can be built around ADHD workplace tools
+        despite the population's structural retention challenges. The
+        unit economics question: can you charge enough, to enough people,
+        with the retention profile this population produces, to sustain
+        the R&D investment that mechanism-aware, meta-challenge-resistant
+        product design requires? The addressable market ($2-2.4B ADHD
+        apps, 11-16% CAGR) is large enough IF retention economics
+        differ from the pattern that has killed previous attempts. This
+        thesis depends on C062 (passive engagement model works) and
+        C055 (architectural differentiation is real) — if those hold,
+        the retention profile changes and the business model becomes
+        viable.
+      counter_thesis:
+        statement: >
+          ADHD tool unit economics are structurally broken and no
+          architectural innovation changes this. B2C acquisition costs
+          are high (ADHD users are difficult to reach without clinical
+          channels or ADHD-community marketing, both of which are
+          expensive or ethically constrained). Willingness to pay is
+          low (the population skews toward free tools — P2D shows most
+          ADHD apps are freemium with low conversion). Churn is high
+          and driven by neurology, not product quality — novelty
+          collapse (MC6) produces 4-12 week retention cliffs regardless
+          of the engagement model. Enterprise distribution is blocked
+          by MC4 (disclosure barrier). The existing ADHD app landscape
+          (Tiimo, Llama Life, Focusmate) demonstrates the ceiling:
+          small, niche, lifestyle-business scale. No amount of
+          architectural sophistication changes the fundamental unit
+          economics of serving a population whose defining
+          characteristic makes sustained subscription revenue difficult.
+        evidence: [C034, C049, C053, P2A_Community_Reports]
+        strength: >
+          The "structural unit economics" argument is the strongest
+          counter-thesis element. Novelty collapse (MC6) producing
+          4-12 week retention cliffs (C034) directly undermines
+          subscription revenue models. The disclosure barrier (MC4)
+          constraining enterprise distribution is well-evidenced.
+          Existing market evidence (P2D landscape — 54 apps, none
+          well-funded) is consistent with a genuinely low ceiling
+          rather than market mispricing. Counter weakens IF passive
+          engagement models (C062) produce fundamentally different
+          retention curves — a tool that works without user-initiated
+          engagement does not face novelty collapse in the same way
+          because the user never formed the habit that collapses. Also
+          weakens if the value delivery is high enough to justify
+          premium pricing ($20-50/month) from a smaller, highly
+          retained segment rather than mass-market freemium. But both
+          of these mitigants are hypotheses, not evidence. This thesis
+          has the highest dependency on other theses being correct and
+          the least independent evidence.
+      refs:
+        depends_on: [C034, C049, C053, C055, C062]
+        entities: [MC4, MC6]
+      comments: >
+        Not in original CT_005 candidates — identified during steel-
+        man review as a critical coverage gap. Market data (market size,
+        CAGR, competitive landscape) is from S10 synthesis and P2D
+        landscape analysis, not encoded as formal claims. This thesis
+        sits at the intersection of research evidence and business
+        analysis. If this thesis is wrong, the research findings are
+        still valid but the commercial path is not individual B2C/B2B
+        SaaS — it may be clinical delivery, employer procurement, or
+        research licensing. Heavy dependency chain: C064 depends on
+        C062 (passive works) which depends on C055 (architecture
+        matters) which depends on C054 (problem is real). If any link
+        breaks, the unit economics thesis is undermined.
+
 
 CT_006:
   type: content_ticket
@@ -5283,69 +5278,67 @@ ST_005:
   type: system_ticket
   origin: schema design (2025-02-25)
   status: open
-  subject: "claim (thesis group) — populate settled flags"
+  subject: "thesis validation — define promotion methodology"
   content: >
-    Thesis entities now exist (C054-C063). Each needs a manual
-    settled assessment recorded. Field TBD (likely status value
-    or boolean). Must be done before first strategic review
-    cycle can use theses as intended. All 10 theses carry
-    draft_review: true pending user review.
+    Thesis candidates reverted from standalone claims (C054-C064)
+    back to CT_005 as unvalidated candidates. Before any future
+    promotion, define: (a) what evidence threshold justifies
+    promotion from candidate to claim, (b) whether thesis-group
+    claims need a different validation process than standard
+    claims, (c) settled assessment methodology. Original draft
+    entities carried draft_review: true but lacked a review
+    process definition.
 
 ST_006:
   type: system_ticket
   origin: thesis steel-man review (2025-02-25)
   status: open
-  subject: "thesis review process and open questions"
+  subject: "thesis candidate review — open questions from development"
   content: >
-    Open questions from thesis map development and steel-man
-    analysis. All require user decision before the thesis set
-    is finalised.
+    Open questions from thesis candidate development and steel-man
+    analysis. These were identified during the CT_005 thesis session
+    and remain relevant for any future promotion of candidates to
+    claims. Candidates are now stored in CT_005.
   questions:
     - id: Q1
-      subject: "C054 demotion"
+      subject: "Problem-space-is-real candidate demotion"
       description: >
-        C054 ("problem space is real and material") may be too
-        well-evidenced to qualify as a thesis under the agreed
-        definition ("contested assumption where a confidence change
-        would prompt strategic reconsideration"). Confidence is 1.5
-        (Tier 1 evidence from multiple sources). Should C054 be
-        demoted to a standard claim or kept as the foundational
-        thesis that anchors the dependency chain?
+        The "problem space is real" candidate (formerly C054) may be
+        too well-evidenced to qualify as a thesis. Confidence was 1.5
+        (Tier 1 evidence from multiple sources). If promoted, should
+        it be a standard claim rather than a thesis?
     - id: Q2
-      subject: "C055+C057 merge validation"
+      subject: "Neurological + structural failure merge"
       description: >
-        C055 and C057 were merged because "mechanisms constrain
-        design" and "tools fail structurally" are the same strategic
-        risk from different angles. Confirm this merge is correct or
-        flag if they should be re-separated.
+        The "neurological constraints" and "tools fail structurally"
+        candidates were merged (formerly C055+C057) because they
+        represent the same strategic risk. Confirm this merge or
+        flag for re-separation.
     - id: Q3
-      subject: "C058+C059 overlap"
+      subject: "Interdisciplinary barrier + market mispricing overlap"
       description: >
-        C058 (interdisciplinary barrier) and C059 (market mispricing)
-        share significant DNA — both partially explain why the market
-        is unfunded. Kept separate because they imply different
+        The interdisciplinary barrier and market mispricing candidates
+        (formerly C058+C059) share significant DNA but imply different
         strategic responses. Should they merge or remain separate?
     - id: Q4
-      subject: "Technical feasibility thesis"
+      subject: "Technical feasibility candidate"
       description: >
-        No thesis addresses whether the required technical
+        No candidate addresses whether the required technical
         capabilities are actually achievable at the required quality
-        and cost. The technology research (S9B-S9J) was quarantined
-        from the phenomena layer. Should a technical feasibility
-        thesis be added, or is this outside SoR scope?
+        and cost. Should one be added, or is this outside SoR scope?
     - id: Q5
       subject: "Dependency structure encoding"
       description: >
-        The thesis dependency chain is captured in refs.depends_on
-        but not structurally typed (logical dependency vs evidence
-        dependency vs thematic relationship). Should the data model
-        distinguish these, or is flat depends_on sufficient?
+        The candidates have internal dependency chains that were
+        captured in refs.depends_on but not structurally typed.
+        Should the data model distinguish logical vs evidence vs
+        thematic dependencies?
     - id: Q6
-      subject: "Thesis review cycle"
+      subject: "Thesis validation methodology"
       description: >
-        All 11 thesis entities carry draft_review: true. What is
-        the intended review process? This affects ST_005 (settled
-        flags) and any future strategic review cycle.
+        No review process was defined before the original promotion.
+        What evidence threshold and review process should govern
+        future candidate-to-claim promotion? Linked to ST_005.
 
 ST_007:
   type: system_ticket
@@ -5512,17 +5505,22 @@ ST_015:
 ST_016:
   type: system_ticket
   origin: user review — thesis claim group
-  status: open
+  status: closed
   added: 2026-02-26
-  subject: "thesis section full review — current entries are examples"
+  closed_reason: superseded
+  resolution: >
+    Thesis claims C054-C064 reverted to unvalidated candidates in
+    CT_005. The full review this ticket described is now the default
+    state — candidates must pass validation (see ST_005) before any
+    future promotion. ST_005 and ST_006 cover the remaining open
+    questions.
+  subject: "thesis section full review — superseded by revert to candidates"
   content: >
-    The thesis claims (C054–C063) were developed as illustrative
-    examples during the steel-man exercise. The entire thesis section
-    needs a full review pass to determine which theses are genuine
-    strategic assumptions worth tracking vs artefacts of the
-    generation process. Broader scope than ST_005 (settled flags) and
-    ST_006 (open questions from steel-man), which address specific
-    mechanics within the thesis set.
+    Originally requested a full review of thesis claims (C054-C063)
+    developed as illustrative examples during the steel-man exercise.
+    Superseded: all thesis claims reverted to CT_005 as unvalidated
+    candidates. See ST_005 (validation methodology) and ST_006
+    (open questions) for remaining work.
 
 ST_017:
   type: system_ticket
