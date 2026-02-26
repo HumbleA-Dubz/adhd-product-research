@@ -1,10 +1,12 @@
-# Derivability Options Analysis
+# Derivability Options Analysis (v2)
 
-> **Scope**: Per-document assessment of what data S1, CS1-CS5, S0, and CQ Reference contain, what's already in the SoR, what's missing, and the options/tradeoffs for making each fully derivable from the SoR.
+> **Scope**: Per-document assessment of what data each analysis file contains, what's already in the SoR, what's changed since v1, and what remains to close each gap.
+>
+> **v2 note (2026-02-26)**: Refreshed against current SoR state. Several v1 recommendations have been actioned (gate-failed problems, inclusion tests, cluster compatibility ratings). New file added (S6). CQ Reference and CS1 noted as absent from repo.
 
 ## Reading Guide
 
-For each document: what it contains, what's already encoded, what's missing, options for closing the gap, tradeoffs, and a verdict. "Derivable" means an AI agent with only the SoR in context could regenerate the document's substantive content without loss.
+For each document: what it contains, what's encoded, what's changed since v1, what's still missing, and a fresh verdict. "Derivable" = an AI agent with only the SoR could regenerate the document's substantive content.
 
 ---
 
@@ -13,498 +15,324 @@ For each document: what it contains, what's already encoded, what's missing, opt
 ### What it contains
 18 functional problem entries (FP01-FP20), each with:
 - Formal functional definition (3-4 sentences)
-- Source file references (P1A, P2A, etc. with section markers)
-- Evidence tier
-- Key quantitative data (3-5 specific data points with numbers, sample sizes, percentages)
-- Symptom-to-function translation notes (whether clinical language was reframed, confidence)
-- Key citations with URLs (1-3 per problem)
-- Summary table (all 18 problems, tier, source count, key prevalence)
+- Source file references, evidence tier
+- Key quantitative data (prevalence percentages, sample sizes)
+- Symptom-to-function translation notes
+- Key citations with URLs
+- Summary table (all 18 problems)
 - 7 deduplication decisions with rationale
 
-### What's already in SoR
-- 14 of 18 problems exist as entities (FP01-FP13, FP18)
-- `plain_language` field on each (shorter than S1's functional definition)
-- Full scoring evaluations with per-dimension rationale and evidence
-- Gate evaluations (pass/fail with rationale)
-- Refs to mechanisms and claims
-- Source entities carry URLs and analysis_docs fields
-- Quantitative data points partially embedded in scoring `assessment` text
+### What's in the SoR now
+- **All 18 problems present** — 14 active + 4 filtered_out (FP13b, FP14-FP17, FP19-FP20) with full gate evaluations. (v1 gap closed)
+- `plain_language` on every problem
+- `functional_definition` on every problem — **but not in the entity type definition**. This field is used consistently across all problems but is not formally declared in `_framework`. Schema-data mismatch.
+- Full scoring evaluations with per-dimension rationale
+- Source entities carry URLs and analysis_docs
 
-### What's missing
-1. **6 gate-failed problems absent**: FP14 (Supervisor Conflict), FP15 (Team Collaboration), FP16 (Emotional Dysregulation), FP17 (Impulsive Quitting), FP19 (Safety Errors), FP20 (Underperformance). The schema defines `filtered_out` status for these — they should exist with gate evaluations per the schema, but don't.
-2. **Formal functional definitions**: SoR `plain_language` is a condensed rewrite, not the S1 definition. S1 definitions are more precise (3-4 sentences vs. 2-3 in SoR).
-3. **Per-problem quantitative data**: Specific numbers (40.7%, n=134, 22.1 days/year) are scattered across scoring rationale text but not structured. No field-level access.
-4. **Symptom-to-function translation notes**: Whether and how clinical language was reframed. Not in any SoR field.
-5. **Per-problem citation URLs**: URLs exist on source entities but the S1-style mapping (which URL supports which specific claim for which problem) requires tracing through claims.
-6. **Deduplication decisions**: 7 merge/split rationale entries. Not in SoR.
+### What's changed since v1
+v1 flagged 6 missing gate-failed problems as a schema compliance issue. **This is now resolved** — all exist with gate evaluations. The `functional_definition` field was also added to all entities since v1 but the schema was not updated.
 
-### Options
+### What's still missing
+1. **Schema declaration for `functional_definition`** — field is used everywhere but not in the type definition. Needs adding to `_framework.entity_types.problem`.
+2. **Per-problem structured quantitative data** — specific numbers (40.7%, n=134, 22.1 days/year) are embedded in scoring rationale prose but not field-accessible.
+3. **Deduplication decisions** — 7 merge/split rationale entries. Process documentation.
+4. **Symptom-to-function translation notes** — one-time methodological notes.
 
-**Option A: Full encoding** — Add all missing problems (6 entities with `filtered_out` status and gate evaluations). Add `functional_definition` field to problem type. Add `quantitative_data` field (structured list of data points). Add `symptom_translation` field. Add `deduplication_log` to _framework.
-- Schema cost: 3 new optional fields on problem type + 6 new entities (~60 lines each = ~360 lines) + framework section (~50 lines)
-- SoR growth: ~500-600 lines
-- Derivability: Full — S1 regenerable
+### Verdict: Schema fix only
+The substantive encoding work is done. The only action item is adding `functional_definition` to the problem entity type definition (~2 lines). Everything else is either already accessible through scoring rationale or is process documentation with no ongoing decision value.
 
-**Option B: Partial encoding** — Add 6 gate-failed problems (required by schema anyway). Upgrade `plain_language` to include the full functional definition. Skip quantitative data structuring (it's in scoring rationale and source entities already). Skip symptom-translation (one-time process note). Skip deduplication log (process documentation).
-- Schema cost: No new fields. 6 new entities (~40 lines each minimal).
-- SoR growth: ~250-300 lines
-- Derivability: ~85%. Missing: per-problem quantitative data as structured fields, symptom-translation notes, deduplication rationale.
+**Residual gap**: Structured quantitative data per problem. Acceptable — scoring rationale already cites key numbers.
 
-**Option C: Keep as source** — S1 is a document the SoR was derived from. Its value was in feeding the problem entities. The entities now carry the analytical conclusions (scores, rationale) that matter for decisions. The raw data (prevalence percentages, sample sizes) is accessible via source entities.
-- Schema cost: None
-- SoR growth: None
-- Derivability: ~60%. The summary table and deduplication log cannot be regenerated. Problem definitions would use plain_language (shorter). Quantitative data requires source-entity traversal.
-
-### Tradeoffs
-- Full functional definitions vs. `plain_language`: The definitions are better — more precise, more useful for downstream work. Upgrading `plain_language` is cheap.
-- Quantitative data structuring: High encoding cost for marginal decision value. The numbers are cited in scoring rationale already. Structured access would only matter if someone needed to query "all problems with >25% WFIRS prevalence" — possible but not a current use case.
-- Gate-failed problems: The schema explicitly says these should exist. This is a data gap, not a design choice.
-- Deduplication log: Process documentation. Useful for audit trail but doesn't inform decisions. Low priority.
-- Symptom-translation: One-time methodological note per problem. Doesn't inform ongoing work.
-
-### Verdict: Option B — partial encoding
-Add the 6 missing gate-failed problems (this is a schema compliance issue). Upgrade `plain_language` to full functional definitions. Everything else is either already accessible through source/claim traversal or is process documentation with no ongoing decision value.
-
-**Residual gap**: S1's summary table (all 18 problems with tier and prevalence) cannot be regenerated without structured quantitative data fields. Acceptable — the SoR's scoring evaluations carry more analytical depth than the summary table.
+**Action item**: Add `functional_definition` to `_framework.entity_types.problem` field list. (Could be a system ticket.)
 
 ---
 
 ## CS1: Choice Space Methodology
 
-### What it contains
-- Three-layer framework definition (L1 Problem Clusters → L2 Engagement Models → L3 Implementation Requirements)
-- ASCII structural diagram
-- L1 constraint attributes table (frequency, context, awareness, co-occurrence → L2 constraints)
-- L2 dimensional framework (4 spectra: Initiation, Effort, Timing, Continuity)
-- L2 population methodology (4-step extraction process)
-- L3 sub-categories (9: data processing, AI/ML, logic/rules, storage, real-time, interfaces, integrations, permissions, design patterns)
-- Meta-challenge inclusion criteria (4 tests)
-- 5-step process summary
-- Structural constraints and limitations
+### Status: Not in repo
 
-### What's already in SoR
-- L2 dimensional framework: engagement_model entity type has `dimensions` with all 4 fields (initiation, effort, timing, continuity) ✓
-- MC inclusion criteria: meta_challenge entity type defines all 4 criteria with test descriptions ✓
-- Cluster concept and structure: cluster entity type with members, hub, causal_direction ✓
-- Engagement model concept: engagement_model entity type with all fields ✓
+CS1 is not in the analysis folder. v1 verdict was "do not encode" — it is process documentation describing how the choice space was built. Its outputs (clusters, engagement models, meta-challenges) are all in the SoR.
 
-### What's missing
-1. **L3 sub-categories**: The 9 implementation requirement categories are not encoded. Technologies are deferred (line 8-10 of SoR).
-2. **L1→L2 constraint flow model**: The table showing how cluster attributes constrain model compatibility isn't encoded as a formal mapping.
-3. **Population methodology**: The 4-step process for extracting engagement models.
-4. **Structural diagram**: Visual representation.
-
-### Options
-
-**Option A: Encode L3 categories and constraint flow** — Add `implementation_categories` list to _framework. Add `constraint_flow` mapping showing how cluster attributes map to L2 compatibility.
-- Schema cost: ~30-40 lines in _framework
-- Derivability: ~80%. Methodology steps and diagram remain non-derivable.
-
-**Option B: Keep as external reference** — CS1 is pure methodology. It describes HOW the choice space was built, not WHAT it contains. The outputs (models, clusters, meta-challenges) are all in the SoR.
-- Schema cost: None
-- Derivability: ~40%. But the question is whether regenerating CS1 matters. The methodology was consumed to produce the SoR entities. The entities are the durable output.
-
-### Tradeoffs
-- CS1 is 90% process documentation. It describes extraction methods, analytical steps, and structural thinking that produced the entities now in the SoR. Encoding the methodology would mean encoding "how we worked" inside the data store, which conflates data and process.
-- L3 sub-categories are the only substantive structural content not yet in SoR, and they're explicitly deferred until technologies are parsed.
-- The constraint flow (how cluster attributes constrain model compatibility) is useful structural logic, but it's also implicitly encoded: an AI reading cluster attributes and engagement model dimensions can derive compatibility without an explicit mapping.
-
-### Verdict: Do not encode
-CS1 is process documentation. Its outputs (entities) are in the SoR. The one substantive gap (L3 sub-categories) is already tagged as deferred pending technology parsing. Keep CS1 as a methodology reference document — it explains how the SoR was built, which is valuable context but not SoR data.
-
-**Exception**: When technologies are parsed, L3 sub-categories should be added to _framework at that point.
+### Verdict: No change from v1
+Process documentation. Outputs encoded. L3 sub-categories remain deferred until technologies are parsed.
 
 ---
 
 ## CS2: Choice Space Map
 
 ### What it contains
-- L1 cluster summary table with constraining attributes
-- L2 model summary table with dimensional positions
-- L1↔L2 compatibility matrix (S/P/X ratings) with per-cell rationale (24 cells)
-- L3 implementation requirements per viable L1×L2 combination
+- L1 cluster summary with constraining attributes
+- L2 model summary with dimensional positions
+- L1-L2 compatibility matrix (S/P/X ratings with per-cell rationale, 24 cells)
+- L3 implementation requirements per viable combination
 - Meta-challenge vulnerability summary
 - Five pre-mapped solution paths
 
-### What's already in SoR
-- Cluster entities with members, hubs, causal_direction ✓
-- Engagement model entities with dimensions, MC vulnerability ✓
-- Model→problem refs (primary_problems, secondary_problems) ✓
-- MC entities with clusters_affected, amplifies refs ✓
+### What's in the SoR now
+- Cluster entities with members, hubs, causal_direction
+- Engagement model entities with dimensions, MC vulnerability
+- **`cluster_compatibility` field on all 8 engagement models** with S/P/X ratings and per-cell rationale (v1 gap closed)
+- Model-to-problem refs
 
-### What's missing
-1. **Compatibility matrix**: The S/P/X ratings and per-cell rationale for each cluster↔model pair. 24 cells of structured assessment.
-2. **L3 requirements per combination**: Deferred with technologies.
-3. **Pre-mapped solution paths**: Five synthesised product-direction candidates.
+### What's changed since v1
+v1 recommended "Option C — encode ratings only" (~40 lines). **More than that was done** — both ratings AND rationale were added as `cluster_compatibility` on each engagement model. However, like `functional_definition`, this field is **not declared in the entity type definition**.
 
-### Options
+### What's still missing
+1. **Schema declaration for `cluster_compatibility`** — field populated on all 8 models but not in `_framework.entity_types.engagement_model`. Schema-data mismatch.
+2. **L3 requirements** — deferred with technologies.
+3. **Pre-mapped solution paths** — synthesis, not data.
 
-**Option A: Encode compatibility matrix** — New section or entity type: `compatibility_assessment` with {cluster_id, model_id, rating, rationale}. 24 entries.
-- Schema cost: New entity type definition (~15 lines) + 24 entries (~10 lines each = ~240 lines)
-- SoR growth: ~255 lines
-- Derivability: ~90%. Solution paths remain synthesis.
+### Verdict: Schema fix only
+Ratings and rationale are encoded. The only action is adding `cluster_compatibility` to the engagement_model type definition (~3 lines).
 
-**Option B: Derive from existing refs** — The compatibility CAN be approximately derived: if M2's primary_problems are [FP07, FP09] and these belong to no cluster, then M2 is not primary for any cluster. If M5's primary_problems are [FP03] and FP03 is CL_A's hub, then M5 is strongly compatible with CL_A. An AI agent can reason about this.
-- Schema cost: None
-- Derivability: ~50-60%. The RATINGS are derivable. The RATIONALE is not — why M1 is "S" for Cluster A vs "P" for Cluster B requires the analytical reasoning in CS3 (awareness-to-timing matching, frequency-to-initiation matching, etc.).
-
-**Option C: Hybrid** — Don't encode per-cell rationale. Add a `cluster_compatibility` field to engagement_model with {cluster_id, rating} pairs. The rating is structured; the rationale is derivable from dimensional analysis.
-- Schema cost: ~5 lines per engagement_model × 8 = ~40 lines
-- SoR growth: ~40 lines
-- Derivability: ~70%. Ratings regenerable. Rationale requires re-derivation (which may produce slightly different wording but same conclusions).
-
-### Tradeoffs
-- Full compatibility encoding (Option A) is expensive for what it delivers. 240 lines of prose rationale that can be re-derived from entity data.
-- The ratings (S/P/X) ARE useful structured data — they're the quick-reference lookup that cluster attributes and model dimensions can produce but require analytical work each time.
-- Solution paths are explicitly synthesis and don't belong in the SoR.
-- L3 requirements are deferred anyway.
-
-### Verdict: Option C — encode ratings only
-Add `cluster_compatibility` to engagement_model entities with rating per cluster. Skip rationale — it's derivable from the dimensional analysis principles already encoded. Skip solution paths — synthesis, not data. Net cost: ~40 lines.
-
-**Residual gap**: Per-cell rationale text is lost. Acceptable — the same rationale can be re-derived by any AI agent applying the constraint-matching principles documented in CS1.
+**Action item**: Add `cluster_compatibility` to `_framework.entity_types.engagement_model`.
 
 ---
 
 ## CS3: Cross-Layer Mapping
 
 ### What it contains
-- Full per-cell rationale for L1↔L2 compatibility (same 24 cells as CS2 but with deeper analysis)
-- Judgment consistency principles (4 matching rules)
-- L3 implementation requirements per viable combination (tabular)
+- Full per-cell rationale for L1-L2 compatibility (deeper than CS2)
+- 4 judgment consistency principles (matching rules)
+- L3 implementation requirements per viable combination
 - Meta-challenge overlay per combination
 
-### What's already in SoR
-- Same as CS2 (engagement model→problem refs, MC vulnerability, cluster membership)
+### What's in the SoR now
+- Compatibility ratings and rationale on engagement models (via CS2 encoding)
+- No `compatibility_principles` in _framework
 
-### What's missing
-- The detailed rationale behind each compatibility rating
-- Judgment consistency principles (the 4 matching rules)
-- L3 requirements per combination
+### What's changed since v1
+v1 recommended encoding the 4 matching principles in _framework. **This has not been done.**
 
-### Analysis
-CS3 is the working document behind CS2. Where CS2 gives the summary matrix, CS3 gives the reasoning. The relationship is: CS3's analysis → CS2's ratings → SoR's entity refs.
+### What's still missing
+1. **Compatibility principles** — the 4 matching rules (frequency-to-initiation, awareness-to-timing, co-occurrence-to-breadth, context-to-surface). These are structural logic that any agent re-deriving or validating compatibility ratings should follow.
+2. **L3 requirements** — deferred.
 
-### Options
+### Verdict: Encode principles (~20 lines in _framework)
+Same as v1. The principles are the "how to think about compatibility" rules. Without them, the ratings in the SoR are assertions without documented methodology.
 
-**Option A: Encode judgment principles** — Add the 4 matching rules (frequency→initiation, awareness→timing, co-occurrence→breadth, context→surface) to _framework as `compatibility_principles`.
-- Schema cost: ~20 lines in _framework
-- Benefit: Any AI re-deriving compatibility will apply consistent principles
-- Derivability: ~60%. Principles encoded but per-cell application still requires reasoning.
-
-**Option B: Accept non-derivability** — CS3 is analytical work product. It's the "showing your work" for the compatibility assessments. Once the ratings are in the SoR (via CS2 Option C), CS3 becomes the audit trail.
-
-### Verdict: Option A — encode principles only
-The 4 matching rules are structural logic that should be in _framework. They're the "how to think about compatibility" rules that any agent working with the SoR should follow. Per-cell application is analytical work that doesn't need encoding.
-
-**Net cost**: ~20 lines in _framework.
+**Action item**: Add `compatibility_principles` section to `_framework`. Could be a system ticket or direct action.
 
 ---
 
 ## CS4: Engagement Models
 
-### What it contains (per model × 8 models)
-- Full description (paragraph)
-- Dimensional position table with per-dimension rationale
-- Retention profile (paragraph)
-- Habit-formation burden (paragraph)
+### What it contains (per model x 8)
+- Full description, dimensional position table with rationale
+- Retention profile, habit-formation burden
 - Data access requirements (bulleted list)
 - User trust requirements (bulleted list)
-- L3 preliminary requirements (table)
-- Evidence from corpus (narrative with specific quotes and source references)
-- Summary table of all 8 models
-- Dimensional coverage map (ASCII)
-- Gap-check analysis (4 rejected combinations)
-- Cross-reference table (models → problem clusters)
-- Limitations (5 items)
+- L3 preliminary requirements
+- Evidence from corpus with quotes
+- Gap-check analysis, dimensional coverage map, limitations
 
-### What's already in SoR (per engagement_model entity)
-- `name` ✓
-- `plain_language` ✓ (equivalent to CS4's description)
-- `dimensions` with initiation, effort, timing, continuity ✓ (but SoR has short strings; CS4 has full rationale tables)
-- `retention_risk` ✓
-- `habit_burden` ✓
-- `evaluations.meta_challenge_vulnerability` ✓
-- `refs.primary_problems`, `refs.secondary_problems` ✓
-- `refs.claims` ✓
+### What's in the SoR now
+- All 8 engagement model entities with: name, plain_language, dimensions, retention_risk, habit_burden, MC vulnerability, problem refs
+- `cluster_compatibility` with ratings (undocumented field)
+- **No `data_access_requirements` or `trust_requirements`**
 
-### What's missing
-1. **Dimensional rationale**: SoR dimensions are single-line values ("Strongly product-initiated"). CS4 has per-dimension rationale explaining WHY.
-2. **Data access requirements**: Not in SoR. Structured list per model.
-3. **User trust requirements**: Not in SoR. Paragraph per model.
-4. **L3 requirements per model**: Not in SoR. Tabular.
-5. **Evidence narrative**: Full corpus evidence with specific quotes. SoR has claim refs but not the narrative.
-6. **Gap-check**: 4 rejected dimensional combinations with rationale.
-7. **Dimensional coverage map**: Analytical summary.
-8. **Limitations**: 5 methodological caveats.
+### What's changed since v1
+v1 recommended adding data_access and trust fields. **Not done.** ST_009 was created to track this but is blocked on ST_007 (requirements layer architecture question).
 
-### Options
+### What's still missing
+1. **data_access_requirements** — what data does each model need? Decision-relevant for product architecture.
+2. **trust_requirements** — what trust must the user extend? Decision-relevant for go-to-market.
+3. **Dimensional rationale** — SoR dimensions are single-line values. CS4 has per-dimension explanations. Low priority — the positions are sufficient for compatibility analysis.
 
-**Option A: Add key structured fields** — Add `data_access_requirements` (list) and `trust_requirements` (prose) to engagement_model entity type. These are the two fields with clear ongoing decision value.
-- Schema cost: 2 new optional fields, ~5-8 lines per model × 8 = ~50 lines
-- SoR growth: ~60 lines total (including schema definition)
-- Derivability: ~70%. Core structured data encoded. Narrative, gap-check, coverage map remain in CS4.
+### Verdict: Blocked on ST_007
+The right fields (data_access, trust) are known and tracked (ST_009). Whether they live on engagement_model entities or in a future requirements layer depends on ST_007. No point adding them until that architectural question is resolved.
 
-**Option B: Full encoding** — Add all missing fields. Expand dimensions to include per-dimension rationale.
-- Schema cost: 5+ new fields, significant per-entity expansion
-- SoR growth: ~300+ lines
-- Derivability: ~90%
-
-**Option C: Accept current encoding** — The 8 engagement_model entities already capture the key structured data. CS4's additional richness is analytical narrative that surrounds and explains the structured data.
-- Schema cost: None
-- Derivability: ~55%
-
-### Tradeoffs
-- Data access requirements have real decision value — they determine integration scope and privacy considerations. Worth encoding.
-- Trust requirements have real decision value — they determine go-to-market friction. Worth encoding.
-- Dimensional rationale: The SoR's single-line values ("Strongly product-initiated") are sufficient for compatibility analysis. The rationale explains the positioning but doesn't change it.
-- L3 requirements: Deferred with technologies.
-- Evidence narrative: Already accessible through claims. The narrative form is CS4's editorial contribution, not data.
-- Gap-check, coverage map, limitations: Analytical/methodological. Process documentation.
-
-### Verdict: Option A — add data access and trust requirements
-Two fields with clear decision value that aren't derivable from anything else in the SoR. Everything else is either already encoded, derivable from encoded data, deferred, or analytical narrative.
-
-**Net cost**: ~60 lines.
+**Action item**: None beyond existing ST_009. Resolve ST_007 first.
 
 ---
 
 ## CS5: Meta-Challenges
 
 ### What it contains
-- 5 confirmed meta-challenges + MC6 (added later) with full analysis per MC:
-  - Multi-paragraph description
-  - Evidence broken by tier (Clinical/User/Market)
-  - Per-criterion inclusion test table (4 criteria × met/not-met with reasoning)
-  - Layer interaction analysis (how the MC interacts with each L1/L2/L3 combination)
-- 6 relocated candidates with per-candidate: failed criterion, relocated-to, rationale
-- Cross-challenge interaction matrix (5×5 showing amplification/independence)
+- 6 meta-challenges with full analysis per MC (description, tiered evidence, inclusion test table, layer interaction)
+- 6 relocated candidates with failed criterion and rationale
+- Cross-challenge interaction matrix (amplification/independence)
 - 3 compound effects (Triple Decay, Lapse Trap, Stealth Requirement)
-- Structural implications (5 conclusions with quantitative framing)
+- Structural implications
 
-### What's already in SoR (per meta_challenge entity)
-- `name` ✓
-- `plain_language` ✓
-- `severity` + `severity_rationale` + `severity_evidence` ✓
-- `evidence_tier` ✓
-- `key_evidence` ✓ (condensed narrative)
-- `refs.clusters_affected` ✓
-- `refs.claims` ✓
-- `refs.amplifies` ✓ (partially encodes the interaction matrix)
+### What's in the SoR now
+- All 6 MC entities with severity, evidence, key_evidence
+- **`inclusion_test` fully populated on all 6 MCs** — per-criterion met/reasoning (v1 gap closed)
+- **Relocated candidates referenced in CT_007** — 6 phenomena listed, pending claim-first assessment (v1 gap partially closed)
+- `refs.amplifies` on all MCs (encodes the interaction graph)
+- **Compound effects NOT encoded** — Triple Decay, Lapse Trap, Stealth Requirement are named interaction patterns not in the SoR
 
-### What's missing
-1. **Inclusion test evaluations**: The schema DEFINES `evaluations.inclusion_test` with per-criterion pass/fail and reasoning — but NO entity has this populated. This is a schema compliance gap.
-2. **Tiered evidence breakdown**: SoR has `key_evidence` as a single narrative. CS5 breaks evidence by Clinical (Tier 1), User (Tier 3), and Market (Tier 2-3) categories.
-3. **Layer interaction analysis**: Per-MC analysis of how it interacts with each L1/L2/L3 combination. Not in SoR.
-4. **Relocated candidates**: 6 candidates that failed inclusion criteria. Not in SoR.
-5. **Cross-challenge interaction matrix**: Partially encoded via `refs.amplifies`. Missing: independence relationships, directionality details.
-6. **Compound effects**: Three named interaction patterns (Triple Decay, Lapse Trap, Stealth Requirement). Not in SoR.
-7. **Structural implications**: 5 analytical conclusions. Not in SoR.
+### What's changed since v1
+v1 flagged inclusion_tests as a schema compliance issue. **Resolved** — all 6 MCs have full inclusion tests. Relocated candidates are tracked in CT_007 (pending reassessment under claim-first protocol). Amplification graph is encoded.
 
-### Options
+### What's still missing
+1. **Compound effects** — three named interaction patterns (Triple Decay = MC1+MC5+MC2, Lapse Trap = MC2+MC3, Stealth Requirement = MC4+MC1+MC3). The amplifies refs encode the relationships but do not name the patterns. These could be claims.
+2. **Tiered evidence breakdown** — key_evidence is a single narrative; CS5 breaks by Clinical/User/Market tiers. Low priority.
+3. **Layer interaction analysis** — per-MC interaction with each L1/L2/L3 combination. High encoding cost, moderate value.
+4. **Structural implications** — 5 synthesis conclusions. Could be claims if decision-relevant.
 
-**Option A: Populate schema-defined fields + add relocated candidates** — Fill in the `evaluations.inclusion_test` that the schema already defines. Add 6 relocated candidates as `filtered_out` meta_challenge entities (or as a reference list in _framework). Add compound effects as claims.
-- Schema cost: No new schema needed for inclusion tests — already defined. ~15 lines per MC × 6 = ~90 lines for inclusion tests. Relocated candidates: ~10 lines each × 6 = ~60 lines. Compound effects: ~3 claims = ~30 lines.
-- SoR growth: ~180 lines
-- Derivability: ~75%. Tiered evidence breakdown, layer interaction analysis, and structural implications remain in CS5.
+### Verdict: Consider compound effects as claims
+Inclusion tests and relocated candidates are handled. The remaining gap with clear value is naming the compound effects — these are analytical patterns that an agent working from amplifies refs alone would not discover. Three claims (~30 lines). Everything else is either partially encoded or analytical narrative.
 
-**Option B: Full encoding** — Everything in Option A plus: break `key_evidence` into tiered structure, add layer interaction data, encode structural implications as claims.
-- Schema cost: Modify key_evidence to structured format. Add layer_interaction field. Multiple new claims.
-- SoR growth: ~400+ lines
-- Derivability: ~90%
-
-**Option C: Populate inclusion tests only** — The minimum schema compliance fix.
-- Schema cost: None (schema already defines it)
-- SoR growth: ~90 lines
-- Derivability: ~60%
-
-### Tradeoffs
-- Inclusion test population: Required by the schema. Not optional. This is a data integrity issue.
-- Relocated candidates: Valuable reference — they're the "why this ISN'T a meta-challenge" documentation that prevents re-visiting settled questions. Worth encoding.
-- Compound effects: These are analytical insights (Triple Decay = MC1+MC5+MC2 compounding) that are partially derivable from `refs.amplifies` but naming them as patterns adds analytical value. Could be claims.
-- Tiered evidence: The current `key_evidence` field already captures the key data points. Breaking by tier adds structure but limited decision value — the evidence_tier field on the MC already signals overall tier.
-- Layer interaction analysis: This is the deepest analytical content in CS5. Each MC's interaction with each L1/L2/L3 combination is detailed. High encoding cost, moderate decision value (the MC vulnerability on engagement_model entities already captures the L2 dimension).
-- Structural implications: Synthesis conclusions. Better as claims if they're decision-relevant.
-
-### Verdict: Option A — schema compliance + relocated candidates
-Populate inclusion_test evaluations (schema requires it). Add relocated candidates (prevents re-investigation). Add compound effects as claims (analytical value). Skip tiered evidence breakdown and layer interaction (already partially encoded, high cost for marginal value). Skip structural implications (synthesis, better as claims if needed later).
-
-**Net cost**: ~180 lines.
+**Action item**: Assess whether compound effects warrant claims. Could be a content ticket.
 
 ---
 
 ## S0: ADHD Product Pathway Methodology
 
 ### What it contains
-- Scope, default outcome, decision factors, output description
-- Key definitions (functional problem, problem cluster)
+- Scope, default outcome, definitions
 - Research sequence (6 steps)
 - Evidence quality tiers (4 tiers)
-- Gate filters (Gate 1: Software Amenability, Gate 2: Individual Addressability) — full rubric
-- Problem Layer scoring (Q1 Frequency, Q2 Differentiation, Q3 Connectedness) — full rubric with anchors
-- Market Gap Layer scoring (Q1 Noise, Q2 Product Enumeration, Q3 Maturity, Q4 User Reviews, Q5 Root Cause) — full rubric
-- Solution Layer scoring (Q1 Complexity, Q2 Behavioural Change, Q3 Setup Effort, Q4 Integration Dependency) — full rubric
+- Gate filters — full rubric
+- Problem Layer scoring — full rubric with anchors
+- Market Gap Layer scoring — full rubric
+- Solution Layer scoring — full rubric (Q1-Q4)
 - Recording and usage instructions
 
-### What's already in SoR
-- `_framework.scope` ✓ (scope, constraint, default_outcome)
-- `_framework.definitions` ✓ (functional_problem, problem_cluster, mechanism, meta_challenge, etc.)
-- `_framework.evidence_tiers` ✓ (all 4 tiers with labels and descriptions)
-- `_framework.evaluation_rubrics.gates` ✓ (both gates with question, pass/fail criteria, data sources)
-- `_framework.evaluation_rubrics.problem_layer` ✓ (Q1-Q3 with full anchors and data sources)
-- `_framework.evaluation_rubrics.market_gap_layer` ✓ (Q1-Q5 with full anchors and data sources)
-- `_framework.evaluation_rubrics.phase_3_selection` — REMOVED (phase 3 concept retired)
-- `_framework.derivation_formulas` ✓ (problem_score, market_gap_score, combined_score)
-- `_framework.recording_requirements` ✓
+### What's in the SoR now
+- `_framework.scope`
+- `_framework.definitions`
+- `_framework.evidence_tiers`
+- `_framework.evaluation_rubrics.gates`
+- `_framework.evaluation_rubrics.problem_layer`
+- `_framework.evaluation_rubrics.market_gap_layer`
+- `_framework.derivation_formulas`
+- `_framework.recording_requirements`
+- **No `solution_layer` rubric**
 
-### What's missing
-1. **Solution Layer rubric**: Q1-Q4 with anchors. Not in SoR _framework.
-2. **Research sequence**: 6-step procedural description.
-3. **Decision factors**: "weighs addressable market evidence, competitive density, technical feasibility..." — one sentence.
+### What's changed since v1
+Nothing. v1 recommended adding the Solution Layer rubric. **Not done.**
+
+### What's still missing
+1. **Solution Layer rubric** — Q1 Complexity, Q2 Behavioural Change, Q3 Setup Effort, Q4 Integration Dependency. With anchors and data sources.
+
+### Verdict: Add Solution Layer rubric (~60 lines)
+Same as v1. This completes the evaluation methodology. Note: no SoR entity currently references solution_layer evaluations, so the rubric will exist without corresponding data — but it is part of the defined methodology and should be encoded for completeness.
+
+**Caveat**: ST_013 questions whether `recording_requirements` is still relevant. ST_014 questions derived formula redundancy. These may affect how S0 maps to the framework. Consider resolving those tickets first, or accept that the rubric addition is independent of those questions.
+
+**Action item**: Add `solution_layer` to `_framework.evaluation_rubrics`. Could be direct action or system ticket.
+
+---
+
+## S6: Market Gap Analysis (NEW — not in v1)
+
+### What it contains
+Per-problem market gap assessment for 11 qualifying problems:
+- Q1 Market Noise score (1-5)
+- Q2 Product Enumeration — competitive product tables with names, funding, maturity, ratings
+- Q3 Product Maturity score (1-5)
+- Q4 ADHD User Review sentiment score (1-5)
+- Q5 Root Cause of Failure narrative
+- Composite score ranking table (problem_score + market_gap_score)
+- Strategic synthesis grouping problems into 3 tiers
+- Cross-cutting insights, market entry risk matrix
+- ~40+ named products with funding amounts, user counts, ratings
+
+### What's in the SoR now
+- `_framework.evaluation_rubrics.market_gap_layer` defines Q1-Q5 with anchors
+- `_framework.derivation_formulas.market_gap_score` formula defined
+- Problem entities define `evaluations.market_gap` as a conditional section
+- **ZERO problems have market_gap evaluations populated**
 
 ### Assessment
-S0 is **95% already encoded** in the SoR _framework section. The encoding is comprehensive — full rubrics with anchors, data sources, and formulas. The only substantive gap is the Solution Layer rubric (Q1-Q4).
+The SoR has the schema for market_gap evaluations but none of the data. This is the largest gap of any analysis file — the framework is ready but the scores have not been entered.
+
+S6 is roughly 40% source data (product names, funding, ratings) and 60% synthesis (scores, root cause narratives, strategic insights). The source data is primary research that belongs in research files; the scores are evaluations that belong in SoR entities.
 
 ### Options
 
-**Option A: Add Solution Layer rubric** — Encode Q1-Q4 in `_framework.evaluation_rubrics.solution_layer`.
-- Schema cost: ~60 lines (4 questions × anchors + data sources)
-- SoR growth: ~60 lines
-- Derivability: ~98%. Research sequence and decision factors are procedural.
+**Option A: Populate market_gap evaluations on qualifying problems** — Enter Q1-Q5 scores and assessment prose on each problem that scored >=10 on the Problem Layer. S6 has scores for 11 problems.
+- SoR growth: ~30-40 lines per problem x 11 = ~330-440 lines
+- Derivability: ~70%. Scores and rationale encoded. Product tables and strategic synthesis remain in S6.
 
-**Option B: Accept 95% derivability** — Solution Layer was used in S7 (Solution Scoring) but is not currently applied to any SoR entity. No entity type references solution_layer evaluations.
-- Schema cost: None
-- Derivability: ~95%
+**Option B: Populate scores only (no product tables)** — Enter Q1-Q4 numeric scores and Q5 summary. Skip per-product enumeration detail.
+- SoR growth: ~15-20 lines per problem x 11 = ~165-220 lines
+- Derivability: ~55%. Scores queryable. Product landscape detail stays in S6.
+
+**Option C: Treat S6 as source** — S6 is a primary analysis document. The scores are its output. Keep it as a reference; problems do not need market_gap populated because the analysis lives in S6.
+- SoR growth: None
+- Derivability: ~20%. Framework exists but data is entirely external.
 
 ### Tradeoffs
-- The Solution Layer rubric is the only gap and it's small (~60 lines).
-- However: no SoR entity currently uses Solution Layer evaluations. Adding the rubric without corresponding entity evaluations creates a schema with no data.
-- If Solution Layer evaluations are ever added to problem entities (or a future solution entity type), the rubric should be there first.
+- The schema explicitly expects market_gap evaluations on qualifying problems. Having the framework without data is a larger compliance gap than any other file.
+- Product enumeration detail (specific products, funding, ratings) is market intelligence that dates quickly. It is source data, not SoR data.
+- Q5 root cause narratives are synthesis — valuable but not structured. They could be shortened to assessment-length prose.
+- The composite ranking table and strategic tier groupings are outputs derivable FROM the scores once populated.
+- S6 also contains insights that go beyond scoring (cross-cutting market observations, entry risk matrix). These are strategic synthesis, not data.
 
-### Verdict: Option A — add Solution Layer rubric
-60 lines for near-complete derivability. The rubric should be in _framework for completeness even if entity-level solution evaluations aren't populated yet. It's part of the evaluation methodology that the SoR is supposed to encode.
+### Verdict: Option A — populate market_gap evaluations
+This is a schema compliance issue equivalent to the inclusion_test gap (now resolved) and the gate-failed problem gap (now resolved). The framework defines these evaluations; the data should exist. Product tables and strategic synthesis stay in S6 as source material.
 
-**Net cost**: ~60 lines. S0 becomes fully derivable minus procedural steps.
+S6 itself should be reclassified: the product tables and market intelligence are primary research. The file could be split (scores to SoR, product data to research) or kept whole as a source document once scores are in the SoR.
+
+**Action item**: Populate `evaluations.market_gap` on all qualifying problems. Largest single encoding task remaining (~330-440 lines).
 
 ---
 
 ## CQ Reference (Competency Questions)
 
-### What it contains
-26 competency questions across 8 categories:
-- Phenomena (CQ1-3): What challenges exist, observable behaviors, ADHD vs NT difference
-- Mechanism (CQ4-6): Causes, co-requirements, shared mechanisms
-- Temporal Shape (CQ7-8): Time unfolding, predictability
-- Addressability (CQ9-10): Digital amenability, prior attempts
-- Impact (CQ11-13): Downstream effects, cascades, affected parties
-- Context (CQ14-16): Work contexts, systems/data, absence contexts
-- User Awareness & Coping (CQ17-20): Recognition, strategies, coping-as-problem, tool breakdown
-- Value (CQ21-22): Solving value, perceived value
-- Meta (CQ23-26): Evidence tier, convergence, contradictions, triangulation
+### Status: Not in repo
 
-Note on CQ21-22: "Perceived value cannot be directly asked. It must be inferred from behavioral signals."
+CQ Reference is not in the analysis folder. v1 recommended encoding as a validation mapping in _framework (~80 lines). **Not done** — no `competency_questions` section exists in the SoR.
 
-### What's already in SoR
-- Nothing directly. However, the CQs map to existing entity fields:
-  - CQ1 → problem.name + problem.plain_language
-  - CQ2 → problem.plain_language (observable behaviors)
-  - CQ3 → problem.evaluations.scoring.differentiation
-  - CQ4 → problem.refs.mechanisms → mechanism entities
-  - CQ5 → mechanism.does_not_explain (what else is needed)
-  - CQ6 → mechanism entities (shared across problems)
-  - CQ7 → not encoded (temporal shape)
-  - CQ8 → not encoded (predictability)
-  - CQ9 → problem.evaluations.gates.software_amenability
-  - CQ10 → market_gap.root_cause_of_failure + market_gap.product_enumeration
-  - CQ11 → problem.evaluations.scoring.connectedness
-  - CQ12 → cluster.causal_direction (cascade effects)
-  - CQ13 → claims (CC entity type removed; content preserved in C033, C038–C041)
-  - CQ14 → not explicitly encoded (work contexts)
-  - CQ15 → not explicitly encoded (systems/data types)
-  - CQ16 → not explicitly encoded (absence contexts)
-  - CQ17 → partially in scoring rationale (user awareness)
-  - CQ18 → not explicitly encoded (coping strategies)
-  - CQ19 → meta_challenge entities (coping-becomes-problem, e.g. MC3)
-  - CQ20 → market_gap evaluations (tool partial-address and breakdown)
-  - CQ21-22 → thesis claims (inferred value)
-  - CQ23 → evidence_tier on entities
-  - CQ24 → not explicitly encoded (convergence/divergence)
-  - CQ25 → claim.refs.challenged_by
-  - CQ26 → claim.refs.sources (count)
-
-### Coverage assessment
-- **Well-covered** (answer derivable from SoR): CQ1-6, CQ9-13, CQ19-20, CQ23, CQ25-26 = 16 of 26
-- **Partially covered** (answer partially derivable): CQ17, CQ21-22 = 3
-- **Not covered** (no corresponding field): CQ7-8, CQ14-16, CQ18, CQ24 = 7
-
-### Options
-
-**Option A: Encode as validation mapping** — Add `competency_questions` to _framework as a list: each CQ with its ID, question text, and the entity field path(s) that answer it. For unanswered CQs, explicitly mark as "not currently answerable" with what would be needed.
-- Schema cost: ~80 lines in _framework
-- Benefit: Makes coverage gaps explicit. Serves as validation criteria — any AI modifying the schema can check CQ coverage. Documents the 7 gaps.
-- Derivability: CQ Reference becomes fully regenerable from this section.
-
-**Option B: Encode as validation mapping + fill gaps** — Same as A, plus add fields to address the 7 uncovered CQs:
-  - `temporal_shape` on problem entities (CQ7-8)
-  - `work_contexts` on problem entities (CQ14-16)
-  - `coping_strategies` on problem entities (CQ18)
-  - `evidence_convergence` on claims (CQ24)
-- Schema cost: ~80 lines for mapping + 4 new optional fields on entity types + per-entity data
-- SoR growth: Substantial — every problem entity gets 3 new optional fields
-- Derivability: CQ Reference regenerable AND all 26 CQs answerable from SoR.
-
-**Option C: Keep as external reference** — CQs are a meta-document about the ontology, not data in it. They define what the schema SHOULD be able to answer. The schema either answers them or it doesn't — encoding the questions doesn't change the answers.
-
-### Tradeoffs
-- Option A is the sweet spot: it makes the CQs part of the SoR without requiring entity-level data changes. The mapping IS the CQ Reference — encoded as schema documentation rather than a separate file.
-- Option B is expensive and the 7 gap-filling fields would need data population across all 14+ problem entities. The fields (temporal_shape, work_contexts, coping_strategies) are genuinely useful but represent a significant enrichment effort.
-- Option C means the CQs remain invisible to any AI agent working purely from the SoR.
-- The CQs are most valuable as VALIDATION CRITERIA — "can the schema answer these?" — rather than as data.
-
-### Verdict: Option A — encode as validation mapping
-80 lines. Makes CQ coverage explicit. Documents gaps without requiring immediate gap-filling. Any future schema work can check CQ coverage as a quality gate.
-
-**Net cost**: ~80 lines in _framework.
+### Verdict: Deferred
+Without the source file in the repo, this cannot be assessed against current SoR state. If the CQ Reference is reintroduced, the v1 recommendation (validation mapping in _framework) remains sound.
 
 ---
 
-## Summary: Recommended Actions
+## Schema-Data Mismatches Discovered
 
-| Document | Verdict | SoR Growth | Key Changes |
-|----------|---------|:----------:|-------------|
-| **S1** | Partial encoding | ~250-300 lines | Add 6 gate-failed problems; upgrade plain_language to full definitions |
-| **CS1** | Do not encode | 0 lines | Process documentation; outputs already in SoR. L3 deferred. |
-| **CS2** | Encode ratings only | ~40 lines | Add cluster_compatibility to engagement_model entities |
-| **CS3** | Encode principles only | ~20 lines | Add 4 compatibility-matching principles to _framework |
-| **CS4** | Add key fields | ~60 lines | Add data_access_requirements and trust_requirements to engagement_model |
-| **CS5** | Schema compliance + candidates | ~180 lines | Populate inclusion_tests; add relocated candidates; add compound effect claims |
-| **S0** | Add Solution Layer | ~60 lines | Encode Solution Layer rubric (Q1-Q4) in _framework |
-| **CQ Ref** | Validation mapping | ~80 lines | Add competency_questions mapping to _framework |
+During this review, two fields were found to be consistently used in entities but not declared in `_framework` entity type definitions:
 
-**Total estimated SoR growth**: ~690-750 lines (from current ~4,612 to ~5,300-5,360)
+| Field | Entity type | Status |
+|-------|------------|--------|
+| `functional_definition` | problem | Used on all 18+ problems; not in type def |
+| `cluster_compatibility` | engagement_model | Used on all 8 models; not in type def |
 
-### What remains non-derivable after all changes
-- CS1 in full (process documentation — acceptable)
-- CS2/CS3 per-cell rationale (re-derivable from principles — acceptable)
-- CS4 evidence narratives, gap-check, limitations (analytical narrative — acceptable)
-- CS5 tiered evidence breakdown, layer interaction analysis, structural implications (partially encoded via entities — acceptable)
-- S1 structured quantitative data per problem, deduplication log, symptom-translation notes (process/raw data — acceptable)
+These should be added to their respective type definitions. Neither requires data changes — the data already exists.
 
-### What becomes derivable
-- S0: ~98%
-- S1: ~85% (missing: raw quantitative fields, process notes)
-- CS2: ~70% (ratings derivable; rationale re-derivable from principles)
-- CS3: ~60% (principles encoded; per-cell application is reasoning)
-- CS4: ~70% (structured data encoded; narrative is editorial)
-- CS5: ~75% (inclusion tests, candidates, compound effects encoded; deep analysis narrative remains)
-- CQ Reference: 100%
+---
 
-### Priority order for implementation
-1. **CS5 inclusion_tests** — schema compliance issue; the schema defines these and they're empty
-2. **S1 gate-failed problems** — schema compliance issue; filtered_out status exists for this purpose
-3. **S0 Solution Layer rubric** — small, completes the evaluation methodology
-4. **CQ Reference mapping** — small, adds validation capability
-5. **CS2/CS3 compatibility ratings + principles** — small, adds structural logic
-6. **CS4 data access + trust** — moderate, adds decision-relevant data
-7. **S1 functional definition upgrade** — moderate, improves problem entity quality
-8. **CS5 relocated candidates + compound effects** — moderate, prevents re-investigation
+## Summary: Current State vs v1
+
+| Document | v1 Verdict | v1 Done? | Current Gap | Current Action |
+|----------|-----------|----------|-------------|----------------|
+| **S1** | Partial encoding (~250-300 lines) | **Mostly** | Schema: `functional_definition` undeclared | ~2 lines schema fix |
+| **CS1** | Do not encode | N/A | Not in repo | None |
+| **CS2** | Encode ratings (~40 lines) | **Yes+** | Schema: `cluster_compatibility` undeclared | ~3 lines schema fix |
+| **CS3** | Encode principles (~20 lines) | **No** | No compatibility_principles in framework | ~20 lines in _framework |
+| **CS4** | Add data_access + trust (~60 lines) | **No** | Blocked on ST_007/ST_009 | Resolve ST_007 first |
+| **CS5** | Schema compliance + candidates (~180 lines) | **Mostly** | Compound effects not encoded | ~30 lines (3 claims) |
+| **S0** | Add Solution Layer (~60 lines) | **No** | No solution_layer rubric | ~60 lines in _framework |
+| **S6** | *(not assessed in v1)* | N/A | Zero market_gap evaluations populated | ~330-440 lines on 11 problems |
+| **CQ Ref** | Validation mapping (~80 lines) | **No** | Not in repo | Deferred |
+
+### Priority order for remaining work
+
+1. **S6 market_gap evaluations** — largest compliance gap; framework exists with no data. ~330-440 lines.
+2. **Schema fixes (S1 + CS2)** — two undeclared fields in active use. ~5 lines total. Quick win.
+3. **S0 Solution Layer rubric** — completes evaluation methodology. ~60 lines.
+4. **CS3 compatibility principles** — documents the logic behind compatibility ratings. ~20 lines.
+5. **CS5 compound effects** — three named patterns as claims. ~30 lines.
+6. **CS4 data_access + trust** — blocked on ST_007. No immediate action.
+7. **CQ Reference mapping** — source file not in repo. Deferred.
+
+### What becomes derivable after all changes
+
+| Document | v1 estimate | Current | After remaining work |
+|----------|------------|---------|---------------------|
+| S0 | ~98% | ~95% | ~98% |
+| S1 | ~85% | ~90% | ~92% |
+| CS2 | ~70% | ~80% | ~82% |
+| CS3 | ~60% | ~60% | ~70% |
+| CS4 | ~70% | ~55% | ~55% (blocked) |
+| CS5 | ~75% | ~80% | ~85% |
+| S6 | *(n/a)* | ~20% | ~70% |
+| CQ Ref | 100% | 0% | 0% (deferred) |
+
+### Files that could move to research/
+- **S6** product tables and market intelligence sections (specific products, funding, ratings) are primary research data. Once scores are in the SoR, these become source material.
+- **CS1** (if ever added to repo) is process documentation — belongs in research or a methodology folder, not analysis.
+- **S0** is methodology — already has a copy in Summaries. Could be moved to research if analysis/ is meant to be purely derivable outputs.
