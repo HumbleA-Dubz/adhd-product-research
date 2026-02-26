@@ -683,7 +683,7 @@ _framework:
 # meta_challenge:         6
 # engagement_model:       8
 # content_ticket:         7
-# system_ticket:          11
+# system_ticket:          17
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -5276,3 +5276,84 @@ ST_011:
     an open question. Current sparse encoding may be intentional —
     sources exist primarily as attribution anchors for claims, not
     as independently queryable entities.
+
+ST_012:
+  type: system_ticket
+  origin: user review — overall file scope
+  status: open
+  added: 2026-02-26
+  subject: "redefine scope"
+  content: >
+    The SoR's scope statement (what it covers, what it excludes, and
+    why) needs revisiting. Current scope may have drifted as entities,
+    layers, and evaluation frameworks were added iteratively.
+
+ST_013:
+  type: system_ticket
+  origin: user review — _framework.recording_requirements
+  status: open
+  added: 2026-02-26
+  subject: "recording_requirements section — purpose and relevance"
+  content: >
+    The recording_requirements block in _framework specifies what must
+    be recorded for every evaluation. Unclear whether this section is
+    still accurate, useful, or redundant given the entity type
+    definitions already specify required fields. Needs review to
+    determine if it should be kept, merged, or removed.
+
+ST_014:
+  type: system_ticket
+  origin: user review — _framework.derived_scores
+  status: open
+  added: 2026-02-26
+  subject: "derived formula redundancy investigation"
+  content: >
+    The derived_scores section defines formulae (problem_score,
+    market_gap_score, combined_score). May contain redundancy or
+    overlap with scoring logic expressed elsewhere in the framework.
+    Investigate whether these formulae are still accurate, actively
+    used, and non-redundant.
+
+ST_015:
+  type: system_ticket
+  origin: user review — source/claim interaction model
+  status: open
+  added: 2026-02-26
+  subject: "sources + claims — interaction granularity and management"
+  content: >
+    The relationship between sources and claims needs clarity. Current
+    model has sources as attribution anchors and claims referencing
+    them, but questions remain around: flag/type taxonomy for claims,
+    whether source-claim links are at the right granularity, and
+    strategies for collapsing or managing the volume of these entities
+    as the SoR grows. Related to but distinct from ST_011 (source
+    enrichment) and ST_003 (derived_from formalisation).
+
+ST_016:
+  type: system_ticket
+  origin: user review — thesis claim group
+  status: open
+  added: 2026-02-26
+  subject: "thesis section full review — current entries are examples"
+  content: >
+    The thesis claims (C054–C063) were developed as illustrative
+    examples during the steel-man exercise. The entire thesis section
+    needs a full review pass to determine which theses are genuine
+    strategic assumptions worth tracking vs artefacts of the
+    generation process. Broader scope than ST_005 (settled flags) and
+    ST_006 (open questions from steel-man), which address specific
+    mechanics within the thesis set.
+
+ST_017:
+  type: system_ticket
+  origin: user review — agent usability
+  status: open
+  added: 2026-02-26
+  subject: "add agent instructions at start of file"
+  content: >
+    The SoR has no clear instructions for AI agents that will read and
+    edit it. Needs an instruction block near the top of the file
+    covering: what the file is, how to navigate it, what the entity
+    types mean, rules for editing (claim-first protocol, ticket
+    creation), and any enforcement or optimisation guidance. Currently
+    agents must infer all of this from the framework section.
