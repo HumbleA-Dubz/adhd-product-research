@@ -9,6 +9,8 @@ I spent the last week decomposing all of it into a single structured system (the
 
 That's done. The question now is what to do with it.
 
+(For more context you can go into the SoC and look at the ticket sections. It's got all the to-do/in progress pieces )
+
 ---
 
 ## What I'm Proposing
