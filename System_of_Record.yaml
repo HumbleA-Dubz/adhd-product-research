@@ -3,6 +3,9 @@
 # All documentation and visualizations derived from this file.
 #
 # Schema defined in _framework section below. Entity data follows.
+# Open issues tracked in two ticket sections at end of file:
+#   - CONTENT TICKETS (CT_nnn): data gaps, evidence needs, entity changes
+#   - SYSTEM TICKETS (ST_nnn): schema changes, process design, structural decisions
 #
 # NOT INCLUDED (deferred):
 # - Technologies (TECH_01-TECH_10) -> _archived/Technologies.yaml
@@ -617,22 +620,37 @@ _framework:
       note: "Indicative, not mechanically determinative."
 
   # ─────────────────────────────────────────────────────────────
-  # STAGING CONVENTIONS
-  # Items that don't fit any current entity type.
+  # TICKET CONVENTIONS
+  # Open issues tracked at end of file in two sections.
+  # Content tickets: data gaps, evidence needs, entity changes.
+  # System tickets: schema changes, process design, structural decisions.
   # ─────────────────────────────────────────────────────────────
-  staging:
+  content_ticket:
     description: >
-      Observations, candidates, and conclusions that do not currently
-      fit any defined entity type. Items are placed here when an AI
-      agent encounters data it cannot confidently classify. Items
-      remain until a human reviews and either assigns them a type
-      (moving them into the main entity set) or discards them.
+      Tracked issues relating to data within the SoR — missing evidence,
+      entity additions/removals, scoring updates, evidence gaps. Each
+      ticket is a to-do item for content changes.
     fields:
-      id:             { required: true,  format: "STG_NNN" }
-      observation:    { required: true,  format: "prose — the thing observed" }
+      id:             { required: true,  format: "CT_NNN" }
+      subject:        { required: true,  format: "prose — what needs to change" }
       source:         { required: true,  format: "doc or entity ID where it was found" }
       added:          { required: true,  format: "ISO date" }
-      context:        { required: false, format: "prose — any additional context" }
+      status:         { required: true,  format: "open | closed | superseded_by_CT_NNN" }
+      resolution:     { required: false, format: "prose — how it was resolved" }
+
+  system_ticket:
+    description: >
+      Tracked issues relating to how the SoR works — schema changes,
+      new fields, process design, structural decisions, evaluation
+      framework modifications. Each ticket is a to-do item for
+      macro/structural changes.
+    fields:
+      id:             { required: true,  format: "ST_NNN" }
+      subject:        { required: true,  format: "prose — what structural change is needed" }
+      source:         { required: true,  format: "doc or entity ID where it was identified" }
+      added:          { required: true,  format: "ISO date" }
+      status:         { required: true,  format: "open | deferred | flagged | closed" }
+      resolution:     { required: false, format: "prose — how it was resolved" }
 
   # ─────────────────────────────────────────────────────────────
   # RECORDING REQUIREMENTS
@@ -653,67 +671,6 @@ _framework:
       judgment calls informed by patterns of scores, evidence
       quality, and factors outside this framework.
 
-  # ─────────────────────────────────────────────────────────────
-  # SCHEMA REVIEW
-  # Deferred fields, structural questions, and maintenance flags.
-  # ─────────────────────────────────────────────────────────────
-  schema_review:
-    last_reviewed: "2025-02-25"
-    items:
-      - id: SR_001
-        subject: "claim (thesis group) — test_surface ref"
-        status: deferred
-        description: >
-          Planned ref type on thesis claims: list of entity IDs where the
-          thesis can be independently evidenced. Deferred because the
-          actual theses and their evidence maps don't exist yet — the
-          shape of this field should emerge from the data, not precede it.
-        added: "2025-02-25"
-
-      - id: SR_002
-        subject: "claim (thesis group) — evidence landscape"
-        status: deferred
-        description: >
-          Structured field for gradient evidence assessment on theses:
-          where the thesis holds strongly, where the counter-thesis has
-          force, and where neither side has meaningful evidence. Deferred
-          for same reason as SR_001 — needs populated theses first.
-        added: "2025-02-25"
-
-      - id: SR_003
-        subject: "claim — derived_from formalisation"
-        status: flagged
-        description: >
-          derived_from is used on many claims in practice but is not in
-          the claim type definition. Either add it as an optional field
-          or remove it from entities. Affects all entity types that use it.
-        added: "2025-02-25"
-
-      - id: SR_004
-        subject: "claim (thesis group) — settled status derivation"
-        status: deferred
-        description: >
-          Whether a thesis still represents strategic exposure or has
-          been resolved is currently a manual judgment during review.
-          Mechanical derivation would require numeric counter-thesis
-          confidence, which creates a circular dependency (need to
-          identify theses before scoring counter-theses). Using manual
-          status flag for now. Revisit if thesis count grows large enough
-          that review-by-reading becomes impractical, or if a lighter
-          derivation method becomes apparent.
-        added: "2025-02-25"
-
-      - id: SR_005
-        subject: "claim (thesis group) — populate settled flags"
-        status: todo
-        description: >
-          Thesis entities now exist (C054-C063). Each needs a manual
-          settled assessment recorded. Field TBD (likely status value
-          or boolean). Must be done before first strategic review
-          cycle can use theses as intended. All 10 theses carry
-          draft_review: true pending user review.
-        added: "2025-02-25"
-        updated: "2025-02-25"
 
 # ─────────────────────────────────────────────────────────────
 # CURRENT COUNTS
@@ -725,7 +682,8 @@ _framework:
 # cluster:                3
 # meta_challenge:         6
 # engagement_model:       8
-# staging:                4
+# content_ticket:         7
+# system_ticket:          11
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -1945,7 +1903,7 @@ C053:
 # THESIS CLAIMS (group: thesis)
 # Contested assumptions where a change in confidence would
 # prompt strategic reconsideration. Draft set — developed from
-# STG_005 candidates plus one identified gap (C063).
+# CT_005 candidates plus one identified gap (C063).
 # All marked draft_review: true pending user review.
 # ─────────────────────────────────────────────────────────────
 
@@ -1991,7 +1949,7 @@ C054:
     Highest-confidence thesis. Tier 1 evidence from multiple
     independent sources. Counter-thesis is about magnitude and
     boundary, not existence. If this thesis is wrong, the entire
-    SoR is investigating a non-problem. Developed from STG_005
+    SoR is investigating a non-problem. Developed from CT_005
     candidate "Problem space is real."
 
 C055:
@@ -2057,7 +2015,7 @@ C055:
     (C055 weakened). Merged to avoid double-counting the same
     strategic risk. If the counter is correct, the strategy shifts
     from "different kind of tool" to "better version of existing
-    tools with ADHD marketing." STG_005 candidates: "Neurological,
+    tools with ADHD marketing." CT_005 candidates: "Neurological,
     not behavioural" + "Existing tools fail structurally."
 
 C056:
@@ -2113,7 +2071,7 @@ C056:
     real but whether software is the right delivery mechanism for
     addressing it. If this thesis is wrong, the product needs
     human-in-loop delivery (coaching platform, not standalone
-    tool). Developed from STG_005 candidate "Medication is
+    tool). Developed from CT_005 candidate "Medication is
     insufficient."
 
 C057:
@@ -2135,7 +2093,7 @@ C057:
     Merged during steel-man review. The dependency: if mechanisms
     do not constrain design (C055 false), then tools do not fail
     structurally (C057 false). Not independently testable.
-    Original STG_005 candidate: "Existing tools fail structurally."
+    Original CT_005 candidate: "Existing tools fail structurally."
 
 C058:
   type: claim
@@ -2196,7 +2154,7 @@ C058:
     inferred — no source directly studies why ADHD workplace
     products are underfunded. The thesis matters because if the
     barrier IS interdisciplinary competence, that is a moat. If
-    it is market size, there is no moat. Developed from STG_005
+    it is market size, there is no moat. Developed from CT_005
     candidate "The gap is interdisciplinary."
 
 C059:
@@ -2248,7 +2206,7 @@ C059:
     not encoded as formal claims in this system. The market
     assessment layer is outside the SoR scope — this thesis sits
     at the boundary between research evidence and market analysis.
-    Developed from STG_005 candidate "Ecosystem incentives are
+    Developed from CT_005 candidate "Ecosystem incentives are
     misaligned" (reframed from incentive mechanism to market
     mispricing).
 
@@ -2300,7 +2258,7 @@ C060:
     can work. If C060 is wrong (demand IS accurate), then C062
     becomes less important because the right strategy is to solve
     the software-delivery-of-structured-intervention problem.
-    Developed from STG_005 candidate "Demand signal is misleading."
+    Developed from CT_005 candidate "Demand signal is misleading."
 
 C061:
   type: claim
@@ -2364,7 +2322,7 @@ C061:
     the team needs to develop ADHD-specific validation methods
     before trusting any product signal. This affects timeline,
     resource allocation, and the confidence placed in early results.
-    Developed from STG_005 candidate "Standard product methodology
+    Developed from CT_005 candidate "Standard product methodology
     is degraded."
 
 C062:
@@ -2424,7 +2382,7 @@ C062:
     approach. Paired with C060: if demand signal is misleading
     AND passive models can work, the strategy is clear. If demand
     signal is accurate OR passive models fail, the strategy must
-    change. Developed from STG_005 candidate "Passive engagement
+    change. Developed from CT_005 candidate "Passive engagement
     can substitute for active engagement."
 
 C063:
@@ -2470,7 +2428,7 @@ C063:
     depends_on: [C031, C039, C041]
     entities: [MC4]
   comments: >
-    Not in original STG_005 candidates — identified as a gap
+    Not in original CT_005 candidates — identified as a gap
     during thesis development. Gate 2 (Individual Addressability)
     shows individual-level intervention is POSSIBLE, but "possible"
     and "optimal" are different claims. If this thesis is wrong,
@@ -2538,7 +2496,7 @@ C064:
     depends_on: [C034, C049, C053, C055, C062]
     entities: [MC4, MC6]
   comments: >
-    Not in original STG_005 candidates — identified during steel-
+    Not in original CT_005 candidates — identified during steel-
     man review as a critical coverage gap. Market data (market size,
     CAGR, competitive landscape) is from S10 synthesis and P2D
     landscape analysis, not encoded as formal claims. This thesis
@@ -3423,7 +3381,7 @@ FP10:
     context with FP02 (focus) but mechanistically different.
   derived_from: Our_S3
 
-# FP13 (Waiting Mode) DEMOTED TO STAGING — see STG_012.
+# FP13 (Waiting Mode) DEMOTED — see CT_006.
 # Originally added from Morning_Extraction_Feb25, never went through
 # the S1→S2→S3 pipeline. No gate evaluations, no claims, Tier 3 only.
 # ID collision with S1's FP13 (Attendance, now FP13b). Software
@@ -3526,7 +3484,7 @@ FP13b:
   id_note: >
     S1/S2 FP13 (Attendance). Originally suffixed 'b' to avoid
     collision with a Waiting Mode entity that occupied FP13.
-    That entity has been demoted to staging (STG_012). The 'b'
+    That entity has been demoted (CT_006). The 'b'
     suffix is retained to avoid confusion in change history.
   derived_from: Our_S2
 
@@ -4959,26 +4917,24 @@ M8:
 
 
 # ═══════════════════════════════════════════════════════════════
-# STAGING
-# Items with incomplete evidence, deferred dependencies, or
-# orphaned content from migration. Each item describes what it
-# is, why it's here, and what would promote it to a full entity.
+# CONTENT TICKETS
+# Data gaps, evidence needs, entity changes. Each ticket
+# describes a content issue and what would resolve it.
 # ═══════════════════════════════════════════════════════════════
 
-STG_001:
-  type: staging
+CT_001:
+  type: content_ticket
   origin: FP13 Waiting Mode (note field, removed during migration)
-  status: superseded_by_STG_012
+  status: superseded_by_CT_006
   content: >
     Original staging note for FP13 evidence thinness. Mislabeled
     as "context switching cost" (that is FP10). Superseded by
-    STG_012 which captures the full demoted entity.
-  promotion_condition: >
-    N/A — see STG_012.
+    CT_006 which captures the full demoted entity.
 
-STG_002:
-  type: staging
+CT_002:
+  type: content_ticket
   origin: IMP09 (foundations reference, deferred)
+  status: open
   content: >
     Seven shared capabilities appear across 3+ engagement models
     and appear needed regardless of product direction: calendar
@@ -4993,24 +4949,23 @@ STG_002:
       - Build sequencing
       - Resource allocation
       - What to build now decisions
-  promotion_condition: >
-    Promote to claim when foundations.yaml entities are imported
-    into the SoR and can be referenced as depends_on targets.
 
-STG_003:
-  type: staging
+CT_003:
+  type: content_ticket
   origin: MECH03 (retrieval_evidence field, removed during migration)
+  status: open
   content: >
     P2E: Trip describes hoard and purge cycles with knowledge
     management. Notion and Obsidian vaults described as
     information graveyards across multiple users.
-  promotion_condition: >
+  resolution: >
     Integrate into a claim about retrieval failure patterns
     when P2E evidence is formally encoded as a source.
 
-STG_004:
-  type: staging
+CT_004:
+  type: content_ticket
   origin: MECH06 (evidence_note field, removed during migration)
+  status: open
   content: >
     Emotional dysregulation appears in practitioner evidence
     (P2C) and user reports (P2A, P2E) but is less established
@@ -5018,266 +4973,23 @@ STG_004:
     Time Perception or Encoding Deficit. Supported by the
     evidence base but the workplace-specific mechanism pathway
     is less documented.
-  promotion_condition: >
+  resolution: >
     Promote to claim when workplace-specific emotional
     dysregulation evidence is identified in clinical sources.
 
-# ─────────────────────────────────────────────────────────────
-# THESIS CANDIDATES (low confidence initial examples)
-# These are starting points for finding the shape of the thesis
-# entity type. Do not anchor on these — they need rigorous
-# development, may merge/split/be discarded entirely.
-# ─────────────────────────────────────────────────────────────
-
-STG_005:
-  type: staging
+CT_005:
+  type: content_ticket
   origin: thesis definition session (2025-02-25)
-  status: promoted
+  status: closed
+  closed_reason: promoted
   promoted_to: [C054, C055, C056, C057, C058, C059, C060, C061, C062, C063, C064]
   content: >
     Nine initial thesis candidates identified during schema design.
-    Low confidence — these exist to find the shape, not to assert
-    the final set. Each needs: rigorous statement, counter-thesis
-    with evidence, confidence assessment, and validation against
-    the thesis definition ("would a confidence change prompt
-    strategic reconsideration?").
-  candidates:
-    - label: "Problem space is real"
-      sketch: >
-        ADHD causes material, measurable workplace functional
-        impairment beyond what medication and behavioural therapy
-        resolve.
-    - label: "Neurological, not behavioural"
-      sketch: >
-        The functional problems are produced by neurological
-        mechanisms, not by insufficient effort, poor habits, or
-        character flaws. Interventions must work with the
-        neurology, not against it.
-    - label: "Medication is insufficient"
-      sketch: >
-        Pharmacological treatment leaves a significant residual
-        functional impairment gap that non-pharma intervention
-        can meaningfully address.
-    - label: "Existing tools fail structurally"
-      sketch: >
-        Current productivity tools fail for ADHD users due to
-        structural design assumptions incompatible with ADHD
-        cognition. Tools that persist succeed through low
-        meta-challenge exposure, not through deliberate
-        ADHD-informed design.
-    - label: "The gap is interdisciplinary"
-      sketch: >
-        Effective solutions require simultaneous competence in
-        neuroscience, product design, and technical capability.
-        The gap exists partly because these disciplines rarely
-        converge in a single team.
-    - label: "Ecosystem incentives are misaligned"
-      sketch: >
-        Research funding, VC investment, and enterprise procurement
-        structures systematically undervalue or deprioritise
-        non-pharma ADHD workplace interventions.
-    - label: "Demand signal is misleading"
-      sketch: >
-        User and practitioner demand points toward high-effort,
-        high-engagement solutions (the models with highest
-        meta-challenge exposure), directing builders toward
-        the wrong design space.
-    - label: "Standard product methodology is degraded"
-      sketch: >
-        Conventional product discovery and validation methods
-        produce unreliable signals for this population. The
-        missing wish-list problem (C040) blocks honest discovery,
-        early engagement metrics are MC6 in disguise.
-    - label: "Passive engagement can substitute for active engagement"
-      sketch: >
-        Product interaction models that minimise user-initiated
-        effort and habit formation can deliver meaningful
-        functional improvement — the core untested assumption
-        behind low-MC-exposure engagement models.
-  promotion_condition: >
-    Each candidate is promoted to a full thesis claim (with
-    group: thesis) when it has: a rigorous statement, a
-    counter_thesis with evidence and strength assessment,
-    a confidence value, and passes the definition test.
+    All promoted to full thesis claims with counter-theses,
+    evidence, and confidence assessments.
 
-STG_006:
-  type: staging
-  origin: thesis steel-man review (2025-02-25)
-  status: open
-  content: >
-    Open questions from thesis map development and steel-man
-    analysis. All require user decision before the thesis set
-    is finalised. These are flagged for review, not blocking
-    further work.
-  questions:
-    - id: Q1
-      subject: "C054 demotion"
-      description: >
-        C054 ("problem space is real and material") may be too
-        well-evidenced to qualify as a thesis under the agreed
-        definition ("contested assumption where a confidence change
-        would prompt strategic reconsideration"). Confidence is 1.5
-        (Tier 1 evidence from multiple sources). A confidence change
-        is nearly inconceivable given WFIRS data, Work-MAP RCT, and
-        P2E interviews. Should C054 be demoted to a standard claim
-        (removing group: thesis) or kept as the foundational thesis
-        that anchors the dependency chain? If demoted, all other
-        theses lose their grounding reference.
-    - id: Q2
-      subject: "C055+C057 merge validation"
-      description: >
-        C055 and C057 were merged because "mechanisms constrain
-        design" and "tools fail structurally" are the same strategic
-        risk from different angles. Confirm this merge is correct or
-        flag if they should be re-separated. The merged thesis is
-        longer and denser than the others.
-    - id: Q3
-      subject: "C058+C059 overlap"
-      description: >
-        Steel-man analysis flagged C058 (interdisciplinary barrier)
-        and C059 (market mispricing) as sharing significant DNA —
-        both partially explain why the market is unfunded. They
-        were kept separate because they imply different strategic
-        responses (C058: build a rare team = moat; C059: better
-        positioning/narrative = GTM). Should they merge or remain
-        separate axes of uncertainty?
-    - id: Q4
-      subject: "Technical feasibility thesis"
-      description: >
-        The steel-man analysis identified a missing coverage area:
-        no thesis addresses whether the required technical
-        capabilities (ambient capture, on-device processing,
-        knowledge graphs, cross-platform integration) are actually
-        achievable at the required quality and cost within the
-        relevant time horizon. The technology research (S9B-S9J)
-        was quarantined from the phenomena layer, so the SoR has
-        no technology claims to reference. Should a technical
-        feasibility thesis be added, or is this outside the SoR
-        scope?
-    - id: Q5
-      subject: "Dependency structure encoding"
-      description: >
-        The thesis set has a clear dependency chain: C054
-        (foundational) → C055 (mechanisms constrain design) →
-        C060 (demand misleads) → C062 (passive can substitute)
-        → C064 (unit economics work). C062 is the strategic hinge
-        — the highest-risk, lowest-evidence thesis that the
-        business case depends on. Currently dependencies are
-        captured in refs.depends_on but not structurally typed
-        (logical dependency vs evidence dependency vs thematic
-        relationship). Should the data model distinguish these,
-        or is the current flat depends_on sufficient?
-    - id: Q6
-      subject: "Thesis review cycle"
-      description: >
-        All 11 thesis entities carry draft_review: true. What is
-        the intended review process? Options: (a) user reviews
-        each thesis statement + counter and approves/edits,
-        (b) user reviews the set holistically and approves/rejects,
-        (c) user identifies which theses to test first and the
-        review becomes a prioritisation exercise. This affects
-        SR_005 (settled flags) and any future strategic review
-        cycle.
-
-STG_007:
-  type: staging
-  origin: derivability assessment — requirements layer evaluation
-  status: open
-  content: >
-    S0 (Methodology), S1 (Master Problem List), CS2 (Choice Space
-    Map), CS3 (Cross-Layer Mapping sans solutioning), and CS4
-    (Engagement Models) represent the transition from claims to
-    requirements/thesis-level content. They need a proper
-    architectural evaluation of how the SoR should support them
-    as a layer, rather than piecemeal encoding of individual
-    fields. Key questions: should there be a requirements entity
-    type? Should these map to existing thesis claims? Is the
-    requirements layer distinct from the claims layer? What
-    derivability target is appropriate?
-  promotion_condition: >
-    Promote when a requirements-layer architecture decision has
-    been made. Output is either: (a) new entity types added to
-    SoR schema, (b) existing entities enriched with requirements
-    fields, or (c) explicit decision that these files remain
-    external references only.
-
-STG_008:
-  type: staging
-  origin: CS5 relocated candidates — entity typing assessment
-  status: open
-  content: >
-    CS5 Section 3 identified 6 phenomena that failed MC inclusion
-    criteria: Implementation Friction, Cognitive Overload from
-    Complexity, Inconsistency Across Contexts, Individual
-    Difference in EF Profiles, Support System Dependency, and
-    Multi-Comorbidity Complications. These are NOT failed meta-
-    challenges to be stored as excluded MCs. They are phenomena
-    that don't fit the meta-challenge entity type and need proper
-    assessment of what entity type (if any) they belong to.
-    Options include: cross-cutting concerns, problem modifiers,
-    mechanism sub-types, or genuinely outside SoR scope.
-  promotion_condition: >
-    Promote when entity typing assessment is complete. Each
-    candidate gets either: (a) assigned to an existing entity
-    type with rationale, (b) identified as needing a new entity
-    type (with schema proposal), or (c) explicitly scoped out
-    with reasoning.
-
-STG_009:
-  type: staging
-  origin: engagement model enrichment — data_access and trust fields
-  status: open
-  content: >
-    Engagement models (M1-M8) could be enriched with data_access
-    (what data does the model need?) and trust (what trust does
-    the user need to extend?) fields. These are structurally
-    relevant for L2→L3 mapping and product architecture
-    decisions. Currently not blocking any analysis but would
-    improve the engagement model entities' utility.
-  promotion_condition: >
-    Promote when the requirements-layer evaluation (STG_007) is
-    resolved — these fields may belong in the requirements layer
-    rather than the phenomena layer.
-
-STG_010:
-  type: staging
-  origin: technology assessment — S9 entity encoding
-  status: open
-  content: >
-    S9B-S9J contain 9 technology research documents covering
-    architecture, AI capabilities, and implementation patterns.
-    These have not been parsed into SoR entities. The technology
-    research is quarantined from the phenomena layer by design
-    (NO SOLUTIONING constraint). Whether and how to encode
-    technology entities depends on resolving the requirements-
-    layer question (STG_007) and potentially adding a technology
-    layer to the SoR schema.
-  promotion_condition: >
-    Promote when a decision is made on whether the SoR should
-    include a technology layer. If yes, define schema and parse
-    S9 content. If no, retain S9 files as external references.
-
-STG_011:
-  type: staging
-  origin: source encoding — weak source assessment
-  status: open
-  content: >
-    The SoR's source entities carry minimal metadata (type, tier,
-    name, notes). Whether to enrich them with richer fields
-    (methodology, sample size, limitations, specific findings) is
-    an open question. The current sparse encoding may be
-    intentional — sources exist primarily as attribution anchors
-    for claims, not as independently queryable entities. Enriching
-    them would improve derivability of S1-style source summaries
-    but may not justify the maintenance cost.
-  promotion_condition: >
-    Assess whether any downstream use case (report generation,
-    evidence audit, systematic review) requires richer source
-    metadata. If yes, define enriched schema. If current encoding
-    is sufficient for all use cases, close as intentional.
-
-STG_012:
-  type: staging
+CT_006:
+  type: content_ticket
   origin: FP13 Waiting Mode — demoted from active problem
   status: open
   content: >
@@ -5292,7 +5004,7 @@ STG_012:
         scheduled events; software cannot suppress that awareness.
     (3) ID collision — S1/S2 FP13 is Attendance (now FP13b). This entity
         claimed an ID that belonged to a different problem.
-    (4) STG_001 mislabeled it as "context switching cost" (that is FP10).
+    (4) CT_001 mislabeled it as "context switching cost" (that is FP10).
     (5) No claims linked. No cluster membership. Tier 3 evidence only.
     (6) Scores were reconstructed from extraction, not formally assessed.
 
@@ -5306,8 +5018,261 @@ STG_012:
 
     Preserved data: frequency 3, differentiation 4, connectedness 2
     (total 9, all Tier 3). Refs: MECH01, MECH02. No claims.
-  promotion_condition: >
+  resolution: >
     Promote if: (a) formal gate assessment confirms software
     amenability, (b) at least one claim with Tier 2+ evidence is
     created, and (c) a non-colliding ID is assigned. Otherwise
     close as "real phenomenon, not a software-addressable FP."
+
+CT_007:
+  type: content_ticket
+  origin: CS5 relocated candidates — entity typing assessment
+  status: open
+  content: >
+    CS5 Section 3 identified 6 phenomena that failed MC inclusion
+    criteria: Implementation Friction, Cognitive Overload from
+    Complexity, Inconsistency Across Contexts, Individual
+    Difference in EF Profiles, Support System Dependency, and
+    Multi-Comorbidity Complications. These are NOT failed meta-
+    challenges to be stored as excluded MCs. They are phenomena
+    that need assessment against the claim-first protocol: do they
+    anchor their own evaluation (entity) or modify other entities'
+    evaluations (claim)? Cross-cutting concern entity type has
+    been removed — that is no longer an option.
+  resolution: >
+    Each candidate gets either: (a) expressed as a claim with
+    rationale, (b) identified as needing a new entity type per
+    the promotion criteria in ST_008, or (c) explicitly scoped
+    out with reasoning.
+
+
+# ═══════════════════════════════════════════════════════════════
+# SYSTEM TICKETS
+# Schema changes, process design, structural decisions. Each
+# ticket describes a system-level issue and what would resolve it.
+# ═══════════════════════════════════════════════════════════════
+
+ST_001:
+  type: system_ticket
+  origin: schema design (2025-02-25)
+  status: deferred
+  subject: "claim (thesis group) — test_surface ref"
+  content: >
+    Planned ref type on thesis claims: list of entity IDs where the
+    thesis can be independently evidenced. Deferred because the
+    actual theses and their evidence maps don't exist yet — the
+    shape of this field should emerge from the data, not precede it.
+
+ST_002:
+  type: system_ticket
+  origin: schema design (2025-02-25)
+  status: deferred
+  subject: "claim (thesis group) — evidence landscape"
+  content: >
+    Structured field for gradient evidence assessment on theses:
+    where the thesis holds strongly, where the counter-thesis has
+    force, and where neither side has meaningful evidence. Deferred
+    for same reason as ST_001 — needs populated theses first.
+
+ST_003:
+  type: system_ticket
+  origin: schema design (2025-02-25)
+  status: flagged
+  subject: "claim — derived_from formalisation"
+  content: >
+    derived_from is used on many claims in practice but is not in
+    the claim type definition. Either add it as an optional field
+    or remove it from entities. Affects all entity types that use it.
+
+ST_004:
+  type: system_ticket
+  origin: schema design (2025-02-25)
+  status: deferred
+  subject: "claim (thesis group) — settled status derivation"
+  content: >
+    Whether a thesis still represents strategic exposure or has
+    been resolved is currently a manual judgment during review.
+    Mechanical derivation would require numeric counter-thesis
+    confidence, which creates a circular dependency (need to
+    identify theses before scoring counter-theses). Using manual
+    status flag for now. Revisit if thesis count grows large enough
+    that review-by-reading becomes impractical, or if a lighter
+    derivation method becomes apparent.
+
+ST_005:
+  type: system_ticket
+  origin: schema design (2025-02-25)
+  status: open
+  subject: "claim (thesis group) — populate settled flags"
+  content: >
+    Thesis entities now exist (C054-C063). Each needs a manual
+    settled assessment recorded. Field TBD (likely status value
+    or boolean). Must be done before first strategic review
+    cycle can use theses as intended. All 10 theses carry
+    draft_review: true pending user review.
+
+ST_006:
+  type: system_ticket
+  origin: thesis steel-man review (2025-02-25)
+  status: open
+  subject: "thesis review process and open questions"
+  content: >
+    Open questions from thesis map development and steel-man
+    analysis. All require user decision before the thesis set
+    is finalised.
+  questions:
+    - id: Q1
+      subject: "C054 demotion"
+      description: >
+        C054 ("problem space is real and material") may be too
+        well-evidenced to qualify as a thesis under the agreed
+        definition ("contested assumption where a confidence change
+        would prompt strategic reconsideration"). Confidence is 1.5
+        (Tier 1 evidence from multiple sources). Should C054 be
+        demoted to a standard claim or kept as the foundational
+        thesis that anchors the dependency chain?
+    - id: Q2
+      subject: "C055+C057 merge validation"
+      description: >
+        C055 and C057 were merged because "mechanisms constrain
+        design" and "tools fail structurally" are the same strategic
+        risk from different angles. Confirm this merge is correct or
+        flag if they should be re-separated.
+    - id: Q3
+      subject: "C058+C059 overlap"
+      description: >
+        C058 (interdisciplinary barrier) and C059 (market mispricing)
+        share significant DNA — both partially explain why the market
+        is unfunded. Kept separate because they imply different
+        strategic responses. Should they merge or remain separate?
+    - id: Q4
+      subject: "Technical feasibility thesis"
+      description: >
+        No thesis addresses whether the required technical
+        capabilities are actually achievable at the required quality
+        and cost. The technology research (S9B-S9J) was quarantined
+        from the phenomena layer. Should a technical feasibility
+        thesis be added, or is this outside SoR scope?
+    - id: Q5
+      subject: "Dependency structure encoding"
+      description: >
+        The thesis dependency chain is captured in refs.depends_on
+        but not structurally typed (logical dependency vs evidence
+        dependency vs thematic relationship). Should the data model
+        distinguish these, or is flat depends_on sufficient?
+    - id: Q6
+      subject: "Thesis review cycle"
+      description: >
+        All 11 thesis entities carry draft_review: true. What is
+        the intended review process? This affects ST_005 (settled
+        flags) and any future strategic review cycle.
+
+ST_007:
+  type: system_ticket
+  origin: derivability assessment — requirements layer evaluation
+  status: open
+  subject: "requirements layer architecture"
+  content: >
+    S0, S1, CS2, CS3, CS4 represent the transition from claims to
+    requirements/thesis-level content. Key questions: should there
+    be a requirements entity type? Should these map to existing
+    thesis claims? Is the requirements layer distinct from the
+    claims layer? What derivability target is appropriate?
+  resolution: >
+    Output is either: (a) new entity types added to SoR schema,
+    (b) existing entities enriched with requirements fields, or
+    (c) explicit decision that these files remain external
+    references only.
+
+ST_008:
+  type: system_ticket
+  origin: claim-to-entity promotion system design (2026-02-26)
+  status: open
+  subject: "claim-first protocol and promotion detection"
+  content: >
+    The SoR follows a claim-first protocol: all observations enter
+    as claims. Entity promotion is a separate step. This ticket
+    captures the unresolved design work for making promotion
+    emergent rather than top-down.
+
+    PRINCIPLE: An entity earns its type by anchoring its own
+    evaluation — evaluations live ON it, not on other entities.
+    If a concept's role is to modify how other entities get
+    evaluated, it stays a claim or becomes a field on those
+    entities. (Established during CC entity type removal.)
+
+    DETECTION SIGNALS (identified, not yet implemented):
+    1. Claim referenced as context/framing rather than evidence
+    2. Claim develops informal children (concept hub, not evidence)
+    3. Claim prose duplicated/paraphrased across other claims
+    4. Agent hits evaluation wall — needs to assess something
+       with no entity type to hold the assessment
+    5. Claim scope exceeds its evidence basis (structural
+       assertions beyond what sources support)
+    6. Multiple claims share implicit subject with no ID
+
+    Signals 2 and 6 are partially detectable from graph structure.
+    Signals 1, 3, 5 need prose comprehension. Signal 4 is
+    real-time only — vanishes if not captured at write time.
+
+    DEPENDENCIES (three things must exist):
+    1. A maintenance protocol — written instructions for agents
+       editing the SoR (what to do, what to check, what to flag).
+       Currently does not exist.
+    2. A decision log — records when claims are used in decisions.
+       Surfaces claims carrying disproportionate decision weight.
+       Mechanism TBD (field on claims, staging convention, or
+       separate structure).
+    3. A question log — records when the SoR cannot answer a
+       question asked of it. Surfaces gaps where no claim exists
+       but a concept is needed. Mechanism TBD (staging convention
+       with query_miss origin, or separate structure).
+
+    The maintenance protocol is the single upstream dependency.
+    Decision and question logs are downstream of it — they require
+    the editing agent to do something extra at write time, which
+    requires documented instructions.
+
+    ALSO NEEDED: a way to capture signal 4 (evaluation wall) at
+    write time. Proposed: inline comment annotation on the claim
+    (# PROMOTION_SIGNAL: ...) that survives in the file for
+    periodic review to pick up.
+
+ST_009:
+  type: system_ticket
+  origin: engagement model enrichment — data_access and trust fields
+  status: open
+  subject: "EM data_access and trust fields"
+  content: >
+    Engagement models (M1-M8) could be enriched with data_access
+    (what data does the model need?) and trust (what trust does
+    the user need to extend?) fields. These are structurally
+    relevant for L2→L3 mapping and product architecture decisions.
+    Depends on ST_007 (requirements layer) — these fields may
+    belong in the requirements layer rather than the phenomena layer.
+
+ST_010:
+  type: system_ticket
+  origin: technology assessment — S9 entity encoding
+  status: open
+  subject: "technology layer decision"
+  content: >
+    S9B-S9J contain 9 technology research documents not parsed into
+    SoR entities. Technology research is quarantined from the
+    phenomena layer by design (NO SOLUTIONING constraint). Whether
+    and how to encode technology entities depends on resolving the
+    requirements-layer question (ST_007) and potentially adding a
+    technology layer to the SoR schema.
+
+ST_011:
+  type: system_ticket
+  origin: source encoding — weak source assessment
+  status: open
+  subject: "source entity enrichment"
+  content: >
+    The SoR's source entities carry minimal metadata (type, tier,
+    name, notes). Whether to enrich them with richer fields
+    (methodology, sample size, limitations, specific findings) is
+    an open question. Current sparse encoding may be intentional —
+    sources exist primarily as attribution anchors for claims, not
+    as independently queryable entities.
