@@ -418,7 +418,7 @@ Note on CQ21-22: "Perceived value cannot be directly asked. It must be inferred 
   - CQ10 → market_gap.root_cause_of_failure + market_gap.product_enumeration
   - CQ11 → problem.evaluations.scoring.connectedness
   - CQ12 → cluster.causal_direction (cascade effects)
-  - CQ13 → cross_cutting_concern entities (affected parties)
+  - CQ13 → claims (CC entity type removed; content preserved in C033, C038–C041)
   - CQ14 → not explicitly encoded (work contexts)
   - CQ15 → not explicitly encoded (systems/data types)
   - CQ16 → not explicitly encoded (absence contexts)

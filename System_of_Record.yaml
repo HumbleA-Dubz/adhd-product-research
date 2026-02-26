@@ -28,7 +28,8 @@ _framework:
   scope:
     domain: "ADHD workplace functional problems"
     population: "Working adults with ADHD in the UK"
-    constraint: "Software products only — no clinical validation"
+    constraint: "Software products only — no clinical validation, no service/content dependencies"
+    default_outcome: "Do not pursue. Analysis must surface something compelling to override."
 
   # ─────────────────────────────────────────────────────────────
   # KEY DEFINITIONS
@@ -57,11 +58,6 @@ _framework:
       cluster, engagement model, or implementation approach. Not a risk
       that can be solved by a feature. A persistent environmental or
       neurological constraint that shapes the entire solution space.
-    cross_cutting_concern: >
-      A population-level observation that modifies or contextualises
-      the problem landscape but is not itself a targetable problem.
-      Contextual facts about the population, research, or treatment
-      landscape that any solution must account for.
     engagement_model: >
       A structural archetype of user-product interaction. Describes
       how an intervention reaches the user — initiation, effort,
@@ -410,22 +406,6 @@ _framework:
           amplifies:         { required: true, format: "list of MC IDs" }
         derived_from:   { required: true, format: "source doc ID" }
 
-    # ─────────────────────────────────────────────────────────────
-    # ENTITY TYPE: cross_cutting_concern
-    # ─────────────────────────────────────────────────────────────
-    cross_cutting_concern:
-      description: >
-        Population-level observation that contextualises the problem
-        landscape. Not targetable, not scorable, but must be accounted
-        for in any solution design.
-      fields:
-        type:           { required: true, values: ["cross_cutting_concern"] }
-        name:           { required: true, format: "string" }
-        plain_language: { required: true, format: "prose" }
-        implications:   { required: true, format: "list of prose implication statements" }
-        refs:
-          claims:       { required: true, format: "list of claim IDs" }
-        derived_from:   { required: true, format: "source doc ID" }
 
     # ─────────────────────────────────────────────────────────────
     # ENTITY TYPE: engagement_model
@@ -744,7 +724,6 @@ _framework:
 # mechanism:              6
 # cluster:                3
 # meta_challenge:         6
-# cross_cutting_concern:  4
 # engagement_model:       8
 # staging:                4
 
@@ -2127,7 +2106,7 @@ C056:
   refs:
     sources: [WorkMAP_RCT, Lauder_2024]
     depends_on: [C041]
-    entities: [CC04]
+    entities: []
   comments: >
     Closely related to C054 (problem exists) but addresses a
     different strategic question: not whether the impairment is
@@ -2284,9 +2263,8 @@ C060:
     planning rituals, habit trackers — which are precisely the models
     with the highest meta-challenge vulnerability profiles. Following
     demand leads toward the design space with the highest structural
-    failure probability. The Missing Wish-List phenomenon (CC03)
-    means users cannot specify what would actually work; they
-    describe variants of what they already know.
+    failure probability. Users cannot specify what would actually
+    work (C040); they describe variants of what they already know.
   counter_thesis:
     statement: >
       Demand signal is accurate. Users and practitioners know what
@@ -2315,7 +2293,7 @@ C060:
   refs:
     sources: [Lauder_2024, ADHD_Coaching_Survey]
     depends_on: [C029, C040, C047]
-    entities: [CC03, M7]
+    entities: [M7]
   comments: >
     This thesis and C062 are a pair: C060 says demand points the
     wrong way, C062 says the alternative direction (passive models)
@@ -2332,7 +2310,7 @@ C061:
   statement: >
     Conventional product discovery and validation methods produce
     systematically unreliable signals when applied to ADHD workplace
-    tools. Users cannot specify desired features (CC03/C040). Early
+    tools. Users cannot specify desired features (C040). Early
     engagement metrics are inflated by novelty (MC6). Standard
     retention metrics cannot distinguish genuine value from novelty
     engagement. A/B testing with typical time horizons cannot detect
@@ -2369,7 +2347,7 @@ C061:
       standard time horizons cannot distinguish this from real
       retention because the collapse window (4-12 weeks per C034)
       exceeds typical test durations. The "missing wish-list"
-      problem (C040/CC03) is also more severe than generic user-
+      problem (C040) is also more severe than generic user-
       need elicitation difficulty — ADHD users structurally cannot
       describe what they need because they cannot observe their own
       failure patterns in real time. Counter retains force where
@@ -2379,7 +2357,7 @@ C061:
       health-tech engagement decline is plausible but unproven.
   refs:
     depends_on: [C040, C034, C053]
-    entities: [CC03, MC6]
+    entities: [MC6]
   comments: >
     If this thesis is wrong, the build approach is straightforward:
     use established health-tech product methodology. If correct,
@@ -4305,79 +4283,6 @@ MC6:
   derived_from: Morning_Extraction_Feb25
 
 
-# ═══════════════════════════════════════════════════════════════
-# CROSS-CUTTING CONCERNS
-# Population-level observations that modify or contextualise
-# the problem landscape but are not targetable problems.
-# ═══════════════════════════════════════════════════════════════
-
-CC01:
-  type: cross_cutting_concern
-  name: Neurodiversity Spectrum Variance
-  plain_language: >
-    ADHD is not one thing. Co-occurring conditions (autism,
-    dyslexia, dyscalculia, anxiety) change the functional profile
-    substantially. What works for ADHD-only may fail for
-    ADHD+autism. Any tool must accommodate a wide range of
-    profiles rather than targeting a single archetype.
-  refs:
-    claims: [C033, C038]
-  implications:
-    - No single intervention profile will fit the population
-    - Personalisation is a structural requirement, not a feature
-    - Testing with one ADHD subtype does not validate for others
-  derived_from: Our_KG
-
-CC02:
-  type: cross_cutting_concern
-  name: Multi-Domain Co-Occurrence
-  plain_language: >
-    ADHD functional problems do not confine themselves to work.
-    The same mechanisms that cause task initiation failure at work
-    cause it at home. Users do not separate "work ADHD" from
-    "life ADHD". Any work-focused tool exists in a person's whole
-    life context.
-  refs:
-    claims: [C001, C039]
-  implications:
-    - Work-only framing may miss relevant context
-    - Tools scoped purely to work may feel artificial to users
-    - Cross-domain data could improve prediction and support
-  derived_from: Our_KG
-
-CC03:
-  type: cross_cutting_concern
-  name: Missing Wish-List
-  plain_language: >
-    Users can articulate pain in vivid detail but struggle to
-    describe what a solution would look like. They know what hurts
-    but cannot envision what would help. Standard "what would you
-    want?" research questions yield either blank stares or requests
-    that restate the problem.
-  refs:
-    claims: [C040]
-  implications:
-    - Feature discovery cannot rely on direct user specification
-    - Behavioural observation outweighs stated preference
-    - Value must be inferred from what users DO, not what they SAY
-  derived_from: Our_KG
-
-CC04:
-  type: cross_cutting_concern
-  name: Medication Persistence Gap
-  plain_language: >
-    Medication helps but does not resolve functional workplace
-    problems. Users on medication still experience the full range
-    of functional failures, albeit sometimes at reduced intensity.
-    Medication is not an alternative to structural support.
-  refs:
-    claims: [C041]
-  implications:
-    - Tools cannot assume medication solves the problem
-    - The target population includes medicated individuals
-    - Complementary structural support has value even for
-      medicated users
-  derived_from: Our_KG
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -5180,9 +5085,9 @@ STG_005:
     - label: "Standard product methodology is degraded"
       sketch: >
         Conventional product discovery and validation methods
-        produce unreliable signals for this population. CC03
-        blocks honest discovery, early engagement metrics are
-        MC6 in disguise.
+        produce unreliable signals for this population. The
+        missing wish-list problem (C040) blocks honest discovery,
+        early engagement metrics are MC6 in disguise.
     - label: "Passive engagement can substitute for active engagement"
       sketch: >
         Product interaction models that minimise user-initiated
