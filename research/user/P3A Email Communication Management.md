@@ -1,6 +1,6 @@
-# P3A: Email Communication Management — Deep Dive
+# P3A: Email Communication Management
 
-> **Scope**: Deep-dive research into email/communication management failure (FP09) in adults with ADHD. Covers clinical evidence, frequency/mechanism analysis, ADHD-vs-neurotypical differentiation, user strategies, and tool landscape. Evidence tier: Tier 1–3.
+> **Scope**: Supplementary research into email/communication management failure (FP09) in adults with ADHD. Covers clinical evidence, frequency/mechanism analysis, ADHD-vs-neurotypical differentiation, user strategies, and tool landscape. Evidence tier: Tier 1–3.
 
 > **Scoring update**: See Analysis/S3b_FP09_Email_Scoring_Update.md for revised scores based on this research.
 

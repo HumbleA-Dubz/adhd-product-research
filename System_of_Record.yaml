@@ -318,16 +318,6 @@ _framework:
                   Array of { cause, reasoning } objects. Each identifies
                   a distinct failure pattern in existing products.
               market_gap_score: { derived: true, formula: "noise + maturity + adhd_user_reviews" }
-          phase_3:
-            description: >
-              Phase 3 deep-dive selection decision. Records whether
-              further research was warranted and what was found.
-            fields:
-              selected:  { required: true,  values: [true, false] }
-              rationale: { required: true,  format: "prose — why selected or not" }
-              what_was_missing: { required: false, format: "prose — evidence gaps that triggered selection" }
-              templates_used:   { required: false, format: "list of template IDs (3A, 3B, 3C)" }
-              outcome:          { required: false, format: "prose — what Phase 3 research found" }
       status_definitions:
         active: "Passed both gates. Scored. Eligible for market gap and downstream analysis."
         filtered_out: >
@@ -619,24 +609,6 @@ _framework:
         data_sources: >
           Negative review patterns, product shutdown post-mortems,
           founder interviews, user community complaints.
-
-    phase_3_selection:
-      description: >
-        Criteria for selecting problems for deep-dive research.
-        Selection is warranted when any of the following apply.
-      criteria:
-        - id: "high_score_low_evidence"
-          description: "Problem scores well (total >= 10) but key scores rely on Tier 3-4 evidence"
-        - id: "borderline_gate"
-          description: "Problem passed gates with caveats; better evidence could flip the decision"
-        - id: "hub_requiring_confidence"
-          description: "Problem is a cluster hub, making scoring accuracy especially important"
-        - id: "market_gap_needs_data"
-          description: "Existing research lacks competitive landscape detail"
-      templates:
-        3A: "Problem behaviour detail (frequency, triggers, downstream consequences, ADHD differentiation)"
-        3B: "Existing solutions for specific problem (software tools, pricing, maturity, funding)"
-        3C: "User experience with specific tools (what works, what fails, why abandoned, what wished for)"
 
   # ─────────────────────────────────────────────────────────────
   # DERIVATION FORMULAS
@@ -3277,7 +3249,7 @@ FP07:
       differentiation:
         score: 5
         assessment: |
-          Phase 3 established ADHD meeting-memory failure driven by
+          Supplementary research established ADHD meeting-memory failure driven by
           encoding deficit, not retrieval failure. P3 amplitude
           reduction during encoding shows the ADHD brain fails to
           encode information into memory even while processing in
@@ -3341,7 +3313,7 @@ FP09:
         assessment: |
           Email and messaging are daily activities. ADHD users describe
           daily failures — forgetting to reply, inbox accumulation,
-          avoidance. Phase 3: prospective memory impairment (d=1.60)
+          avoidance. Prospective memory impairment (d=1.60)
           applied to volume of daily email strongly supports multiple
           daily failures. Case could be made for 5 but relies on
           inference not direct measurement. Score 4 is the
@@ -3356,7 +3328,7 @@ FP09:
       differentiation:
         score: 4
         assessment: |
-          Phase 3 confirmed substantial differentiation: (1) prospective
+          Supplementary research confirmed substantial differentiation: (1) prospective
           memory failure as qualitatively different mechanism — "read it,
           intended to reply, forgot" is neurological not procrastination
           [Tier 1]; (2) avoidance-shame spiral driven by RSD amplifies
@@ -3375,14 +3347,14 @@ FP09:
       connectedness:
         score: 3
         assessment: |
-          Phase 3 identified direct causal link to FP04 via missed
+          Supplementary research identified direct causal link to FP04 via missed
           action items in email. Termination case for failed calendar
           invite demonstrates chain. Email failure feeds
           overwhelm-burnout cycle — accumulated unanswered emails
           create stress worsening FP02 (focus) and FP01 (initiation)
           through shame-driven paralysis. Still modest — primarily a
           receiving problem — but direct FP04 link warrants 3 over 2.
-          Raised from 2 to 3 in Phase 3.
+          Raised from 2 to 3 after supplementary research.
         evidence: |
           Email → missed action items → deadline failure [P3A, Tier 2].
           Termination for missed calendar invite [P2A, Tier 3]. Email

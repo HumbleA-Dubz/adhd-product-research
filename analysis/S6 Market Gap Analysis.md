@@ -217,7 +217,7 @@ General AI meeting market is large ($6.5B+ projected 2026). Otter.ai ($100M ARR,
 General meeting tools are mature (5+ years, hundreds of millions in funding). But ADHD-specific meeting tools are nascent. The score reflects the dominant general market any entrant must contend with.
 
 **Q4: ADHD User Reviews — 4 (Mixed-negative)**
-Transcripts too long (5,000-20,000+ words). No proactive resurfacing ("out of sight, out of mind"). Summaries assume partial encoding but ADHD failure can be total. No spaced repetition. Meeting bot social friction. Positive: removing dual-task burden (listen AND take notes) is consistently valued. Per Phase 3 deep dive, 7 specific ADHD gaps in existing tools identified.
+Transcripts too long (5,000-20,000+ words). No proactive resurfacing ("out of sight, out of mind"). Summaries assume partial encoding but ADHD failure can be total. No spaced repetition. Meeting bot social friction. Positive: removing dual-task burden (listen AND take notes) is consistently valued. Per supplementary research (P3B), 7 specific ADHD gaps in existing tools identified.
 
 **Q5: Root Cause of Failure**
 **Fundamental design assumption mismatch:** All general tools assume the problem is retrieval ("I need to find what was said"). The ADHD problem is encoding ("my brain never stored it"). This means transcripts compensate for the wrong failure, summaries assume partial encoding when ADHD failure can be total, and action items are extracted but not scaffolded against prospective memory failure.
@@ -430,7 +430,7 @@ Both FP07 and FP09 (plus aspects of FP08 and FP11) are driven by **prospective m
 - Communications Biology (2024): Brain.fm ADHD focus study
 - Scientific Reports (2025): Time monitoring and prospective memory in ADHD
 - Prevatt et al. (2011): Time estimation in college students with ADHD
-- Phase 3 deep dives: P3A (email/prospective memory), P3B (meeting/encoding deficit)
+- Supplementary research: P3A (email/prospective memory), P3B (meeting/encoding deficit)
 
 ---
 

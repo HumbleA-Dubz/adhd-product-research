@@ -353,7 +353,7 @@ Populate inclusion_test evaluations (schema requires it). Add relocated candidat
 - `_framework.evaluation_rubrics.gates` ✓ (both gates with question, pass/fail criteria, data sources)
 - `_framework.evaluation_rubrics.problem_layer` ✓ (Q1-Q3 with full anchors and data sources)
 - `_framework.evaluation_rubrics.market_gap_layer` ✓ (Q1-Q5 with full anchors and data sources)
-- `_framework.evaluation_rubrics.phase_3_selection` ✓ (criteria and templates)
+- `_framework.evaluation_rubrics.phase_3_selection` — REMOVED (phase 3 concept retired)
 - `_framework.derivation_formulas` ✓ (problem_score, market_gap_score, combined_score)
 - `_framework.recording_requirements` ✓
 

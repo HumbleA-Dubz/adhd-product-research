@@ -1,6 +1,6 @@
-# P3B: Meeting and Instruction Memory Failure — Deep Dive
+# P3B: Meeting and Instruction Memory Failure
 
-> **Scope**: Deep-dive research into meeting/instruction memory failure (FP07) in adults with ADHD. Covers clinical evidence on working memory and encoding deficits, frequency/triggers, ADHD-vs-neurotypical differentiation, existing solutions landscape, and ADHD user experience with tools. Evidence tier: Tier 1–3.
+> **Scope**: Supplementary research into meeting/instruction memory failure (FP07) in adults with ADHD. Covers clinical evidence on working memory and encoding deficits, frequency/triggers, ADHD-vs-neurotypical differentiation, existing solutions landscape, and ADHD user experience with tools. Evidence tier: Tier 1–3.
 
 > **Scoring update**: See Analysis/S3c_FP07_Meeting_Memory_Scoring_Update.md for revised scores based on this research.
 
