@@ -30,7 +30,7 @@ Three stages. Each produces something usable — they build on each other but ar
 
 **Mahdi receives:** Something like a shortlist of the strongest candidate directions — where problem clusters, engagement models, mechanism fits, and meta-challenge resilience all converge + the shape of requirements they impose. Ranked or grouped, with the reasoning visible and traceable. I'd want to work out the exact format with you so it's something you can actually react to and interrogate rather than just read.
 
-I.E. rebuilding the matrices from this file, overlaying them, presenting as a single layer/shortlist we can evaluate with Jordan. This is the evidence-based graph of "What requirements are "safest"/most enabling to build" 
+I.E. rebuilding the matrices from this file ( https://github.com/HumbleA-Dubz/adhd-product-research/blob/main/analysis%2FCS3%20Cross-Layer%20Mapping.md ) overlaying them, presenting as a single layer/shortlist we can evaluate with Jordan. This is the evidence-based graph of "What requirements are "safest"/most enabling to build" 
 
 **Main risk to estimate:** The cross-comparison matrices. Last time they degraded as context got too large. The SoR was built specifically to fix that — atomic entities, explicit relationships, no ambiguity for the AI to hallucinate into. But until I run them, I can't guarantee it. If it breaks again, I'll know within the first hour and can flag it.
 
